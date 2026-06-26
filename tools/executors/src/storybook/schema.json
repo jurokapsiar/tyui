@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "properties": {
+    "framework": {
+      "type": "string",
+      "enum": ["web-components", "solid"]
+    },
+    "port": {
+      "type": "number",
+      "default": 6006
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["dev", "build"],
+      "default": "dev"
+    }
+  },
+  "required": ["framework", "port", "mode"]
+}

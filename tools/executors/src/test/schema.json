@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "properties": {
+    "browser": {
+      "type": "boolean",
+      "default": false
+    },
+    "watch": {
+      "type": "boolean",
+      "default": false
+    },
+    "coverage": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

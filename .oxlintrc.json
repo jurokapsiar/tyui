@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "off",
+    "style": "off"
+  },
+  "rules": {
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "solid-js",
+            "message": "Component implementations must not import Solid. Keep Solid integration in libs/solid."
+          },
+          {
+            "name": "react",
+            "message": "Component implementations must not import React."
+          },
+          {
+            "name": "lit",
+            "message": "Component implementations must not import Lit. Lit is allowed only in Storybook story files."
+          }
+        ]
+      }
+    ]
+  },
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    ".nx",
+    "coverage",
+    "**/*.d.ts",
+    ".yarn",
+    "apps/**",
+    "libs/solid/**",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    "tools/**"
+  ]
+}

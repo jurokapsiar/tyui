@@ -1,0 +1,34 @@
+{
+  "name": "solid-example",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/solid-example/src",
+  "implicitDependencies": ["solid", "define", "elements", "core"],
+  "targets": {
+    "build": {
+      "executor": "@tyui/tools-executors:build"
+    },
+    "serve": {
+      "executor": "@tyui/tools-executors:serve",
+      "options": {
+        "port": 4200
+      }
+    },
+    "test": {
+      "executor": "@tyui/tools-executors:test",
+      "options": {
+        "browser": true,
+        "watch": false,
+        "coverage": false
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/solid-example",
+        "command": "tsc -p tsconfig.app.json --noEmit"
+      }
+    }
+  },
+  "tags": ["scope:apps", "framework:solid"]
+}

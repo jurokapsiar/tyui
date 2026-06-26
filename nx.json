@@ -1,0 +1,66 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/.oxlintrc.json",
+      "{workspaceRoot}/.oxfmtrc.json",
+      "{workspaceRoot}/nx.json",
+      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/package.json"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.test.ts",
+      "!{projectRoot}/**/*.test.tsx",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/**/*.spec.tsx",
+      "!{projectRoot}/**/*.stories.ts",
+      "!{projectRoot}/**/*.stories.tsx",
+      "!{projectRoot}/__visual_snapshots__/**",
+      "!{projectRoot}/e2e/**"
+    ],
+    "visualInputs": ["default", "{projectRoot}/__visual_snapshots__/**"],
+    "e2eInputs": ["default", "{projectRoot}/e2e/**"]
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"]
+    },
+    "test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
+    },
+    "typecheck": {
+      "cache": true,
+      "inputs": ["default", "^default"]
+    },
+    "verify-configs": {
+      "cache": true,
+      "inputs": ["default", "sharedGlobals"]
+    },
+    "visual": {
+      "cache": true,
+      "inputs": ["visualInputs", "^production"],
+      "outputs": ["{projectRoot}/__visual_snapshots__"],
+      "parallelism": false
+    },
+    "e2e": {
+      "cache": true,
+      "inputs": ["e2eInputs", "^production"],
+      "parallelism": false
+    },
+    "storybook": {
+      "cache": false
+    },
+    "serve": {
+      "cache": false
+    }
+  },
+  "defaultBase": "main",
+  "analytics": false
+}

@@ -1,0 +1,28 @@
+{
+  "executors": {
+    "build": {
+      "implementation": "./src/build/executor.ts",
+      "schema": "./src/build/schema.json"
+    },
+    "serve": {
+      "implementation": "./src/serve/executor.ts",
+      "schema": "./src/serve/schema.json"
+    },
+    "test": {
+      "implementation": "./src/test/executor.ts",
+      "schema": "./src/test/schema.json"
+    },
+    "storybook": {
+      "implementation": "./src/storybook/executor.ts",
+      "schema": "./src/storybook/schema.json"
+    },
+    "storybook-visual": {
+      "implementation": "./src/storybook-visual/executor.ts",
+      "schema": "./src/storybook-visual/schema.json"
+    },
+    "storybook-e2e": {
+      "implementation": "./src/storybook-e2e/executor.ts",
+      "schema": "./src/storybook-e2e/schema.json"
+    }
+  }
+}

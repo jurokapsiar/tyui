@@ -1,0 +1,23 @@
+{
+  "name": "generators",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/generators/src",
+  "projectType": "library",
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/generators",
+        "command": "tsc -p tsconfig.json --noEmit"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/generators",
+        "command": "vitest run --passWithNoTests"
+      }
+    }
+  },
+  "tags": ["scope:tools", "type:tooling"]
+}

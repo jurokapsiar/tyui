@@ -1,0 +1,36 @@
+{
+  "name": "solid",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/solid/src",
+  "implicitDependencies": ["define", "elements"],
+  "targets": {
+    "build": {
+      "executor": "@tyui/tools-executors:build"
+    },
+    "test": {
+      "executor": "@tyui/tools-executors:test",
+      "options": {
+        "browser": true,
+        "watch": false,
+        "coverage": false
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/solid",
+        "command": "tsc -p tsconfig.lib.json --noEmit"
+      }
+    },
+    "storybook": {
+      "executor": "@tyui/tools-executors:storybook",
+      "options": {
+        "framework": "solid",
+        "port": 6007,
+        "mode": "dev"
+      }
+    }
+  },
+  "tags": ["scope:libs", "type:library"]
+}

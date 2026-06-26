@@ -1,0 +1,44 @@
+{
+  "name": "workspace",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/workspace/src",
+  "projectType": "library",
+  "targets": {
+    "verify-configs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "tsx src/verify-configs.ts"
+      }
+    },
+    "sync-configs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "tsx src/sync-configs.ts"
+      }
+    },
+    "bundle-sizes": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "tsx src/bundle-sizes.ts"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "tsc -p tsconfig.json --noEmit"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "vitest run --passWithNoTests"
+      }
+    }
+  },
+  "tags": ["scope:tools", "type:tooling"]
+}

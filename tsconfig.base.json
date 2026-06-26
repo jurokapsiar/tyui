@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": [],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "paths": {
+      "@tyui/core": ["./libs/core/src/index.ts"],
+      "@tyui/elements": ["./libs/elements/src/index.ts"],
+      "@tyui/elements/button": ["./libs/elements/src/button/index.ts"],
+      "@tyui/define": ["./libs/define/src/index.ts"],
+      "@tyui/define/button": ["./libs/define/src/button.ts"],
+      "@tyui/solid": ["./libs/solid/src/index.ts"],
+      "@tyui/solid/button": ["./libs/solid/src/button.tsx"],
+      "@tyui/solid/jsx": ["./libs/solid/src/jsx.ts"],
+      "@tyui/testing": ["./libs/testing/src/index.ts"],
+      "@tyui/tools-executors": ["./tools/executors/src/index.ts"],
+      "@tyui/tools-executors/*": ["./tools/executors/src/*"],
+      "@tyui/tools-workspace": ["./tools/workspace/src/index.ts"]
+    }
+  }
+}

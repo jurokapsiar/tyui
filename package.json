@@ -1,0 +1,70 @@
+{
+  "name": "tyui",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*",
+    "tools/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "verify-configs": "nx run workspace:verify-configs",
+    "sync-configs": "nx run workspace:sync-configs",
+    "report-bundle-sizes": "nx run workspace:bundle-sizes",
+    "playwright:image": "scripts/build-playwright-image.sh",
+    "playwright:ensure-image": "scripts/ensure-playwright-image.sh",
+    "dev:solid": "nx serve solid-example",
+    "dev:vanilla": "nx serve vanilla-example",
+    "graph": "nx graph",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@nx/devkit": "^22.6.5",
+    "@nx/js": "^22.6.5",
+    "@playwright/test": "^1.59.1",
+    "@storybook/web-components": "^10.3.5",
+    "@storybook/web-components-vite": "^10.3.5",
+    "@swc-node/register": "^1.11.1",
+    "@swc/core": "^1.15.43",
+    "@types/node": "^25.6.0",
+    "@vitest/browser": "^4.1.5",
+    "@vitest/browser-playwright": "^4.1.5",
+    "@vitest/ui": "^4.1.5",
+    "happy-dom": "^20.10.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "lit": "^3.3.2",
+    "nx": "^22.6.5",
+    "oxfmt": "^0.46.0",
+    "oxlint": "^1.61.0",
+    "playwright": "^1.59.1",
+    "solid-js": "^1.9.13",
+    "storybook": "^10.3.5",
+    "storybook-solidjs-vite": "^10.0.12",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "7.1.11",
+    "vite-plugin-solid": "^2.11.12",
+    "vitest": "^4.1.5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,cjs,mjs}": [
+      "oxlint --fix --no-error-on-unmatched-pattern",
+      "oxfmt"
+    ],
+    "*.{md,yml,yaml,json}": [
+      "oxfmt"
+    ]
+  },
+  "packageManager": "yarn@4.5.0"
+}

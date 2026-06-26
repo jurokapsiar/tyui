@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "libs/**/*.ts",
+    "libs/**/*.tsx",
+    "tools/**/*.ts",
+    "vite.aliases.ts",
+    "vitest.workspace.ts"
+  ],
+  "exclude": ["node_modules", "dist", ".nx"]
+}
