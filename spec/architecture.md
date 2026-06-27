@@ -1,358 +1,116 @@
-# Component Library Architecture
+# TYUI Architecture Overview
 
-## Premise
+TYUI is a framework-neutral component library built as an Nx + Vite monorepo. Its thesis is simple: implement UI components with plain TypeScript and native Custom Elements, then layer thin framework-specific typings and wrappers on top for ergonomic consumption. The implementation must not depend on Solid, React, Lit, JSX, or a virtual DOM.
 
-Compiling arbitrary Solid components into framework-free code is not a practical primary architecture.
-Solid's compiler emits DOM operations plus calls into Solid's reactive runtime. Once a component uses signals, effects, context, control-flow components, or Solid lifecycle APIs, the generated component remains coupled to `solid-js`.
+## Design Principles
 
-There are three viable architecture families to consider.
+1. **No framework runtime in component implementation.** Components are native `HTMLElement` subclasses. Framework packages may improve consumer ergonomics, but they do not define component behavior.
+2. **No JSX in component implementations.** JSX is allowed only in optional wrapper packages and example apps. Those wrappers compile into the consuming app, not into `@tyui/elements`.
+3. **No virtual DOM. Stable-node updates only.** DOM is created once, usually from a shared `<template>`, and state changes mutate affected nodes and attributes directly.
+4. **Headless behavior is separated from DOM.** Reusable state machines and interaction logic live in `@tyui/core` and are unit-testable without browser DOM.
+5. **Standard Web Component contract.** Primitive configuration uses attributes, structured values use JavaScript properties, composition uses slots, and user output uses `CustomEvent`s with `bubbles: true` and `composed: true`.
+6. **Native behavior first.** Native controls own text editing, form input, focus behavior, keyboard defaults, and accessibility semantics wherever possible. Custom behavior is added only where the native platform does not provide the required composite pattern.
+7. **Ergonomics are additive, never authoritative.** `@tyui/solid` provides types and thin wrappers; it must remain tree-shakable and cannot become the source of behavior.
+8. **Idempotent registration.** `define*` functions guard with `customElements.get(...)` so repeated registration is safe.
+9. **Public styling surface is explicit.** Generated app CSS may target only documented host attributes, slots, parts, forwarded parts, and public `--ty-*` tokens.
+10. **Tooling is opinionated and locked.** Yarn 4, Nx caching, Vite, Vitest, Playwright, Dockerized browser infrastructure, custom executors, `oxlint`, `oxfmt`, and config-drift checks are part of the architecture.
 
-## Option 1: Restricted JSX Source To Multiple Targets
-
-This is the cleanest solution when the goal is one component source that generates multiple framework-native outputs.
-
-Define a framework-neutral JSX dialect, then compile it to:
-
-- Vanilla Custom Elements.
-- Lit.
-- Solid.
-- React wrappers.
-- Potential Vue or Svelte wrappers.
-
-This is essentially the Mitosis model. Mitosis uses a restricted JSX component format, parses it into an intermediate representation, and generates targets including React, Solid, Lit, Stencil, and raw Web Components.
-
-### Example Neutral Source
-
-```tsx
-import { useMetadata, useStore } from '@acme/component-compiler';
-
-useMetadata({
-  customElement: 'acme-counter',
-});
-
-export default function Counter(props: { initial?: number }) {
-  const state = useStore({
-    count: props.initial ?? 0,
-  });
-
-  return (
-    <button type="button" onClick={() => state.count++}>
-      Count: {state.count}
-    </button>
-  );
-}
-```
-
-### Pipeline
+## Layered Architecture
 
 ```text
-neutral TSX
-  -> parse
-component IR / AST
-  -> vanilla custom-element generator
-  -> Lit generator
-  -> Solid generator
-  -> React generator
+┌─────────────────────────────────────────────────────────────┐
+│ apps/                                                       │
+│   solid-example   (Solid + Vite consumer)                  │
+│   vanilla-example (plain HTML/TS consumer)                 │
+└───────────────▲─────────────────────────▲──────────────────┘
+                │                         │
+        @tyui/solid (opt-in)       @tyui/define (registration)
+                │                         │
+┌───────────────┴──────────┐   ┌──────────┴──────────────────┐
+│ libs/solid               │   │ libs/define                  │
+│  - JSX intrinsic types   │   │  - defineTyuiButton()        │
+│  - thin wrappers         │   │  - defineTyuiElements()      │
+│  - typed custom events   │   │  - idempotent registration   │
+└───────────────▲──────────┘   └──────────▲──────────────────┘
+                │                         │
+                └───────────┬─────────────┘
+                            │
+                ┌───────────┴─────────────┐
+                │ libs/elements           │
+                │  - native Custom        │
+                │    Elements             │
+                │  - shadow DOM           │
+                │  - templates            │
+                │  - attrs / props        │
+                │  - slots / events       │
+                └───────────▲─────────────┘
+                            │ imports controllers
+                ┌───────────┴─────────────┐
+                │ libs/core               │
+                │  - DOM-free behavior    │
+                │  - state machines       │
+                │  - transition objects   │
+                └─────────────────────────┘
+
+        libs/testing -> contract-test and a11y helpers
 ```
 
-The key is that this source is not actually Solid source, even when it looks Solid-like.
+| Layer    | Package                            | Responsibility                                                                                                                           | Depends on                       |
+| -------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Core     | `@tyui/core`                       | Framework-neutral state machines, interaction logic, transition objects, pub/sub where needed. No DOM.                                   | none                             |
+| Elements | `@tyui/elements`                   | Native `HTMLElement` implementations: shadow DOM, templates, attributes/properties, slots, events, form participation, focus delegation. | `@tyui/core`                     |
+| Define   | `@tyui/define`                     | Opt-in `customElements.define` entry points per component and for all components.                                                        | `@tyui/elements`                 |
+| Solid    | `@tyui/solid`                      | Solid JSX intrinsic typings, typed event surfaces, thin ergonomic wrappers.                                                              | `@tyui/define`, `@tyui/elements` |
+| Testing  | `@tyui/testing`                    | Shared contract-test helpers and accessibility-role helpers.                                                                             | none                             |
+| Apps     | `solid-example`, `vanilla-example` | Consumer reference apps and smoke targets.                                                                                               | `@tyui/solid` or `@tyui/define`  |
 
-### Benefits
+Package conventions:
 
-- No Solid dependency in vanilla output.
-- Native React components for React consumers.
-- Native Solid components for Solid consumers.
-- Target-specific optimizations.
-- One source of truth.
+- Workspace packages use `"type": "module"` and should use `"sideEffects": false` when safe.
+- In-repo TypeScript types resolve to `src/` for fast development; build output resolves from `dist/`.
+- Per-component subpath exports such as `@tyui/elements/button` and `@tyui/define/button` support granular imports and code splitting.
+- `vite.aliases.ts` maps `@tyui/*` package specifiers to source files during local development so layers do not need prebuilds for HMR.
+- Skill-bearing packages use the `tanstack-intent` keyword and include `skills/` in package files so agent guidance ships with the same version as the library.
+- `@tyui/elements` publishes `custom-elements.json` at the package root and exposes it as `@tyui/elements/custom-elements.json`.
 
-### Costs
+## Component Anatomy
 
-The language must be constrained:
+Native components follow a stable-node pattern:
 
-- No arbitrary hooks.
-- No arbitrary framework imports.
-- No Solid context.
-- No `<For>` or `<Show>` unless the compiler understands them.
-- No runtime reflection magic.
-- Event and lifecycle semantics must be normalized.
-
-This is the strongest multi-target architecture, but it also requires the most compiler work. It does not match the requirement that component implementations should not use JSX.
-
-## Option 2: Solid-Flavored JSX To Vanilla DOM And A Neutral Runtime
-
-Another path is to build a Babel, SWC, or Vite transform that turns Solid-like components into Custom Elements plus a small framework-neutral runtime.
-
-For example, this component:
-
-```tsx
-function Counter() {
-  const [count, setCount] = createSignal(0);
-
-  return <button onClick={() => setCount(count() + 1)}>{count()}</button>;
-}
-```
-
-Could become something conceptually like:
+1. Define one module-level `<template>` and one module-level `CSSStyleSheet`.
+2. In the constructor, attach shadow DOM, adopt the stylesheet, and clone the template.
+3. Store references to stable internal nodes.
+4. Register event listeners once.
+5. Reflect attributes/properties into internal DOM through a narrow `#render()` or `#sync*()` method.
+6. Dispatch composed custom events only for user-initiated state changes.
 
 ```ts
-class AcmeCounter extends HTMLElement {
-  connectedCallback(): void {
-    const button = document.createElement('button');
-    const text = document.createTextNode('');
+const template = document.createElement('template');
 
-    let count = 0;
+template.innerHTML = `
+  <button part="control" type="button">
+    <slot></slot>
+  </button>
+`;
 
-    const updateCount = (): void => {
-      text.data = String(count);
-    };
-
-    button.addEventListener('click', () => {
-      count++;
-      updateCount();
-    });
-
-    button.append(text);
-    this.append(button);
-
-    updateCount();
-  }
-}
-```
-
-That can produce excellent output, but it is effectively a new framework/compiler.
-
-The compiler would need transformations for:
-
-- Signals.
-- Memos.
-- Effects and cleanup.
-- Conditionals.
-- Keyed lists.
-- Spread props.
-- Dynamic attributes and properties.
-- Event delegation.
-- Refs.
-- Slots.
-- Lifecycle.
-- Server rendering and hydration, if needed.
-
-Solid already performs much of this work, but its output assumes the Solid runtime. Replacing that runtime requires either recognizing all Solid primitives statically or defining restricted equivalents.
-
-A practical version is to create owned primitives:
-
-```ts
-import { signal, memo, effect } from '@acme/reactivity';
-```
-
-Those primitives can then compile differently for every target. This approach should not accept general `solid-js` imports.
-
-This option is powerful, but it conflicts with the requirement to avoid a custom JSX compiler unless it becomes genuinely necessary.
-
-## Option 3: Solid Internals Behind Standard Web Components
-
-This option is consumer-agnostic, though not implementation-agnostic.
-
-```text
-Solid implementation
-  -> Custom Element API
-  -> React / Vue / Angular / vanilla consumers
-```
-
-Consumers do not need to know the implementation framework. `solid-element` exists specifically to expose Solid implementations as interoperable custom elements.
-
-The package can bundle Solid internally:
-
-```text
-acme-button.js
-  -> generated component DOM code
-  -> required Solid reactive helpers
-  -> custom-element registration
-```
-
-The external contract is neutral:
-
-```html
-<acme-button disabled>Save</acme-button>
-```
-
-```ts
-button.addEventListener('activate', handler);
-```
-
-This is often sufficient for a design system. In many contexts, "framework-agnostic" means consumers are not coupled to the implementation, not that the shipped implementation contains no framework runtime.
-
-However, the requirements here explicitly prefer no Solid, React, Lit, JSX, or virtual DOM in the component implementation. That makes this a fallback option rather than the best fit.
-
-## Recommended Direction
-
-Use native Custom Elements internally, plus a thin Solid typing and optional wrapper package for consumption.
-
-```text
-Component library
-  plain TypeScript + DOM APIs
-  native Custom Elements
-  no Solid, React, Lit, or JSX
-      |
-      v
-Solid application
-  imports/registers those elements
-  consumes them naturally from Solid JSX
-```
-
-This keeps the library framework-independent. Only the consuming app uses Solid JSX, and Solid compiles only the application code.
-
-## Recommended Nx/Vite Monorepo Structure
-
-```text
-package.json
-nx.json
-tsconfig.base.json
-vitest.workspace.ts
-
-libs/
-  core/
-    project.json
-    vite.config.ts
-    src/
-      state machines
-      accessibility behavior
-      keyboard navigation
-      DOM-independent component logic
-
-  elements/
-    project.json
-    vite.config.ts
-    src/
-      native HTMLElement implementations
-      shadow DOM structure
-      attributes, properties, slots, events
-
-  define/
-    project.json
-    vite.config.ts
-    src/
-      optional custom-element registration entry points
-
-  solid/
-    project.json
-    vite.config.ts
-    src/
-      JSX intrinsic-element declarations
-      typed event definitions
-      optional property-binding helpers
-      optional ergonomic wrappers
-
-  testing/
-    project.json
-    vite.config.ts
-    src/
-      shared component contract tests
-      accessibility helpers
-      visual regression utilities
-
-apps/
-  solid/
-    project.json
-    vite.config.ts
-    src/
-
-  vanilla/
-    project.json
-    vite.config.ts
-    src/
-```
-
-Nx owns workspace orchestration, dependency-aware task execution, caching, and project graph visibility. Vite owns package builds, app dev servers, and Vitest-powered tests. The Solid package should not reimplement components. It should only improve type safety and ergonomics for Solid consumers.
-
-## Headless Core Pattern
-
-Reusable behavior can be plain TypeScript:
-
-```ts
-export type ToggleState = {
-  pressed: boolean;
-  disabled: boolean;
-};
-
-export function createToggleController(options: {
-  initialPressed?: boolean;
-  disabled?: boolean;
-  onChange?: (pressed: boolean) => void;
-}) {
-  let state: ToggleState = {
-    pressed: options.initialPressed ?? false,
-    disabled: options.disabled ?? false,
-  };
-
-  const subscribers = new Set<(state: ToggleState) => void>();
-
-  const emit = (): void => {
-    for (const subscriber of subscribers) {
-      subscriber(state);
-    }
-  };
-
-  return {
-    getState(): ToggleState {
-      return state;
-    },
-
-    press(): void {
-      if (state.disabled) return;
-
-      state = {
-        ...state,
-        pressed: !state.pressed,
-      };
-
-      options.onChange?.(state.pressed);
-      emit();
-    },
-
-    subscribe(subscriber: (state: ToggleState) => void): () => void {
-      subscribers.add(subscriber);
-      subscriber(state);
-
-      return () => subscribers.delete(subscriber);
-    },
-  };
-}
-```
-
-This avoids duplicating the hard parts across renderers: accessibility behavior, state transitions, and keyboard logic can live in one framework-neutral layer.
-
-## Native Web Component Pattern
-
-The actual component implementation should use the browser platform directly:
-
-```ts
-export class AcmeButton extends HTMLElement {
+export class TyuiExampleElement extends HTMLElement {
   static observedAttributes = ['disabled'];
 
-  readonly #button = document.createElement('button');
+  readonly #button: HTMLButtonElement;
 
   constructor() {
     super();
 
-    const root = this.attachShadow({ mode: 'open' });
+    const root = this.attachShadow({ mode: 'open', delegatesFocus: true });
+    root.append(template.content.cloneNode(true));
 
-    this.#button.type = 'button';
+    const button = root.querySelector('button');
+    if (!(button instanceof HTMLButtonElement)) {
+      throw new Error('TyuiExampleElement template is missing its button.');
+    }
 
-    const slot = document.createElement('slot');
-    this.#button.append(slot);
-
-    this.#button.addEventListener('click', () => {
-      if (this.disabled) return;
-
-      this.dispatchEvent(
-        new CustomEvent('activate', {
-          bubbles: true,
-          composed: true,
-        }),
-      );
-    });
-
-    root.append(this.#button);
+    this.#button = button;
+    this.#button.addEventListener('click', this.#handleClick);
   }
 
   get disabled(): boolean {
@@ -363,222 +121,225 @@ export class AcmeButton extends HTMLElement {
     this.toggleAttribute('disabled', value);
   }
 
-  attributeChangedCallback(): void {
-    this.#button.disabled = this.disabled;
-  }
-}
-
-export function defineAcmeButton(): void {
-  if (!customElements.get('acme-button')) {
-    customElements.define('acme-button', AcmeButton);
-  }
-}
-```
-
-There is no component runtime here, only the browser platform.
-
-## Solid Consumption Pattern
-
-The Solid app imports or registers the custom element, then consumes it from JSX:
-
-```tsx
-import { createSignal } from 'solid-js';
-import { defineAcmeButton } from '@acme/components/button';
-
-defineAcmeButton();
-
-export function App() {
-  const [saving, setSaving] = createSignal(false);
-
-  return (
-    <acme-button
-      disabled={saving()}
-      on:activate={() => {
-        setSaving(true);
-      }}
-    >
-      {saving() ? 'Saving...' : 'Save'}
-    </acme-button>
-  );
-}
-```
-
-Solid compiles the application JSX. The component library remains plain JavaScript.
-
-## Solid JSX Types
-
-TypeScript will not automatically know custom-element properties and events. Add declarations in the Solid application or publish them from the component package:
-
-```ts
-// solid.d.ts
-import type { JSX } from 'solid-js';
-
-declare module 'solid-js' {
-  namespace JSX {
-    interface IntrinsicElements {
-      'acme-button': JSX.HTMLAttributes<HTMLElement> & {
-        disabled?: boolean;
-        children?: JSX.Element;
-        'on:activate'?: (event: CustomEvent<void>) => void;
-      };
-    }
-  }
-}
-```
-
-For an event with data:
-
-```ts
-export type ActivateDetail = {
-  source: 'keyboard' | 'pointer';
-};
-
-type ActivateEvent = CustomEvent<ActivateDetail>;
-```
-
-## Structured Properties
-
-Attributes are fine for strings, numbers, booleans, and primitive configuration.
-
-For objects, arrays, callbacks, or controllers, expose JavaScript properties:
-
-```ts
-export class AcmeList extends HTMLElement {
-  #items: readonly ListItem[] = [];
-
-  get items(): readonly ListItem[] {
-    return this.#items;
-  }
-
-  set items(value: readonly ListItem[]) {
-    if (Object.is(this.#items, value)) return;
-
-    this.#items = value;
+  connectedCallback(): void {
     this.#render();
   }
 
-  #render(): void {
-    // Update the DOM.
-  }
-}
-```
-
-Solid can assign the property from JSX:
-
-```tsx
-<acme-list items={items()} />
-```
-
-Depending on JSX/custom-element typing and compiler behavior, a ref gives fully explicit property assignment:
-
-```tsx
-let list!: AcmeList;
-
-createEffect(() => {
-  list.items = items();
-});
-
-return <acme-list ref={list} />;
-```
-
-## Fine-Grained Component Updates
-
-Raw DOM components must design update granularity directly. Avoid implementing every property change as:
-
-```ts
-this.shadowRoot!.innerHTML = this.render();
-```
-
-That recreates DOM, event state, and potentially focus.
-
-Instead, create stable nodes once and update only the nodes affected by each state change:
-
-```ts
-export class AcmeCounter extends HTMLElement {
-  readonly #valueNode = document.createTextNode('0');
-  readonly #button = document.createElement('button');
-
-  #value = 0;
-
-  constructor() {
-    super();
-
-    const root = this.attachShadow({ mode: 'open' });
-
-    this.#button.append('Count: ', this.#valueNode);
-    this.#button.addEventListener('click', this.#increment);
-
-    root.append(this.#button);
+  attributeChangedCallback(): void {
+    this.#render();
   }
 
-  get value(): number {
-    return this.#value;
-  }
-
-  set value(next: number) {
-    if (Object.is(next, this.#value)) return;
-
-    this.#value = next;
-    this.#valueNode.data = String(next);
-  }
-
-  #increment = (): void => {
-    this.value++;
-
-    this.dispatchEvent(
-      new CustomEvent('valuechange', {
-        detail: { value: this.value },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+  #handleClick = (): void => {
+    if (this.disabled) return;
+    this.dispatchEvent(new CustomEvent('activate', { bubbles: true, composed: true }));
   };
+
+  #render(): void {
+    this.#button.disabled = this.disabled;
+  }
 }
 ```
 
-This gives behavior comparable to compiled fine-grained bindings: each setter updates only its associated DOM node.
+Avoid `shadowRoot.innerHTML = ...` in response to state changes. Recreating DOM destroys event state, focus, text selection, validity UI, and browser-managed control state. Update the smallest affected node or attribute instead.
 
-## Optional Solid Wrapper Pattern
+## Behavior And State Flow
 
-A wrapper can improve API ergonomics while keeping implementation neutral:
+State ownership must be explicit in every component contract:
+
+- **Core-owned state:** reusable interaction or selection state that benefits from DOM-free tests.
+- **Element-owned state:** host attributes/properties, form internals, reflected public state, and shadow DOM sync.
+- **Native-control-owned state:** text editing, selection, IME, undo, browser validation, checked/value defaults, and keyboard behavior for native controls.
+- **Parent-owned state:** composite coordination such as radio-group value, roving tabindex, option selection, popup open state, or listbox active item.
+- **App-owned state:** controlled data passed through properties or attributes.
+
+For composite components, the parent owns coordinated state and children expose a minimal surface. For example, `tyui-radio-group` owns value and roving tabindex; `tyui-radio` owns the native input and mirrors the active tab stop onto that input so real browser `Tab` can enter the group correctly.
+
+Programmatic state changes must not emit user events unless the component contract explicitly says otherwise. User-initiated changes dispatch composed events with stable detail payloads.
+
+## Solid Consumption Pattern
+
+Solid consumers can use registered custom elements directly:
 
 ```tsx
-import type { JSX } from 'solid-js';
-import '@acme/components/button/define';
+import { defineTyuiButton } from '@tyui/define/button';
 
-type ButtonProps = {
-  disabled?: boolean;
-  onActivate?: () => void;
-  children?: JSX.Element;
-};
+defineTyuiButton();
 
-export function Button(props: ButtonProps) {
+export function SaveButton(props: { saving: boolean; save: () => void }) {
   return (
-    <acme-button disabled={props.disabled} on:activate={props.onActivate}>
-      {props.children}
-    </acme-button>
+    <tyui-button disabled={props.saving} on:activate={props.save}>
+      {props.saving ? 'Saving' : 'Save'}
+    </tyui-button>
   );
 }
 ```
 
-The app gets conventional JSX:
+Optional wrappers may improve naming, event typing, or property assignment:
 
 ```tsx
-<Button disabled={saving()} onActivate={save}>
-  Save
-</Button>
+import type { JSX } from 'solid-js';
+import { defineTyuiButton } from '@tyui/define/button';
+
+defineTyuiButton();
+
+export function Button(props: {
+  disabled?: boolean;
+  onActivate?: () => void;
+  children?: JSX.Element;
+}) {
+  return (
+    <tyui-button disabled={props.disabled} on:activate={props.onActivate}>
+      {props.children}
+    </tyui-button>
+  );
+}
 ```
 
-The wrapper compiles into the Solid application and should tree-shake normally. The underlying component remains framework-independent.
+Wrappers must remain thin. They cannot fork behavior, duplicate accessibility logic, or introduce a second state model.
 
-## Decision
+## Build, Test, And Dev Workflows
 
-The best fit for the current requirements is:
+Nx owns workspace orchestration, dependency-aware task execution, caching, and project graph visibility. Vite owns library builds, app dev servers, and Vitest-powered tests. Custom Nx executors live under `tools/executors`.
 
-- Plain TypeScript for component behavior and state machines.
-- Native Custom Elements as the primary distribution.
-- Direct DOM updates with stable nodes rather than virtual DOM or `innerHTML` rerenders.
-- Thin Solid JSX typings and optional wrappers for ergonomic consumption.
-- No custom JSX compiler unless the component set later proves that native DOM authoring is too expensive.
+| Workflow              | Command                                                 | Architecture expectation                                                                                                                                                       |
+| --------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Build                 | `yarn build`                                            | Runs `nx run-many -t build`; custom build executor invokes Vite library builds, ES output, per-component entries, and `dist/{projectRoot}` output.                             |
+| Unit / contract tests | `yarn test` or `nx run <project>:test`                  | Vitest checks DOM-free core behavior and custom-element DOM contracts.                                                                                                         |
+| Browser E2E           | `nx run elements:e2e`                                   | Starts a direct Vite fixture server and runs Playwright against project `e2e/` fixtures. This is the correctness gate for trusted keyboard, focus, pointer, and form behavior. |
+| CEM                   | `nx run elements:cem`                                   | Emits package-level `libs/elements/custom-elements.json` with component API facts and `x-design-system` metadata.                                                              |
+| Skills validation     | `yarn skills:validate`                                  | Validates Intent-compatible `skills/**/SKILL.md` frontmatter and package rules without requiring a network install.                                                            |
+| AI context bundle     | `yarn design-system:context`                            | Runs `elements:ai-context`, assembling `dist/ai/` with compact CEM, resolved tokens, component guidance, skills, context metadata, and `llms.txt`.                             |
+| Typecheck             | `yarn typecheck` or project typecheck targets           | Runs TypeScript without emit against project references and package declarations.                                                                                              |
+| Lint / format         | `yarn lint`, `yarn format`                              | Uses `oxlint` and `oxfmt`; no ESLint or Prettier.                                                                                                                              |
+| Storybook             | `nx run elements:storybook`                             | Web-components Storybook for interactive development and documentation only. Storybook is not the acceptance harness for behavior correctness.                                 |
+| Visual regression     | `nx run elements:visual`                                | Starts Storybook and runs Playwright snapshots across configured themes and viewports.                                                                                         |
+| Example apps          | `yarn dev:solid`, `yarn dev:vanilla`                    | Vite dev servers for reference consumers.                                                                                                                                      |
+| Config drift          | `yarn verify-configs`, `yarn sync-configs`              | Verifies and regenerates locked workspace config expectations.                                                                                                                 |
+| Bundle sizes          | `yarn report-bundle-sizes`                              | Reports `.js` byte sizes from `dist/` as a footprint signal.                                                                                                                   |
+| Playwright image      | `yarn playwright:image`, `yarn playwright:ensure-image` | Builds or ensures the pinned Docker image used for deterministic browser runs in CI.                                                                                           |
 
-This achieves implementation agnosticism without building a compiler and without requiring consumers to know how the components are implemented.
+`nx.json` defines production inputs that exclude specs, stories, snapshots, and e2e fixtures from build cache invalidation. Visual and e2e targets run with `parallelism: false` because browser tests, screenshots, ports, and focus state are easier to keep deterministic when serialized.
+
+## Testing Architecture
+
+Testing follows the layered strategy in [`spec/testing.md`](./testing.md):
+
+1. Core unit tests for DOM-free state machines.
+2. Custom-element contract tests for attributes, properties, slots, events, lifecycle, form state, and DOM synchronization.
+3. Browser E2E tests for trusted focus, keyboard, pointer, popup, and form behavior that unit DOM environments cannot prove.
+4. Accessibility tests for roles, labels, ARIA states, keyboard behavior, and accessibility-tree expectations.
+5. Styling-contract tests for public tokens, slots, parts, forwarded parts, reflected state selectors, and private-surface violations.
+6. Solid type tests and wrapper behavior tests where wrappers exist.
+7. Example app smoke tests.
+8. Visual regression for states, themes, density, directionality, viewports, and forced-colors mode.
+
+Any component with focus, keyboard, pointer, popup, or form behavior must include direct browser E2E coverage. These tests must use trusted Playwright input such as `page.keyboard.press('Tab')`, assert the observable focus target, and inspect `shadowRoot.activeElement` when focus is delegated into shadow DOM. Storybook stories may demonstrate the behavior, but they are not sufficient evidence that the behavior works.
+
+The component spec template requires browser E2E rows for these behaviors before implementation. Reported accessibility bugs must be reproduced by a failing browser E2E test before being considered fixed.
+
+## Styling Architecture
+
+The styling system follows the layered token model documented in [`spec/styling.md`](./styling.md). Components expose styling through:
+
+- reflected host attributes for public state;
+- named slots for composition;
+- named CSS parts and forwarded parts for targeted styling;
+- public `--ty-*` custom properties;
+- private `--_ty-*` helper variables for internal calculations only.
+
+Design tokens are layered:
+
+- primitive tokens define raw choices such as spacing, radius, type, motion, and elevation;
+- semantic tokens express product intent such as surface, accent, border, focus, and text roles;
+- component tokens map semantic choices onto one component.
+
+Consumer override order is:
+
+1. Attributes and properties.
+2. Host classes or app-local CSS.
+3. Public CSS custom properties.
+4. Documented `::part()` selectors.
+5. Inline styles only for dynamic per-instance values.
+
+Generated app CSS must not target private shadow DOM, undocumented `data-*` attributes, undocumented parts, or private `--_ty-*` variables.
+
+## Layout Architecture
+
+The layout system follows [`spec/layout.md`](./layout.md). Components own their internal padding, gap, alignment, minimum target size, and intrinsic sizing. Parent layout owns stretching, sibling distribution, order, wrapping, and available width.
+
+Components should size from content, icons, and padding. They must avoid fixed `block-size` except for truly fixed-format primitives. Density changes padding, gaps, and related sizing tokens; it does not force fixed heights. CSS logical properties are required for writing-direction compatibility.
+
+The v1 layout primitive set is custom-elements-first and utility-CSS-second: `Flex`, `Grid`, `Center`, `Container`, `Frame` / `AspectRatio`, `Cluster` / `Wrap`, and `Sidebar`. `Switcher` is a follow-up candidate. Container queries are preferred over viewport media queries for component structural changes.
+
+## Agentic Design Architecture
+
+TYUI is designed to be used by AI coding agents as well as human developers, following [`spec/agentic-ui-design.md`](./agentic-ui-design.md). TYUI itself does not own one root product `DESIGN.md`; consuming products own `DESIGN.md` as the source design brief.
+
+The design-generation pipeline transforms:
+
+- a product or design-repo `DESIGN.md`;
+- `custom-elements.json` generated by `nx run elements:cem`;
+- Intent-compatible `skills/**/SKILL.md` files shipped by package version;
+- TYUI component metadata;
+- component contracts under `ai/components/`;
+- design metadata and examples;
+
+into a layered design bundle:
+
+- `theme.css`;
+- `component-variants.css`;
+- `design-app.md`;
+- `tokens.resolved.json`;
+- `context.json`;
+- optional `llms.txt`.
+
+The bundle can live in the app repo or in a separate design repo. Apps layer base TYUI components with one or more generated styling bundles. `design-app.md` records preferred components and variants by intent, new app-level variants, composition guidance, and known gaps.
+
+TYUI also publishes a repository/root `llms.txt` and generated `dist/ai/llms.txt` discovery index. The Custom Elements Manifest and resolved token JSON are the machine-readable facts. Intent-compatible `SKILL.md` files are the versioned agent-readable intent layer. The AI context bundle is the discovery and assembly layer that lets agents find both.
+
+Consumer flow:
+
+```sh
+yarn dlx @tanstack/intent@latest install
+```
+
+Consumers may then load skills for their installed TYUI version, for example `@tyui/elements#button` or `@tyui/solid#setup`, while still using `custom-elements.json` for exact API facts.
+
+## Performance Assessment
+
+Strengths:
+
+- Near-zero framework runtime footprint: no Solid, React, Lit, virtual DOM, or CSS-in-JS runtime ships in `@tyui/elements`.
+- Fast initial load: module-level templates and constructed stylesheets are created once and reused per instance.
+- Efficient updates: stable nodes preserve listeners, focus, selection, and native control state.
+- Strong tree-shaking: per-component subpath exports let apps pay for the components they import.
+- Style isolation without runtime cost: shadow DOM plus CSS custom properties allow theme recalculation without component rerendering.
+- Scalable build pipeline: Nx caching and dependency-aware targets keep incremental builds and tests bounded.
+
+Watch-items:
+
+- Manual DOM update paths require discipline as the component count grows.
+- Behavior controllers should avoid exposing unused state-propagation models.
+- Composite focus and keyboard behavior must be browser-tested, not inferred from DOM unit tests.
+- External publishing should produce `.d.ts` output rather than requiring consumers to compile library source.
+- SSR and Declarative Shadow DOM stance is not yet finalized.
+
+## Rejected Or Deferred Alternatives
+
+### Restricted JSX Source To Multiple Targets
+
+A framework-neutral JSX dialect could compile to Custom Elements, Lit, Solid, React, Vue, or Svelte. This is similar to the Mitosis model and can be powerful when one source must generate several framework-native outputs.
+
+TYUI does not choose this path now because it requires a constrained language, an intermediate representation, target-specific generators, normalized lifecycle semantics, and significant compiler ownership. It also conflicts with the current requirement that component implementations do not use JSX.
+
+### Solid-Flavored JSX To Vanilla DOM
+
+A Babel, SWC, or Vite transform could convert Solid-like components into Custom Elements plus a small neutral runtime. That can produce excellent output, but it effectively creates a new framework/compiler and requires static support for signals, effects, control flow, refs, spreads, slots, lifecycle, and cleanup.
+
+TYUI may revisit a compiler only if native DOM authoring becomes the dominant cost. It is not part of the current architecture.
+
+### Solid Internals Behind Standard Web Components
+
+Wrapping Solid implementations as Custom Elements would give consumers a framework-neutral HTML contract, and tools such as `solid-element` make this possible. However, the shipped component would still include Solid runtime assumptions.
+
+This remains a fallback architecture for product-specific components, not for TYUI base components.

@@ -2,6 +2,15 @@
   "name": "@tyui/elements",
   "version": "0.0.0",
   "private": true,
+  "keywords": [
+    "tanstack-intent"
+  ],
+  "files": [
+    "dist",
+    "skills",
+    "!skills/_artifacts",
+    "custom-elements.json"
+  ],
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -15,6 +24,25 @@
     "./button": {
       "types": "./src/button/index.ts",
       "default": "./dist/button.js"
+    },
+    "./checkbox": {
+      "types": "./src/checkbox/index.ts",
+      "default": "./dist/checkbox.js"
+    },
+    "./input": {
+      "types": "./src/input/index.ts",
+      "default": "./dist/input.js"
+    },
+    "./radio": {
+      "types": "./src/radio/index.ts",
+      "default": "./dist/radio.js"
+    },
+    "./radio-group": {
+      "types": "./src/radio-group/index.ts",
+      "default": "./dist/radio-group.js"
+    },
+    "./custom-elements.json": {
+      "default": "./custom-elements.json"
     }
   },
   "scripts": {

@@ -1,4 +1,6 @@
 import type { StorybookConfig as WebComponentsConfig } from '@storybook/web-components-vite';
+import { mergeConfig } from 'vite';
+import { workspaceAliases } from '../../../../vite.aliases';
 
 export interface DefineStorybookConfigInput {
   framework: 'web-components' | 'solid';
@@ -21,5 +23,11 @@ export function defineStorybookConfig(input: DefineStorybookConfigInput): WebCom
     typescript: {
       reactDocgen: false,
     },
+    viteFinal: (config) =>
+      mergeConfig(config, {
+        resolve: {
+          alias: workspaceAliases,
+        },
+      }),
   } as WebComponentsConfig;
 }

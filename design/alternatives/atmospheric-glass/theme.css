@@ -1,0 +1,147 @@
+@layer tokens, product-theme;
+
+@layer product-theme {
+  [data-design-system='atmospheric-glass'] {
+    color-scheme: dark;
+
+    --ty-design-name: atmospheric-glass;
+    --ty-color-background: #0b1326;
+    --ty-color-on-background: #dae2fd;
+    --ty-color-surface: rgb(255 255 255 / 0.1);
+    --ty-color-surface-hover: rgb(255 255 255 / 0.16);
+    --ty-color-surface-pressed: rgb(255 255 255 / 0.2);
+    --ty-color-surface-elevated: rgb(255 255 255 / 0.2);
+    --ty-color-text: #ffffff;
+    --ty-color-text-muted: #c4c7c8;
+    --ty-color-border: rgb(255 255 255 / 0.2);
+    --ty-color-border-strong: rgb(255 255 255 / 0.34);
+    --ty-color-accent: #ffffff;
+    --ty-color-on-accent: #2f3131;
+    --ty-color-accent-hover: #e2e2e2;
+    --ty-color-accent-pressed: #c6c6c7;
+    --ty-color-danger: #ffb4ab;
+    --ty-color-on-danger: #690005;
+
+    --ty-font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --ty-font-size-100: 0.75rem;
+    --ty-font-size-200: 1rem;
+    --ty-font-size-300: 1.125rem;
+    --ty-font-size-400: 1.5rem;
+    --ty-font-size-500: 2rem;
+    --ty-font-size-display: 5.25rem;
+    --ty-font-weight-regular: 400;
+    --ty-font-weight-medium: 500;
+    --ty-font-weight-semibold: 600;
+    --ty-font-weight-bold: 700;
+    --ty-line-height-100: 1rem;
+    --ty-line-height-200: 1.5rem;
+    --ty-line-height-300: 1.75rem;
+    --ty-line-height-400: 2rem;
+    --ty-line-height-display: 5.625rem;
+    --ty-letter-spacing-label: 0.05em;
+
+    --ty-space-0: 0;
+    --ty-space-1: 0.25rem;
+    --ty-space-2: 0.5rem;
+    --ty-space-3: 0.75rem;
+    --ty-space-4: 1rem;
+    --ty-space-5: 1.25rem;
+    --ty-space-6: 1.5rem;
+    --ty-space-8: 2rem;
+    --ty-space-10: 2.5rem;
+
+    --ty-radius-0: 0;
+    --ty-radius-1: 0.25rem;
+    --ty-radius-2: 0.5rem;
+    --ty-radius-3: 0.75rem;
+    --ty-radius-4: 1rem;
+    --ty-radius-5: 1.5rem;
+    --ty-radius-pill: 9999px;
+
+    --ty-stroke-thin: 1px;
+    --ty-stroke-thick: 2px;
+    --ty-focus-width: 2px;
+    --ty-focus-offset: 2px;
+    --ty-focus-color: rgb(255 255 255 / 0.92);
+
+    --ty-duration-fast: 120ms;
+    --ty-duration-normal: 200ms;
+    --ty-duration-slow: 320ms;
+    --ty-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ty-motion-feedback-duration: var(--ty-duration-fast);
+    --ty-motion-content-duration: var(--ty-duration-normal);
+    --ty-motion-easing: var(--ty-easing-standard);
+
+    --ty-elevation-1: 0 8px 32px rgb(0 0 0 / 0.1);
+    --ty-elevation-2: 0 18px 60px rgb(0 0 0 / 0.16);
+    --ty-elevation-3: 0 30px 90px rgb(0 0 0 / 0.22);
+    --ty-overlay-elevation: var(--ty-elevation-2);
+
+    --ty-glass-blur-standard: 20px;
+    --ty-glass-blur-elevated: 40px;
+    --ty-glass-background-standard: rgb(255 255 255 / 0.1);
+    --ty-glass-background-elevated: rgb(255 255 255 / 0.2);
+    --ty-glass-border-color: rgb(255 255 255 / 0.2);
+    --ty-glass-shine-color: rgb(255 255 255 / 0.36);
+    --ty-glass-shadow: var(--ty-elevation-1);
+    --ty-glass-text-shadow: 0 2px 4px rgb(0 0 0 / 0.15);
+
+    --ty-control-radius: var(--ty-radius-5);
+    --ty-control-border-width: var(--ty-stroke-thin);
+    --ty-control-font-size: var(--ty-font-size-200);
+    --ty-control-padding-inline: var(--ty-space-6);
+    --ty-control-padding-block: var(--ty-space-3);
+    --ty-control-gap: var(--ty-space-2);
+    --ty-control-min-block-size: 3rem;
+
+    --ty-layout-page-gutter: clamp(1.5rem, 4vw, 3.5rem);
+    --ty-layout-card-gap: var(--ty-space-4);
+    --ty-layout-section-gap: var(--ty-space-10);
+    --ty-layout-content-measure: 72rem;
+
+    background:
+      radial-gradient(circle at 12% 18%, rgb(219 39 119 / 0.72), transparent 32rem),
+      radial-gradient(circle at 86% 10%, rgb(126 34 206 / 0.74), transparent 34rem),
+      linear-gradient(135deg, #1e3a8a 0%, #7e22ce 50%, #db2777 100%);
+    color: var(--ty-color-text);
+    font-family: var(--ty-font-family);
+  }
+
+  [data-design-system='atmospheric-glass'] ::selection {
+    background: rgb(255 255 255 / 0.28);
+    color: #ffffff;
+  }
+
+  [data-design-system='atmospheric-glass'][data-color-scheme='light'] {
+    color-scheme: dark;
+  }
+
+  @media (forced-colors: active) {
+    [data-design-system='atmospheric-glass'] {
+      --ty-color-background: Canvas;
+      --ty-color-surface: Canvas;
+      --ty-color-surface-hover: Canvas;
+      --ty-color-surface-pressed: Canvas;
+      --ty-color-text: CanvasText;
+      --ty-color-text-muted: CanvasText;
+      --ty-color-border: ButtonBorder;
+      --ty-color-border-strong: ButtonText;
+      --ty-color-accent: Highlight;
+      --ty-color-on-accent: HighlightText;
+      --ty-focus-color: Highlight;
+      --ty-glass-background-standard: Canvas;
+      --ty-glass-background-elevated: Canvas;
+      --ty-glass-border-color: ButtonBorder;
+      --ty-glass-shadow: none;
+      background: Canvas;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-design-system='atmospheric-glass'] {
+      --ty-motion-feedback-duration: 0ms;
+      --ty-motion-content-duration: 0ms;
+    }
+  }
+}

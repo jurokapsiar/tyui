@@ -16,6 +16,22 @@
       "types": "./src/button.ts",
       "default": "./dist/button.js"
     },
+    "./checkbox": {
+      "types": "./src/checkbox.ts",
+      "default": "./dist/checkbox.js"
+    },
+    "./input": {
+      "types": "./src/input.ts",
+      "default": "./dist/input.js"
+    },
+    "./radio": {
+      "types": "./src/radio.ts",
+      "default": "./dist/radio.js"
+    },
+    "./radio-group": {
+      "types": "./src/radio-group.ts",
+      "default": "./dist/radio-group.js"
+    },
     "./all": {
       "types": "./src/all.ts",
       "default": "./dist/all.js"

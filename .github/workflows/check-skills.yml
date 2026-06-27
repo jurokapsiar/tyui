@@ -1,0 +1,36 @@
+name: Check Skills
+
+on:
+  pull_request:
+    paths:
+      - 'libs/*/skills/**'
+      - 'libs/*/package.json'
+      - 'tools/executors/src/skills-validate/**'
+      - 'tools/executors/executors.json'
+      - 'nx.json'
+      - 'package.json'
+      - 'yarn.lock'
+  push:
+    branches:
+      - main
+    paths:
+      - 'libs/*/skills/**'
+      - 'libs/*/package.json'
+      - 'tools/executors/src/skills-validate/**'
+      - 'tools/executors/executors.json'
+      - 'nx.json'
+      - 'package.json'
+      - 'yarn.lock'
+
+jobs:
+  skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn skills:validate

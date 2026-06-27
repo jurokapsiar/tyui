@@ -2,6 +2,14 @@
   "name": "@tyui/solid",
   "version": "0.0.0",
   "private": true,
+  "keywords": [
+    "tanstack-intent"
+  ],
+  "files": [
+    "dist",
+    "skills",
+    "!skills/_artifacts"
+  ],
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -15,6 +23,22 @@
     "./button": {
       "types": "./src/button.tsx",
       "default": "./dist/button.js"
+    },
+    "./checkbox": {
+      "types": "./src/checkbox.tsx",
+      "default": "./dist/checkbox.js"
+    },
+    "./input": {
+      "types": "./src/input.tsx",
+      "default": "./dist/input.js"
+    },
+    "./radio": {
+      "types": "./src/radio.tsx",
+      "default": "./dist/radio.js"
+    },
+    "./radio-group": {
+      "types": "./src/radio-group.tsx",
+      "default": "./dist/radio-group.js"
     },
     "./jsx": {
       "types": "./src/jsx.ts",

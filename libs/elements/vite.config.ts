@@ -19,6 +19,10 @@ export default defineConfig({
       entry: {
         index: resolve(root, 'src/index.ts'),
         button: resolve(root, 'src/button/index.ts'),
+        checkbox: resolve(root, 'src/checkbox/index.ts'),
+        input: resolve(root, 'src/input/index.ts'),
+        radio: resolve(root, 'src/radio/index.ts'),
+        'radio-group': resolve(root, 'src/radio-group/index.ts'),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,

@@ -1,39 +1,140 @@
+# Agentic UI Design
+
+A component library designed for AI-assisted development requires a distinct layer of machine-readable documentation alongside the human-readable one. This spec defines the artifact contract that enables coding agents to generate consistent, correct, and accessible UI.
+
+## Artifact Overview
+
 Use a small set of complementary artifacts, each optimized for a different type of information:
 
-DESIGN.md                 Human and AI-readable product design intent
-tokens.json               Exact design-token values and aliases
-custom-elements.json      Exact component API metadata
-components/*.md           Behavior, intent, layout and usage guidance
-examples/                 Executable canonical examples
-llms.txt                  Index telling agents where to find everything
+| Artifact               | Purpose                                       |
+| ---------------------- | --------------------------------------------- |
+| `DESIGN.md`            | Human and AI-readable product design intent   |
+| `design-app.md`        | Generated app-to-component design application |
+| `tokens.json`          | Exact design-token values and aliases         |
+| `custom-elements.json` | Exact component API metadata                  |
+| `components/*.md`      | Behavior, intent, layout, and usage guidance  |
+| `skills/**/SKILL.md`   | Versioned Intent-compatible agent guidance    |
+| `examples/`            | Executable canonical examples                 |
+| `llms.txt`             | Index telling agents where to find everything |
 
-DESIGN.md is now an open draft format from Google Labs intended to give coding agents a persistent description of a product’s visual identity. It is useful for product-wide visual intent, but it should not become the sole authoritative description of every component API.
+## 1. `DESIGN.md`: Product Design Intent
 
-The proposed contract
-1. DESIGN.md: product design intent
+The consuming product owns this file. It answers:
 
-The consuming product owns this file.
+- What kind of product is this?
+- What visual character should it have?
+- Which design-system package and theme does it use?
+- What density, typography, shape, and color policies apply?
+- Which layout principles should generated UI follow?
+- Which components should be preferred for recurring patterns?
+- What must an agent never invent or override?
+- What accessibility requirements apply?
 
-It should answer:
+This file describes **intent and policy**, not an exhaustive dump of APIs.
 
-What kind of product is this?
-What visual character should it have?
-Which design-system package and theme does it use?
-What density, typography, shape and color policies apply?
-Which layout principles should generated UI follow?
-Which components should be preferred for recurring patterns?
-What must an agent never invent or override?
-What accessibility requirements apply?
+### Format Baseline
 
-Example:
+Adopt the upstream `design.md` shape for product files:
 
-# Product design system
+- YAML front matter at the top of the file stores machine-readable design tokens.
+- Markdown body sections store human-readable design rationale and guardrails.
+- Token values are normative exact values.
+- Prose is normative design intent: it explains why values exist and how agents should apply them.
+- Unknown token groups and unknown sections are allowed and must be preserved so products can document motion, iconography, elevation, domain-specific surfaces, or other concerns.
+- Duplicate canonical sections are invalid.
 
-## Product character
+Recommended section order:
+
+1. Overview, also accepted as Brand & Style
+2. Colors
+3. Typography
+4. Layout, also accepted as Layout & Spacing
+5. Elevation & Depth, also accepted as Elevation
+6. Shapes
+7. Components
+8. Do's and Don'ts
+
+Use `DESIGN.md` as the product's design constitution. Do not use it as a component API database. Component APIs, slots, events, CSS parts, and per-component layout contracts remain in library-owned artifacts.
+
+TYUI itself does not maintain a root product-style `DESIGN.md`. The library owns templates, examples, schemas, validators, and generation tools. Consuming applications own their `DESIGN.md` files and may keep generated design bundles in the application repository or import them from a separate design repository.
+
+### Derived App Design Layer
+
+It is valid and expected for an LLM or build tool to read `DESIGN.md`, `tokens.json`, `custom-elements.json`, and component guidance, then generate an app-specific companion document named `design-app.md`.
+
+`design-app.md` is not the source of visual identity. It is the application of that identity to the component system. It answers:
+
+- Which library component should be preferred for each intent?
+- Which existing component variants should be used by default?
+- Which new app-level variants should be introduced through component tokens?
+- Which page and composition patterns should be preferred?
+- Which component combinations are valid for this product?
+- Which product-specific exceptions are allowed?
+- Which generated theme CSS files implement the decisions?
+
+The generated file may add app-level variants such as `button-primary-glass`, `card-atmospheric`, or `toolbar-muted` when those variants are implemented through public component tokens and documented parts. It must not invent unsupported attributes, slots, events, CSS parts, state hooks, or component behavior. When a desired style cannot be expressed through existing tokens or parts, `design-app.md` must record a component-library gap rather than silently relying on private selectors.
+
+Generated app styling follows the same override order as hand-written app styling:
+
+1. Component attributes and properties.
+2. Host classes or app-local CSS for layout and scoped variables.
+3. Public CSS custom properties.
+4. Documented `::part()` and forwarded-part selectors.
+5. Inline styles only for dynamic per-instance values supplied by runtime code.
+
+The generator must never target private shadow DOM selectors, `--_ty-*` helper variables, undocumented `data-*` attributes, or undocumented parts. If the product design requires one of those hooks, the generated `design-app.md` must list it as a library gap.
+
+Expected generated outputs:
+
+```text
+dist/design/<design-name>/
+├─ theme.css
+├─ component-variants.css
+├─ design-app.md
+├─ patterns.md
+├─ tokens.resolved.json
+└─ context.json
+```
+
+The generated bundle is portable. An app may consume a bundle produced in its own repo or a bundle published by another repo:
+
+```ts
+import '@product/design/theme.css';
+import '@product/design/component-variants.css';
+```
+
+```html
+<body data-design-system="product-name" data-color-scheme="system"></body>
+```
+
+`design-app.md` may be regenerated as the product design evolves. Human review is still required before committing changes that affect broad component styling. TYUI should provide one `design.md`-style example inspired by the upstream Google repo as the first example; a Fluent-design-system example and a dedicated generation skill are follow-up deliverables.
+
+### App-Level vs Component-Level Concerns
+
+| Concern                                                       | Product `DESIGN.md`             | Component Library                              |
+| ------------------------------------------------------------- | ------------------------------- | ---------------------------------------------- |
+| Product character, audience, emotional tone                   | Owns                            | May provide examples only                      |
+| Visual references and negative constraints                    | Owns                            | Does not own                                   |
+| Exact product token values                                    | Owns or points to `tokens.json` | Publishes token schema and defaults            |
+| Theme, density, color-scheme, and accessibility policy        | Owns policy                     | Implements resilient hooks and defaults        |
+| App shell, page composition, safe areas, and product patterns | Owns                            | Provides primitives and reusable patterns      |
+| Component APIs, slots, attributes, events, parts              | References                      | Owns through `custom-elements.json`            |
+| Component behavior and accessibility invariants               | References                      | Owns implementation contract                   |
+| Component layout contracts                                    | References                      | Owns per component                             |
+| Preferred component selection                                 | May add product preferences     | Owns baseline guidance and misuse alternatives |
+| Derived app variants and component preferences                | Generated into `design-app.md`  | Validates against public APIs                  |
+
+### Example
+
+````markdown
+# Product Design System
+
+## Product Character
 
 This is a desktop productivity application.
 
 The interface should feel:
+
 - compact but not cramped
 - information-dense
 - calm and neutral
@@ -41,82 +142,73 @@ The interface should feel:
 - structurally similar to native desktop software
 
 Do not use:
+
 - oversized marketing typography
 - floating glass cards
 - excessive rounding
 - gradients for decoration
 - fixed control heights that prevent text growth
 
-## Component system
+## Component System
 
-Use components from `@acme/elements`.
-
-Import component registration from explicit entry points:
+Use components from `@acme/elements`. Import from explicit entry points:
 
 ```ts
-import "@acme/elements/button/define";
+import '@acme/elements/button/define';
+```
 
 Do not recreate functionality already provided by the component library.
 
 Component metadata:
 
-node_modules/@acme/elements/custom-elements.json
-node_modules/@acme/elements/ai/components/
-Theme
+- `node_modules/@acme/elements/custom-elements.json`
+- `node_modules/@acme/elements/ai/components/`
 
-Use the product theme:
+## Theme
 
-import "@product/design-system/theme.css";
+Apply the product theme at the application root:
 
-Apply it at the application root:
+```ts
+import '@product/design-system/theme.css';
+```
 
-<body data-design-system="product">
-Shape
-controls use --product-control-radius
-panels use --product-panel-radius
-pills are reserved for tags, filters and status
-do not apply pill shapes to ordinary buttons
-Density
+```html
+<body data-design-system="product"></body>
+```
 
-The default density is compact.
+## Shape
 
-Controls must:
+- Controls use `--product-control-radius`
+- Panels use `--product-panel-radius`
+- Pills are reserved for tags, filters, and status
+- Do not apply pill shapes to ordinary buttons
 
-size intrinsically from content
-use minimum block size rather than fixed height
-allow labels to grow under zoom or translation
-preserve at least the configured interaction target
-Layout
+## Density
 
-Prefer:
+The default density is compact. Controls must:
 
-intrinsic sizing
-flex wrapping
-grid auto-fit
-container queries
-logical properties
+- size intrinsically from content
+- use minimum block size rather than fixed height
+- allow labels to grow under zoom or translation
+- preserve at least the configured interaction target
 
-The parent owns distribution and stretching.
-Components own their internal layout.
+## Layout
 
-Do not assign flex: 1 to individual controls unless the surrounding
-pattern explicitly requires equal distribution.
+Prefer intrinsic sizing, flex wrapping, grid auto-fit, container queries, and logical properties. The parent owns distribution and stretching. Components own their internal layout. Do not assign `flex: 1` to individual controls unless the surrounding pattern explicitly requires equal distribution.
 
-Accessibility
-all functionality must be keyboard accessible
-preserve visible focus indicators
-use library components instead of recreating ARIA widgets
-do not use color as the only indication of state
-support 400% zoom and text enlargement
-respect reduced motion and forced colors
+## Accessibility
 
-This file describes **intent and policy**, not an exhaustive JSON-like dump of APIs.
+- All functionality must be keyboard accessible
+- Preserve visible focus indicators
+- Use library components instead of recreating ARIA widgets
+- Do not use color as the only indication of state
+- Support 400% zoom and text enlargement
+- Respect reduced motion and forced colors
+````
 
-## 2. `tokens.json`: exact visual values
+## 2. `tokens.json`: Exact Visual Values
 
-Use the Design Tokens Community Group format for values such as color, spacing, radius, typography and motion. The DTCG published its first stable format version in October 2025, specifically to exchange design tokens across tools and platforms. :contentReference[oaicite:1]{index=1}
-
-Example:
+Use the Design Tokens Community Group (DTCG) format. Agents should use semantic token names rather than copying resolved values.
 
 ```json
 {
@@ -146,120 +238,132 @@ Example:
     }
   }
 }
+```
 
-Generate CSS from this:
+Generated CSS:
 
-[data-design-system="product"] {
-  --ds-control-padding-inline: 0.75rem;
-  --ds-control-padding-block: 0.375rem;
-  --ds-control-radius: 0.375rem;
-  --ds-content-measure: 68rem;
+```css
+[data-design-system='product'] {
+  --ty-control-padding-inline: 0.75rem;
+  --ty-control-padding-block: 0.375rem;
+  --ty-control-radius: 0.375rem;
+  --ty-content-measure: 68rem;
 }
+```
 
-The agent should normally use the semantic token name rather than copying the resolved value.
+## 3. `custom-elements.json`: Exact Component API
 
-3. custom-elements.json: exact component API
+The component library publishes a Custom Elements Manifest at its package root. Generate this from source declarations and documentation comments rather than maintaining it manually.
 
-The component library should publish a Custom Elements Manifest at its package root.
+TYUI exposes CEM generation through:
 
-The manifest format can describe:
+```sh
+nx run elements:cem
+```
 
-tag names
-attributes
-JavaScript properties
-methods
-events
-slots
-CSS custom properties
-CSS shadow parts
-module exports and inheritance
+This writes `libs/elements/custom-elements.json`, which is exported as `@tyui/elements/custom-elements.json` and included in the package files. The manifest is the machine-readable facts layer. It is generated output and must not be hand-edited.
+
+A future implementation may delegate baseline extraction to `@custom-elements-manifest/analyzer`; the architectural requirement is the package-level manifest plus TYUI's `x-design-system` enrichment and validation.
+
+The manifest describes:
+
+- Tag names
+- Attributes
+- JavaScript properties
+- Methods
+- Events
+- Slots
+- CSS custom properties
+- CSS shadow parts
+- Module exports and inheritance
+- Reflected state attributes
+- Forwarded parts exposed through `exportparts`
 
 That makes it the correct machine-readable source for component syntax and public surface area.
 
-For example, the metadata for a button should encode information equivalent to:
+### Example Entry
 
+```json
 {
-  "name": "DsButton",
-  "tagName": "ds-button",
+  "name": "TyuiButton",
+  "tagName": "tyui-button",
   "description": "Triggers an immediate action.",
   "attributes": [
     {
       "name": "appearance",
-      "type": {
-        "text": "\"primary\" | \"secondary\" | \"subtle\""
-      },
+      "type": { "text": "\"primary\" | \"secondary\" | \"subtle\"" },
       "default": "\"secondary\""
     },
-    {
-      "name": "disabled",
-      "type": {
-        "text": "boolean"
-      }
-    }
+    { "name": "disabled", "type": { "text": "boolean" } }
   ],
-  "events": [
-    {
-      "name": "ds-activate",
-      "type": {
-        "text": "CustomEvent<ActivateDetail>"
-      }
-    }
-  ],
+  "events": [{ "name": "tyui-activate", "type": { "text": "CustomEvent<ActivateDetail>" } }],
   "slots": [
-    {
-      "name": "",
-      "description": "Button label or inline content."
-    },
-    {
-      "name": "start",
-      "description": "Leading icon."
-    },
-    {
-      "name": "end",
-      "description": "Trailing icon."
-    }
+    { "name": "", "description": "Button label or inline content." },
+    { "name": "start", "description": "Leading icon." },
+    { "name": "end", "description": "Trailing icon." }
   ],
   "cssParts": [
-    {
-      "name": "control",
-      "description": "The native interactive control."
-    },
-    {
-      "name": "label",
-      "description": "The label container."
-    }
+    { "name": "control", "description": "The native interactive control." },
+    { "name": "label", "description": "The label container." }
   ],
   "cssProperties": [
     {
-      "name": "--ds-button-padding-inline",
+      "name": "--ty-button-padding-inline",
       "description": "Inline padding of the control.",
-      "default": "var(--ds-control-padding-inline)"
+      "default": "var(--ty-control-padding-inline)"
     }
   ]
 }
+```
 
-Generate this from source declarations and documentation comments rather than maintaining it manually.
+### Semantic Metadata Extensions
 
-4. Component guidance documents
+Extend the manifest with namespaced `x-design-system` properties for intent and alternatives that the base CEM spec cannot capture:
 
-A manifest describes what exists, but not enough about when and why to use it.
+```json
+{
+  "tagName": "tyui-button",
+  "x-design-system": {
+    "intent": "action",
+    "roles": ["primary-action", "secondary-action", "toolbar-action"],
+    "alternatives": {
+      "navigation": "tyui-link",
+      "binary-state": "tyui-toggle-button",
+      "menu-opening": "tyui-menu-button"
+    },
+    "layout": {
+      "intrinsic": true,
+      "defaultDisplay": "inline-block",
+      "parentOwnsStretching": true
+    },
+    "accessibility": {
+      "requiresAccessibleName": true,
+      "allowsInteractiveChildren": false
+    }
+  }
+}
+```
 
-Each substantial component should therefore have a concise semantic document:
+Author this metadata in co-located component files such as:
 
-ai/components/button.md
-ai/components/dialog.md
-ai/components/listbox.md
-ai/patterns/forms.md
-ai/patterns/toolbars.md
+```text
+libs/elements/src/button/tyui-button.design.json
+```
 
-A good component document should follow a predictable schema.
+The enrichment step merges design-system metadata into `custom-elements.json` and fails if metadata references nonexistent attributes, properties, events, slots, CSS parts, CSS custom properties, alternatives, or layout hooks.
 
-Suggested component document format
+## 4. Component Contract Documents
+
+A manifest describes what exists, not enough about when and why to use something. Each substantial component has one combined contract document at `ai/components/<component>.md`. This document is the single component-level source of truth for human guidance, agent guidance, layout/styling contracts, examples, anti-examples, and test expectations.
+
+### Document Format
+
+````markdown
 ---
-component: ds-button
+component: tyui-button
 status: stable
 manifest: ../../custom-elements.json
-source: ../../src/button/ds-button.ts
+source: ../../src/button/tyui-button.ts
 ---
 
 # Button
@@ -267,50 +371,27 @@ source: ../../src/button/ds-button.ts
 ## Intent
 
 Use a button to trigger an immediate action.
-
 Use a link when activation navigates to another resource.
 
-## Selection guidance
+## Selection Guidance
 
-Use:
-- `primary` for the main action in a bounded task
-- `secondary` for ordinary actions
-- `subtle` for low-emphasis toolbar actions
-- `danger` only for destructive actions
+- `primary` — the main action in a bounded task
+- `secondary` — ordinary actions
+- `subtle` — low-emphasis toolbar actions
+- `danger` — destructive actions only
 
 A region should normally contain no more than one primary action.
 
-## API summary
+## API Summary
 
 - `appearance`: primary | secondary | subtle | danger
 - `disabled`: boolean
 - `pending`: boolean
-- event: `ds-activate`
+- event: `tyui-activate`
 
 The manifest is authoritative for exact types.
 
-## Slots
-
-### Default slot
-
-Contains the visible label.
-
-The label should normally be concise text. It may wrap when space is
-constrained or text is enlarged.
-
-### `start`
-
-Contains a leading decorative or meaningful icon.
-
-When the icon conveys unique meaning, provide an accessible name.
-
-### `end`
-
-Reserved for content such as a disclosure indicator.
-
-Do not place an arbitrary badge here.
-
-## Internal layout
+## Internal Layout
 
 The control uses intrinsic `inline-flex` sizing:
 
@@ -321,67 +402,71 @@ the label may shrink or wrap
 padding comes from component tokens
 block size is a minimum, never fixed
 the parent controls stretching and distribution
-Styling contract
+```
+
+## Styling Contract
 
 Preferred customization order:
 
-semantic product tokens
-button component tokens
-public CSS parts
+1. Attributes and properties
+2. Host classes or app-local CSS
+3. Semantic and component tokens
+4. Public CSS parts
+5. Inline style only for dynamic values
 
-Do not target undocumented shadow-DOM selectors.
+Supported component tokens: `--ty-button-padding-inline`, `--ty-button-padding-block`, `--ty-button-radius`, `--ty-button-background`, `--ty-button-foreground`
 
-Supported component tokens:
+Public parts: `control`, `label`
 
---ds-button-padding-inline
---ds-button-padding-block
---ds-button-radius
---ds-button-background
---ds-button-foreground
+Private implementation variables: none documented; do not depend on `--_ty-*` variables.
 
-Public parts:
+State styling: `disabled` and `pending` reflect to host attributes. Hover and focus use native pseudo-classes. ARIA state remains on the internal native button.
 
-control
-label
-Behavior
-Enter activates the button
-Space activates the button
-disabled buttons do not emit ds-activate
-pending buttons remain labelled but reject repeated activation
-focus is retained after ordinary activation
-Accessibility
+## Behavior
 
-Prefer visible text labels.
+- Enter activates the button
+- Space activates the button
+- Disabled buttons do not emit `tyui-activate`
+- Pending buttons remain labelled but reject repeated activation
+- Focus is retained after ordinary activation
 
-An icon-only button requires an accessible name.
+## Accessibility
 
-Do not place interactive elements inside the default slot.
+Prefer visible text labels. An icon-only button requires an accessible name. Do not place interactive elements inside the default slot.
 
-Solid example
-<ds-button
-  appearance="primary"
-  disabled={saving()}
-  on:ds-activate={save}
->
-  <ds-icon slot="start" name="save" />
-  {saving() ? "Saving…" : "Save"}
-</ds-button>
-Invalid examples
+## Valid Example
+
+```tsx
+<tyui-button appearance="primary" disabled={saving()} on:tyui-activate={save}>
+  <tyui-icon slot="start" name="save" />
+  {saving() ? 'Saving…' : 'Save'}
+</tyui-button>
+```
+
+## Invalid Examples
 
 Do not use a button for navigation:
 
-<ds-button on:ds-activate={() => navigate("/settings")}>
-  Settings
-</ds-button>
+```tsx
+// ✗ Use tyui-link instead
+<tyui-button on:tyui-activate={() => navigate('/settings')}>Settings</tyui-button>
+```
+````
 
-Use the design-system link component instead.
+Strict CI validation keeps the component contract synchronized with source:
 
+- Frontmatter `component` must match a manifest tag.
+- Documented attributes, properties, events, slots, parts, and tokens must exist in the manifest.
+- Documented forwarded parts must correspond to real `exportparts` usage.
+- Public state selectors must be backed by reflected host attributes, native pseudo-classes, or semantic ARIA attributes.
+- Generated app CSS must not target private shadow DOM selectors, private `--_ty-*` variables, or undocumented `data-*` state.
+- Examples and anti-examples must parse and validate against the manifest.
+- `.design.json` metadata must reference only valid component APIs.
+- Status, deprecation, and experimental flags must agree across source, manifest, docs, and AI context.
 
-The sections on **intent**, **selection guidance**, **invalid examples** and **layout ownership** are particularly valuable to an AI agent. Type declarations alone cannot communicate them.
+## 5. Layout Contracts
 
-## Describe layout as contracts, not hidden CSS
-
-For every component, publish a small layout model:
+For every component, publish a layout model as YAML front matter or an adjacent file:
 
 ```yaml
 layout:
@@ -389,7 +474,7 @@ layout:
   intrinsic-size: content
   shrink-policy: allowed
   wrap-policy: label-may-wrap
-  min-block-size-token: --ds-control-min-block-size
+  min-block-size-token: --ty-control-min-block-size
 
   children:
     start:
@@ -411,95 +496,120 @@ layout:
     - internal gap
     - minimum target size
     - internal alignment
+```
 
-This could be embedded in Markdown front matter or stored in an adjacent JSON file.
+This gives agents explicit answers to questions such as: Can this component shrink? Which content wraps? Is it valid to make it full width? Does the parent or child own spacing?
 
-It gives agents an explicit answer to questions such as:
+## 6. Canonical Examples as Data
 
-Can this component shrink?
-Which content wraps?
-Is it valid to make it full width?
-Does the parent or child own spacing?
-Which values are tokens?
-Which slots are inflexible?
-Add semantic metadata beyond the current manifest
+Agents learn especially well from small, validated examples. Store each example in structured form and run them in tests so AI documentation cannot silently drift from the implementation.
 
-The Custom Elements Manifest should remain the interoperable base, but your library can add namespaced extensions:
+### Valid Example
 
-{
-  "tagName": "ds-button",
-
-  "x-design-system": {
-    "intent": "action",
-    "roles": ["primary-action", "secondary-action", "toolbar-action"],
-
-    "alternatives": {
-      "navigation": "ds-link",
-      "binary-state": "ds-toggle-button",
-      "menu-opening": "ds-menu-button"
-    },
-
-    "layout": {
-      "intrinsic": true,
-      "defaultDisplay": "inline-block",
-      "parentOwnsStretching": true
-    },
-
-    "accessibility": {
-      "requiresAccessibleName": true,
-      "allowsInteractiveChildren": false
-    }
-  }
-}
-
-Use an x- namespace because this is your extension rather than part of the base CEM specification.
-
-Publish canonical examples as data
-
-Agents learn especially well from small, validated examples.
-
-For each example, store:
-
+```yaml
 id: button-primary-submit
-component: ds-button
+component: tyui-button
 purpose: Submit the current form
 valid: true
 context:
   inside: form-actions
 code: |
-  <ds-button appearance="primary" type="submit">
+  <tyui-button appearance="primary" type="submit">
     Save changes
-  </ds-button>
+  </tyui-button>
+```
 
-Also include anti-examples:
+### Anti-Example
 
+```yaml
 id: button-navigation
-component: ds-button
+component: tyui-button
 valid: false
-reason: Navigation should use ds-link.
+reason: Navigation should use tyui-link.
 code: |
-  <ds-button>Open documentation</ds-button>
+  <tyui-button>Open documentation</tyui-button>
+```
 
-Run examples in tests so the AI documentation cannot silently drift from the implementation.
+## 7. Intent Skills as the Versioned Guidance Layer
 
-llms.txt as the discovery layer
+The Custom Elements Manifest and token files describe facts. They do not explain
+which component to choose, which anti-patterns to avoid, or how framework setup
+should work. TYUI ships that intent as Intent-compatible `SKILL.md` files:
 
-At the documentation site or package root, provide an llms.txt index. llms.txt is currently a proposal rather than a formal web standard, but it is designed to help language models locate the most useful documentation without ingesting an entire site blindly.
+```text
+libs/elements/
+├─ custom-elements.json
+└─ skills/
+   ├─ button/SKILL.md
+   ├─ input/SKILL.md
+   ├─ checkbox/SKILL.md
+   ├─ radio/SKILL.md
+   └─ radio-group/SKILL.md
 
-Example:
+libs/solid/
+└─ skills/
+   └─ setup/SKILL.md
+```
 
+Skill files are the agent-readable intent layer:
+
+- intent and selection guidance;
+- anti-patterns;
+- layout ownership;
+- accessibility constraints;
+- design-system variant guidance;
+- framework setup guidance.
+
+They must not duplicate full API type definitions. Skills reference
+`custom-elements.json` as the authoritative API source. This prevents drift and
+keeps each file short enough for agent loading.
+
+Skill-bearing packages must:
+
+- include the `tanstack-intent` package keyword;
+- include `skills/` in package files;
+- exclude `skills/_artifacts` from package files;
+- validate skills through `skills:validate`;
+- use `metadata.type: library` for component packages;
+- use `metadata.type: framework` plus `requires` for framework setup skills.
+
+Maintainer commands:
+
+```sh
+yarn skills:validate
+nx run elements:skills:validate
+nx run solid:skills:validate
+```
+
+Consumer commands:
+
+```sh
+yarn dlx @tanstack/intent@latest install
+yarn dlx @tanstack/intent@latest load @tyui/elements#button
+yarn dlx @tanstack/intent@latest load @tyui/solid#setup
+```
+
+The local `skills:validate` target intentionally provides a no-network CI gate.
+Projects may additionally run `yarn dlx @tanstack/intent@latest validate --check`
+when they want upstream Intent validation.
+
+## 8. `llms.txt` as the Discovery Layer
+
+Provide an `llms.txt` index at the documentation site or package root:
+
+```
 # Acme Design System
 
 > Framework-neutral custom elements with Solid JSX integration.
 
-## Start here
+## Start Here
 
 - [Product integration](https://docs.example.com/ai/integration.md)
 - [Component selection guide](https://docs.example.com/ai/selection.md)
 - [Layout principles](https://docs.example.com/ai/layout.md)
 - [Accessibility rules](https://docs.example.com/ai/accessibility.md)
 
-## Machine-readable sources
+## Machine-Readable Sources
 
 - [Custom Elements Manifest](https://docs.example.com/custom-elements.json)
 - [Design tokens](https://docs.example.com/tokens.json)
@@ -515,101 +625,180 @@ Example:
 - [Form actions](https://docs.example.com/ai/patterns/form-actions.md)
 - [Toolbars](https://docs.example.com/ai/patterns/toolbars.md)
 - [Responsive page layouts](https://docs.example.com/ai/patterns/layouts.md)
+```
 
-For repository-based agents, you can also include a local AGENTS.md that instructs them to read DESIGN.md and the relevant component metadata before generating UI.
+For repository-based agents, include a local `AGENTS.md` that instructs them to read `DESIGN.md` and the relevant component metadata before generating UI.
 
-Product-level and library-level responsibilities
-The component library publishes
-custom-elements.json
-tokens.schema.json
-defaults.tokens.json
-ai/
-  overview.md
-  component-selection.md
-  layout-principles.md
-  components/
-  patterns/
-solid/
-  jsx.d.ts
-examples/
-The consuming product publishes
-DESIGN.md
-tokens.json
-theme.css
-AGENTS.md
-design/
-  patterns.md
-  exceptions.md
+## 9. Responsibility Split
 
-This distinction matters:
+| Responsibility             | Component Library                             | Consuming Product                            |
+| -------------------------- | --------------------------------------------- | -------------------------------------------- |
+| Component capabilities     | `custom-elements.json`                        |                                              |
+| Token schema               | `tokens.schema.json`, `defaults.tokens.json`  |                                              |
+| AI overview and selection  | `ai/overview.md`, `ai/component-selection.md` |                                              |
+| Component and pattern docs | `ai/components/`, `ai/patterns/`              |                                              |
+| Versioned skill guidance   | `skills/**/SKILL.md`                          | May install or allowlist via Intent          |
+| Solid JSX types            | `solid/jsx.d.ts`                              |                                              |
+| Validated examples         | `examples/`                                   |                                              |
+| Design intent and policy   |                                               | `DESIGN.md`                                  |
+| Applied component guidance |                                               | `design-app.md`                              |
+| Resolved token values      |                                               | `tokens.json`, `theme.css`                   |
+| Agent instructions         |                                               | `AGENTS.md`                                  |
+| Product-specific patterns  |                                               | `design/patterns.md`, `design/exceptions.md` |
 
-The library knows what a component can do.
-The product knows how that component should look and when it should be chosen in that particular application.
-Generate an AI bundle at build time
+The library knows what a component **can** do. `DESIGN.md` knows how the product should feel. `design-app.md` maps that product intent onto the actual component system.
 
-I would add a build command such as:
+## 10. `design-app.md`: Generated Component Application
 
-npm run design-system:context
+`design-app.md` is generated from:
 
-It would combine and validate:
+- Product `DESIGN.md`
+- Product token files
+- Library `custom-elements.json`
+- Library component guidance
+- Library pattern guidance
+- Existing app screenshots or source, when available
 
-DESIGN.md
-+ resolved DTCG tokens
-+ custom-elements.json
-+ relevant component guidance
-+ framework-specific examples
+The file should be structured for review and regeneration:
 
-The output could be:
+```markdown
+# Product Component Application
 
+## Source Inputs
+
+- DESIGN.md
+- tokens.json
+- node_modules/@acme/elements/custom-elements.json
+- node_modules/@acme/elements/ai/components/
+
+## Intent To Component Map
+
+| Intent              | Preferred Component | Variant | Notes                     |
+| ------------------- | ------------------- | ------- | ------------------------- |
+| primary action      | tyui-button         | primary | One per bounded task      |
+| low-emphasis action | tyui-button         | subtle  | Toolbar and inline use    |
+| navigation          | tyui-link           | default | Do not use buttons        |
+| binary state        | tyui-toggle-button  | default | Do not use pressed button |
+
+## App Variants
+
+### tyui-button[appearance="primary"]
+
+Use for the single strongest action in a task.
+
+Implemented by:
+
+- `--ty-button-background`
+- `--ty-button-foreground`
+- `--ty-button-radius`
+- `--ty-button-padding-inline`
+
+Uses no parts and no private selectors.
+
+### tyui-card[data-app-variant="glass"]
+
+Use for dashboard metric groups.
+
+Implemented by:
+
+- `--ty-card-background`
+- `--ty-card-border-color`
+- `--ty-card-elevation`
+
+Requires a documented `surface` part only if the backdrop treatment cannot be expressed as a component token.
+
+## Composition Patterns
+
+### Form Actions
+
+Use `tyui-cluster` with content distribution by default.
+Use equal-width buttons only in narrow stacked layouts.
+
+## New Library Gaps
+
+- Need `tyui-card` to expose `--ty-card-backdrop-filter` before true glass surfaces can be implemented without private selectors.
+```
+
+### Generation Rules
+
+- Prefer existing library variants before creating app variants.
+- Create app variants through semantic tokens, component tokens, and documented `::part()` selectors only.
+- Do not generate selectors against undocumented shadow DOM.
+- Do not invent attributes, slots, events, or properties that are absent from `custom-elements.json`.
+- Do not redefine behavior, keyboard interaction, ARIA semantics, or slot ownership.
+- Record unavailable styling needs as library gaps.
+- Include source references so reviewers can trace each decision back to product intent or component capability.
+- Prefer tokens over `::part()`. Any `::part()` usage must be listed with a rationale. If the same part override appears across multiple variants or products, promote it to a new public component token.
+
+### Example Transformation
+
+If `DESIGN.md` says the product should feel "atmospheric, layered, and glass-like", the generator may produce:
+
+- `theme.css` values for translucent surfaces, bright text, soft elevation, and larger radii.
+- `component-variants.css` entries for card, button, input, and list-item component tokens.
+- `design-app.md` guidance that maps "metric group" to a card variant, "primary action" to a high-contrast button variant, and "secondary navigation" to low-emphasis links.
+
+It may not decide that a button has a new `glass` attribute unless that attribute exists in the manifest. If the desired variant is product-specific, prefer a product data attribute or class outside the shadow root that remaps documented component tokens.
+
+## 11. AI Context Bundle
+
+Add a build command to combine and validate all sources:
+
+```
+yarn design-system:context
+```
+
+This runs `nx run elements:ai-context`, which depends on `elements:cem` and
+`elements:skills:validate`.
+
+Output at `dist/ai/`:
+
+```
 dist/ai/
 ├─ index.md
 ├─ components.md
-├─ patterns.md
+├─ llms.txt
 ├─ tokens.resolved.json
 ├─ custom-elements.compact.json
 └─ context.json
+```
 
-The compact machine document might look like:
+`patterns.md` and `design-app.md` are included when a generated product bundle
+provides them. The root `llms.txt` points agents to the generated context bundle.
 
+The compact context document:
+
+```json
 {
   "designSystem": "product",
   "framework": "solid",
   "components": {
     "action": {
-      "default": "ds-button",
-      "navigation": "ds-link",
-      "toggle": "ds-toggle-button"
+      "default": "tyui-button",
+      "navigation": "tyui-link",
+      "toggle": "tyui-toggle-button"
     }
   },
   "rules": [
     "Use library components before native reimplementations.",
     "Use no more than one primary action per bounded task.",
     "Parent layouts own stretching.",
-    "Use semantic tokens rather than literal values."
+    "Use semantic tokens rather than literal values.",
+    "Use design-app.md for app-specific variants and composition preferences."
   ],
   "sources": {
     "manifest": "../custom-elements.json",
-    "tokens": "../tokens.json"
+    "tokens": "../tokens.json",
+    "appliedDesign": "../design-app.md"
   }
 }
+```
 
-This is much more efficient than making an agent repeatedly search hundreds of long documentation pages.
+## 12. Validation Loop
 
-Validation is as important as documentation
+The same metadata drives automated checks. Without validation, even excellent context will eventually be ignored or misinterpreted:
 
-The same metadata should drive automated checks:
-
-validate every element used in generated TSX against custom-elements.json;
-validate attributes and event names;
-flag undocumented CSS parts or custom properties;
-reject literal colors, radii and spacing where semantic tokens exist;
-detect invalid nesting;
-test canonical examples;
-run accessibility checks;
-ensure every documented slot, token and event still exists.
-
-This creates a closed loop:
-
+```
 design intent
    ↓
 AI generates interface
@@ -619,32 +808,38 @@ schema and lint validation
 browser and accessibility tests
    ↓
 visual comparison
+```
 
-Without validation, even excellent context will eventually be ignored or misinterpreted.
+Checks to enforce:
 
-Recommended overall format
+- Validate every element used in generated TSX against `custom-elements.json`
+- Validate attributes and event names
+- Flag undocumented CSS parts or custom properties
+- Reject literal colors, radii, and spacing where semantic tokens exist
+- Detect invalid nesting
+- Validate `design-app.md` selectors against documented component tokens and parts
+- Validate app variant names against the generated CSS that implements them
+- Test canonical examples
+- Run accessibility checks
+- Ensure every documented slot, token, and event still exists
+- Diff manifest changes and classify them as patch, minor, or major.
+- Propagate deprecated and experimental status into `custom-elements.json`, component docs, `design-app.md`, and the AI context bundle.
 
-Use DESIGN.md as the design constitution, not the database:
+Validation is strict by default in CI. Products may use configurable validation presets, but every escape hatch must be an explicit allowlist entry with rationale.
 
-DESIGN.md
-  product identity, principles, constraints and decisions
+## Summary
 
-tokens.json
-  exact visual values
+Use `DESIGN.md` as the design constitution, not the database:
 
-custom-elements.json
-  exact programmable component interface
+| Artifact               | Role                                                     |
+| ---------------------- | -------------------------------------------------------- |
+| `DESIGN.md`            | Product identity, principles, constraints, and decisions |
+| `tokens.json`          | Exact visual values                                      |
+| `custom-elements.json` | Exact programmable component interface                   |
+| Component Markdown     | Intent, behavior, composition, and accessibility         |
+| Examples               | Canonical implementation patterns                        |
+| `design-app.md`        | Generated app-level component application                |
+| `llms.txt`             | Discovery and context routing                            |
+| Lint/tests             | Enforcement                                              |
 
-component Markdown
-  intent, behavior, composition and accessibility
-
-examples
-  canonical implementation patterns
-
-llms.txt
-  discovery and context routing
-
-lint/tests
-  enforcement
-
-That gives humans readable documentation, IDEs structured metadata, AI agents semantic guidance, and build tools authoritative schemas—without trying to force all four audiences into one oversized Markdown file.
+This gives humans readable documentation, IDEs structured metadata, AI agents semantic guidance, and build tools authoritative schemas—without forcing all four audiences into one oversized Markdown file.

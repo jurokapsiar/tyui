@@ -18,13 +18,24 @@ export default defineConfig({
       entry: {
         index: resolve(root, 'src/index.ts'),
         button: resolve(root, 'src/button.ts'),
+        checkbox: resolve(root, 'src/checkbox.ts'),
+        input: resolve(root, 'src/input.ts'),
+        radio: resolve(root, 'src/radio.ts'),
+        'radio-group': resolve(root, 'src/radio-group.ts'),
         all: resolve(root, 'src/all.ts'),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
-      external: ['@tyui/elements', '@tyui/elements/button'],
+      external: [
+        '@tyui/elements',
+        '@tyui/elements/button',
+        '@tyui/elements/checkbox',
+        '@tyui/elements/input',
+        '@tyui/elements/radio',
+        '@tyui/elements/radio-group',
+      ],
     },
   },
   test: {

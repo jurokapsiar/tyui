@@ -4,6 +4,10 @@ reviews/
 
 node_modules/
 dist/
+!dist/
+dist/*
+!dist/ai/
+!dist/ai/**
 .nx/
 .corepack/
 .vite/

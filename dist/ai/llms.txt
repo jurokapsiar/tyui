@@ -1,0 +1,25 @@
+# TYUI
+
+TYUI is a framework-neutral Custom Elements component library with generated agent context.
+
+## AI context
+
+- index.md
+- custom-elements.compact.json
+- tokens.resolved.json
+- components.md
+- context.json
+
+## Source docs
+
+- spec/agentic-ui-design.md
+- spec/architecture.md
+- spec/requirements.md
+- spec/testing.md
+- ai/components/
+- design/alternatives/
+
+## Intent skills
+
+- libs/elements/skills/
+- libs/solid/skills/

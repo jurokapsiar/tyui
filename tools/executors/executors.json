@@ -23,6 +23,22 @@
     "storybook-e2e": {
       "implementation": "./src/storybook-e2e/executor.ts",
       "schema": "./src/storybook-e2e/schema.json"
+    },
+    "component-e2e": {
+      "implementation": "./src/component-e2e/executor.ts",
+      "schema": "./src/component-e2e/schema.json"
+    },
+    "cem": {
+      "implementation": "./src/cem/executor.ts",
+      "schema": "./src/cem/schema.json"
+    },
+    "ai-context": {
+      "implementation": "./src/ai-context/executor.ts",
+      "schema": "./src/ai-context/schema.json"
+    },
+    "skills-validate": {
+      "implementation": "./src/skills-validate/executor.ts",
+      "schema": "./src/skills-validate/schema.json"
     }
   }
 }

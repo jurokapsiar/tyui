@@ -19,6 +19,8 @@
     "verify-configs": "nx run workspace:verify-configs",
     "sync-configs": "nx run workspace:sync-configs",
     "report-bundle-sizes": "nx run workspace:bundle-sizes",
+    "design-system:context": "nx run elements:ai-context",
+    "skills:validate": "nx run-many -t skills:validate",
     "playwright:image": "scripts/build-playwright-image.sh",
     "playwright:ensure-image": "scripts/ensure-playwright-image.sh",
     "dev:solid": "nx serve solid-example",

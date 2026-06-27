@@ -1,0 +1,54 @@
+{
+  "name": "fluent-web",
+  "source": "https://storybooks.fluentui.dev/react/",
+  "colorSchemeDefault": "light",
+  "supportedColorSchemes": ["light", "dark"],
+  "components": {
+    "tyui-button": {
+      "preferredVariants": ["default", "primary", "outline", "subtle", "transparent"],
+      "preferredShapes": ["rounded", "circular", "square"],
+      "preferredSizes": ["small", "medium", "large"],
+      "mappedTokens": [
+        "--ty-button-background",
+        "--ty-button-background-hover",
+        "--ty-button-background-active",
+        "--ty-button-foreground",
+        "--ty-button-border-color",
+        "--ty-button-radius"
+      ]
+    },
+    "tyui-input": {
+      "preferredVariants": ["outline", "filled-darker", "filled-lighter"],
+      "focusTreatment": {
+        "indicator": "brand underline",
+        "motion": "expands from center over feedback duration",
+        "surface": "documented control part",
+        "appliesTo": "all Fluent input variants"
+      },
+      "designVariants": [
+        {
+          "name": "underline",
+          "class": "ty-fluent-input-underline",
+          "description": "Fluent-owned compact underline input variant implemented through the documented control part."
+        }
+      ],
+      "preferredSizes": ["small", "medium", "large"],
+      "mappedTokens": [
+        "--ty-input-background",
+        "--ty-input-foreground",
+        "--ty-input-placeholder-color",
+        "--ty-input-border-color",
+        "--ty-input-focus-indicator-color",
+        "--ty-input-radius"
+      ]
+    }
+  },
+  "appClasses": [
+    "ty-fluent-panel",
+    "ty-fluent-toolbar",
+    "ty-fluent-form-grid",
+    "ty-fluent-input-underline",
+    "ty-fluent-caption",
+    "ty-fluent-title"
+  ]
+}

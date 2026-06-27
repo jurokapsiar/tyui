@@ -1,16 +1,21 @@
 import { expect, test } from '@playwright/test';
 
-const STORYBOOK_URL = process.env.STORYBOOK_URL;
+const E2E_URL = process.env.E2E_URL;
 
-if (!STORYBOOK_URL) throw new Error('STORYBOOK_URL env var required.');
+if (!E2E_URL) throw new Error('E2E_URL env var required.');
 
-test('button story exposes the expected label and disabled state', async ({ page }) => {
-  await page.goto(`${STORYBOOK_URL}/iframe.html?viewMode=story&id=components-button--states`);
+async function openFixture(page: import('@playwright/test').Page): Promise<void> {
+  await page.goto(`${E2E_URL}/e2e/fixtures/components.html`);
+  await page.waitForFunction(() => customElements.get('tyui-button') !== undefined);
+  await page.waitForSelector('tyui-button');
+}
 
-  await expect(page.getByRole('button', { name: 'Default' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Pressed' })).toHaveAttribute(
-    'aria-pressed',
+test('button exposes the expected label and disabled state', async ({ page }) => {
+  await openFixture(page);
+
+  await expect(page.getByRole('button', { name: 'Focusable disabled' })).toHaveAttribute(
+    'aria-disabled',
     'true',
   );
-  await expect(page.getByRole('button', { name: 'Disabled' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Disabled', exact: true })).toBeDisabled();
 });

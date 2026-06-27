@@ -1,0 +1,45 @@
+{
+  "fluent-web": {
+    "name": "fluent-web",
+    "cssVariables": {
+      "--ty-color-background": "#ffffff",
+      "--ty-color-surface": "#ffffff",
+      "--ty-color-surface-hover": "#f5f5f5",
+      "--ty-color-surface-pressed": "#e0e0e0",
+      "--ty-color-text": "#242424",
+      "--ty-color-text-muted": "#616161",
+      "--ty-color-border": "#d1d1d1",
+      "--ty-color-border-strong": "#8a8886",
+      "--ty-color-accent": "#0f6cbd",
+      "--ty-color-on-accent": "#ffffff",
+      "--ty-color-accent-hover": "#115ea3",
+      "--ty-color-accent-pressed": "#0f548c",
+      "--ty-color-danger": "#c50f1f",
+      "--ty-font-family": "\"Segoe UI\", \"Segoe UI Web\", system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif",
+      "--ty-font-size-100": "0.75rem",
+      "--ty-font-size-200": "0.875rem",
+      "--ty-font-size-300": "1rem",
+      "--ty-control-radius": "var(--ty-radius-2)",
+      "--ty-control-min-block-size": "2rem",
+      "--ty-control-padding-inline": "var(--ty-space-3)",
+      "--ty-control-padding-block": "var(--ty-space-1)"
+    },
+    "componentMappings": {
+      "tyui-button[appearance='primary']": {
+        "--ty-button-background": "var(--ty-color-accent)",
+        "--ty-button-foreground": "var(--ty-color-on-accent)",
+        "--ty-button-border-color": "transparent"
+      },
+      "tyui-input": {
+        "--ty-input-background": "var(--ty-color-surface)",
+        "--ty-input-border-color": "var(--ty-color-border)",
+        "--ty-input-focus-indicator-color": "var(--ty-color-accent)",
+        "focusTreatment": "brand underline expands from center on focus through tyui-input::part(control)"
+      },
+      "tyui-input.ty-fluent-input-underline": {
+        "--ty-input-background": "transparent",
+        "--ty-input-radius": "var(--ty-radius-0)"
+      }
+    }
+  }
+}

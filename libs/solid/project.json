@@ -6,7 +6,8 @@
   "implicitDependencies": ["define", "elements"],
   "targets": {
     "build": {
-      "executor": "@tyui/tools-executors:build"
+      "executor": "@tyui/tools-executors:build",
+      "dependsOn": ["skills:validate"]
     },
     "test": {
       "executor": "@tyui/tools-executors:test",
@@ -30,6 +31,9 @@
         "port": 6007,
         "mode": "dev"
       }
+    },
+    "skills:validate": {
+      "executor": "@tyui/tools-executors:skills-validate"
     }
   },
   "tags": ["scope:libs", "type:library"]

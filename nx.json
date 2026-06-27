@@ -54,6 +54,25 @@
       "inputs": ["e2eInputs", "^production"],
       "parallelism": false
     },
+    "cem": {
+      "cache": true,
+      "inputs": ["production"],
+      "outputs": ["{projectRoot}/custom-elements.json"]
+    },
+    "skills:validate": {
+      "cache": true,
+      "inputs": ["{projectRoot}/skills/**/*", "{projectRoot}/package.json"]
+    },
+    "ai-context": {
+      "cache": true,
+      "inputs": [
+        "production",
+        "{workspaceRoot}/ai/components/**/*",
+        "{workspaceRoot}/design/alternatives/**/*",
+        "{projectRoot}/skills/**/*"
+      ],
+      "outputs": ["{workspaceRoot}/dist/ai", "{workspaceRoot}/llms.txt"]
+    },
     "storybook": {
       "cache": false
     },

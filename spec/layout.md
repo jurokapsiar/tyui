@@ -1,303 +1,413 @@
-The design system supplies constraints and relationships; content and available space determine the final layout.
+# Layout Architecture
 
-So instead of a product theme defining fixed button heights, toolbar widths, or breakpoint-specific layouts, it defines things like spacing, minimum target size, preferred proportions, and wrapping thresholds. The browser then resolves the actual size.
+The design system supplies constraints and relationships; content and available space determine the final layout. Rather than a product theme defining fixed button heights, toolbar widths, or breakpoint-specific layouts, it defines spacing, minimum target sizes, preferred proportions, and wrapping thresholds. The browser then resolves the actual size.
 
-Flexbox is especially suitable because its sizing algorithm starts from the items’ intrinsic sizes and then distributes available space.
+Flexbox is especially suitable because its sizing algorithm starts from items' intrinsic sizes and then distributes available space.
 
-1. Tokens should define constraints, not fixed geometry
+## App-Level vs Component-Level Layout
 
-Avoid this:
+A product `DESIGN.md` owns the spatial character of an application: page rhythm, gutters, safe areas, density posture, dashboard composition, shell regions, and the amount of negative space that should remain visible. This layout spec owns the reusable library contract: primitives, component internals, slot shrink behavior, token names, and the boundary between parent composition and child intrinsic sizing.
 
---ds-button-width: 120px;
---ds-button-height: 32px;
+| Concern                                                  | App-Level `DESIGN.md`      | Component-Level Contract                |
+| -------------------------------------------------------- | -------------------------- | --------------------------------------- |
+| Page gutters, safe areas, page max width                 | Owns                       | Provides token names and primitives     |
+| Product spatial mood: dense, spacious, calm, editorial   | Owns                       | Maps density to constraints             |
+| App shell, navigation, dashboard, and form-page patterns | Owns                       | Provides reusable pattern docs          |
+| Parent composition decisions                             | Owns per screen or pattern | Defines supported policies              |
+| Component padding, internal gap, minimum target size     | References product tokens  | Owns implementation                     |
+| Slot shrink and wrapping behavior                        | Does not override          | Owns per component                      |
+| Container-query threshold policy                         | May choose overrides       | Documents defaults and mechanism        |
+| Global scroll regions and app stacking policy            | Owns app shell             | Owns overlays and internal scroll areas |
 
-Prefer:
+The product can say "this dashboard uses generous gutters and card grouping." It must not redefine that a button's label slot shrinks, that a leading icon is `flex: none`, or that a dialog body owns its internal scroll region. Those are component contracts.
 
---ds-control-min-block-size: 2rem;
---ds-control-padding-inline: 0.75rem;
---ds-control-padding-block: 0.375rem;
---ds-control-max-inline-size: 100%;
+`design-app.md` may translate product spatial intent into app-specific composition guidance:
 
-Then the component adapts to:
+- preferred primitives for common layouts (`Flex` for one-axis groups, `Cluster` for action rows, `Grid` for metric cards)
+- default gap and gutter tokens for app regions
+- when to use equal distribution versus content-sized controls
+- which component combinations form approved product patterns
+- which desired layouts require new library primitives or documented component hooks
 
-translated text;
-larger fonts;
-user zoom;
-different icons;
-product density;
-available container width.
+It must still validate those choices against the library's layout contracts.
+
+## 1. Tokens Define Constraints, Not Fixed Geometry
+
+**Avoid:**
+
+```css
+--ty-button-width: 120px;
+--ty-button-height: 32px;
+```
+
+**Prefer:**
+
+```css
+--ty-control-min-block-size: 2rem;
+--ty-control-padding-inline: 0.75rem;
+--ty-control-padding-block: 0.375rem;
+--ty-control-max-inline-size: 100%;
+```
+
+The component then adapts to translated text, larger fonts, user zoom, different icons, product density, and available container width:
+
+```css
 [part='control'] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-control-gap);
+  gap: var(--ty-control-gap);
 
-  min-block-size: var(--ds-control-min-block-size);
+  min-block-size: var(--ty-control-min-block-size);
   max-inline-size: 100%;
-  padding:
-    var(--ds-control-padding-block)
-    var(--ds-control-padding-inline);
+  padding: var(--ty-control-padding-block) var(--ty-control-padding-inline);
 }
+```
 
 The token system sets the visual character, but content remains authoritative.
 
-2. Component internals should be intrinsically sized
+## 2. Component Internals Should Be Intrinsically Sized
 
-A button should normally size itself from its icon, label, gap, border, and padding:
+A button should size itself from its icon, label, gap, border, and padding:
 
+```css
 [part='control'] {
   display: inline-flex;
   inline-size: fit-content;
   min-inline-size: min-content;
   max-inline-size: 100%;
 }
+```
 
-Usually you do not even need to set inline-size; an inline-flex control naturally follows its content.
+For the label, `min-inline-size: 0` is critical—it allows the flex child to shrink and prevents the component from overflowing a narrow container:
 
-For the label:
-
+```css
 [part='label'] {
   min-inline-size: 0;
   overflow-wrap: anywhere;
 }
+```
 
-min-inline-size: 0 is important when a flex child must be allowed to shrink. Otherwise, its automatic minimum size can prevent the component from fitting inside a narrow container.
-
-3. Expose flex behaviour as semantic layout tokens
+## 3. Expose Flex Behavior as Semantic Layout Tokens
 
 The product theme can define how controls behave in composition:
 
+```css
 :root {
-  --ds-control-grow: 0;
-  --ds-control-shrink: 1;
-  --ds-control-basis: auto;
+  --ty-control-grow: 0;
+  --ty-control-shrink: 1;
+  --ty-control-basis: auto;
 }
+
 :host {
-  flex:
-    var(--ds-control-grow)
-    var(--ds-control-shrink)
-    var(--ds-control-basis);
+  flex: var(--ty-control-grow) var(--ty-control-shrink) var(--ty-control-basis);
 }
+```
 
-A mobile-oriented product could change this:
+Use this sparingly. In most cases, the **parent layout**—not the child component—should decide whether a component grows. The preferred division:
 
-[data-design-system='mobile'] {
-  --ds-control-grow: 1;
-  --ds-control-basis: 100%;
+```css
+tyui-button {
+  /* owns intrinsic appearance */
 }
-
-But use this sparingly. In most cases, the parent layout—not the child component—should decide whether the component grows.
-
-A better division is:
-
-ds-button {
-  /* Own intrinsic appearance */
+tyui-toolbar {
+  /* owns arrangement of buttons */
 }
+```
 
-ds-toolbar {
-  /* Own arrangement of buttons */
+## 4. Headless Layout Primitives
+
+The component library includes a small number of layout primitives. Each ships as a custom element for the primary documented API and as a CSS utility for low-level use. Both forms use the same tokens and layout contracts.
+
+Required v1 primitives:
+
+| Primitive               | Primary element    | Utility class   | Purpose                            |
+| ----------------------- | ------------------ | --------------- | ---------------------------------- |
+| `Flex`                  | `<tyui-flex>`      | `.ty-flex`      | One-dimensional row/column layout  |
+| `Grid`                  | `<tyui-grid>`      | `.ty-grid`      | Auto-fit responsive grid           |
+| `Center`                | `<tyui-center>`    | `.ty-center`    | Horizontally centered content      |
+| `Container`             | `<tyui-container>` | `.ty-container` | Page or region width constraint    |
+| `Frame` / `AspectRatio` | `<tyui-frame>`     | `.ty-frame`     | Aspect-ratio container             |
+| `Cluster` / `Wrap`      | `<tyui-cluster>`   | `.ty-cluster`   | Horizontal group that wraps        |
+| `Sidebar`               | `<tyui-sidebar>`   | `.ty-sidebar`   | Fixed-plus-fluid two-column layout |
+
+`Switcher` is a useful intrinsic-layout pattern but is not required in v1. Add it later if product patterns need explicit column-to-row switching beyond `Flex`, `Cluster`, and container-query composition.
+
+### Flex
+
+For one-axis composition. Use `direction`, `wrap`, `align`, `justify`, and `gap` attributes or matching CSS custom properties rather than one-off layout classes:
+
+```css
+.ty-flex,
+tyui-flex {
+  display: flex;
+  flex-direction: var(--ty-flex-direction, row);
+  flex-wrap: var(--ty-flex-wrap, nowrap);
+  align-items: var(--ty-flex-align, stretch);
+  justify-content: var(--ty-flex-justify, flex-start);
+  gap: var(--ty-flex-gap, var(--ty-space-3));
 }
-4. Build headless layout primitives alongside headless controls
+```
 
-The component library should include a small number of layout components or CSS primitives:
+### Cluster / Wrap
 
-Stack
-Cluster
-Sidebar
-Grid
-Switcher
-Center
-Frame
+For toolbars, action groups, tags, and button rows. Items wrap when they no longer fit—no viewport breakpoint required:
 
-This is the model popularized by intrinsic-layout approaches such as Every Layout: use browser algorithms and composable constraints instead of application-specific breakpoints and magic numbers.
-
-Cluster
-
-For toolbars, action groups, tags, and button rows:
-
-.ds-cluster {
+```css
+.ty-cluster,
+tyui-cluster {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--ds-cluster-gap, var(--ds-space-2));
+  gap: var(--ty-cluster-gap, var(--ty-space-2));
 }
-<div class="ds-cluster">
-  <ds-button>Save</ds-button>
-  <ds-button>Cancel</ds-button>
-  <ds-button>More options</ds-button>
-</div>
+```
 
-The items wrap when they no longer fit. No viewport breakpoint is needed. Flex wrapping naturally uses the items’ intrinsic sizes.
+### Grid
 
-Stack
-.ds-stack {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: var(--ds-stack-gap, var(--ds-space-3));
-}
-Intrinsic grid
-.ds-grid {
+Responds to the container, content, and configured minimum card size—not a hardcoded screen width:
+
+```css
+.ty-grid,
+tyui-grid {
   display: grid;
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(
-        min(100%, var(--ds-grid-min-item-size, 16rem)),
-        1fr
-      )
-    );
-  gap: var(--ds-grid-gap, var(--ds-space-4));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--ty-grid-min-item-size, 16rem)), 1fr)
+  );
+  gap: var(--ty-grid-gap, var(--ty-space-4));
+}
+```
+
+### Center
+
+```css
+.ty-center,
+tyui-center {
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--ty-center-measure, var(--ty-layout-content-measure, 65ch));
+  padding-inline: var(--ty-center-gutter, var(--ty-page-gutter, 1rem));
+}
+```
+
+### Container
+
+```css
+.ty-container,
+tyui-container {
+  box-sizing: border-box;
+  inline-size: min(100%, var(--ty-container-max-inline-size, 72rem));
+  margin-inline: auto;
+  padding-inline: var(--ty-container-gutter, var(--ty-page-gutter, 1rem));
+}
+```
+
+### Frame / AspectRatio
+
+```css
+.ty-frame,
+tyui-frame {
+  aspect-ratio: var(--ty-frame-ratio, 16 / 9);
+  display: block;
+  overflow: hidden;
 }
 
-This responds to the container, content, and configured minimum card size rather than a hardcoded screen width.
+.ty-frame > *,
+tyui-frame > * {
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: var(--ty-frame-fit, cover);
+}
+```
 
-5. Use container queries for true component responsiveness
+### Sidebar
 
-Intrinsic sizing should handle most cases. Container queries are useful when a component genuinely needs a structural mode change.
+```css
+.ty-sidebar,
+tyui-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ty-sidebar-gap, var(--ty-layout-gap, 1rem));
+}
 
-ds-toolbar {
+.ty-sidebar > :first-child,
+tyui-sidebar > :first-child {
+  flex-basis: var(--ty-sidebar-size, 18rem);
+  flex-grow: 1;
+}
+
+.ty-sidebar > :last-child,
+tyui-sidebar > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: min(100%, var(--ty-sidebar-content-min-inline-size, 50%));
+}
+```
+
+## 5. Container Queries for Structural Mode Changes
+
+Intrinsic sizing handles most cases. Container queries are appropriate when a component genuinely needs a structural mode change. This is superior to viewport media queries because the same component behaves correctly in a full page, a sidebar, a dialog, or a dashboard tile:
+
+```css
+tyui-toolbar {
   container-type: inline-size;
 }
+
 @container (inline-size < 28rem) {
   [part='actions'] {
     flex-direction: column;
     align-items: stretch;
   }
 
-  [part='actions'] > ds-button {
+  [part='actions'] > tyui-button {
     inline-size: 100%;
   }
 }
+```
 
-This is superior to a viewport media query because the same toolbar can behave correctly in:
+Container-query thresholds are documented in each component or primitive contract. CSS custom properties cannot be used in query conditions, so thresholds are build-time design parameters in v1. A generated design bundle may override thresholds by emitting product CSS from `DESIGN.md` / `design-app.md`. Runtime threshold mutation is out of v1 scope.
 
-a full page;
-a sidebar;
-a dialog;
-a dashboard tile.
+## 6. Density Modifies Spacing, Not Intrinsic Sizing
 
-The threshold can itself be a product token conceptually, although custom properties cannot currently be used directly in container-query conditions. Your build-time theme generator can emit the relevant query value.
+A theme adjusts padding, gaps, radius, typography, and minimum target size. It does not fix block size. Components can still grow when text wraps, when the user increases font size, or when an icon is larger:
 
-6. Density should modify spacing, not override intrinsic sizing
-
-A theme can make controls feel like Windows, macOS, touch UI, or a dense enterprise system by adjusting padding, gaps, radius, typography, and minimum target size.
-
+```css
 [data-density='compact'] {
-  --ds-control-padding-inline: 0.5rem;
-  --ds-control-padding-block: 0.25rem;
-  --ds-control-gap: 0.25rem;
-  --ds-control-min-block-size: 1.75rem;
+  --ty-control-padding-inline: 0.5rem;
+  --ty-control-padding-block: 0.25rem;
+  --ty-control-gap: 0.25rem;
+  --ty-control-min-block-size: 1.75rem;
 }
 
 [data-density='touch'] {
-  --ds-control-padding-inline: 1rem;
-  --ds-control-padding-block: 0.625rem;
-  --ds-control-gap: 0.5rem;
-  --ds-control-min-block-size: 2.75rem;
+  --ty-control-padding-inline: 1rem;
+  --ty-control-padding-block: 0.625rem;
+  --ty-control-gap: 0.5rem;
+  --ty-control-min-block-size: 2.75rem;
 }
+```
 
-The actual height can still grow if:
+**Avoid:** `block-size: var(--ty-control-height);`
+**Prefer:** `min-block-size: var(--ty-control-min-block-size);`
 
-text wraps;
-the user increases font size;
-an icon is larger;
-the label occupies two lines.
+## 7. Fluid but Bounded Values with `clamp()`
 
-Avoid:
+Some values can adapt continuously between a minimum, preferred relationship, and maximum—without a sequence of breakpoint overrides:
 
-block-size: var(--ds-control-height);
-
-Prefer:
-
-min-block-size: var(--ds-control-min-block-size);
-7. Use clamp() for fluid but bounded values
-
-Some design-system values can adapt continuously:
-
+```css
 :root {
-  --ds-page-gutter:
-    clamp(1rem, 0.5rem + 2vi, 3rem);
-
-  --ds-section-gap:
-    clamp(1.5rem, 1rem + 2vi, 4rem);
-
-  --ds-heading-size:
-    clamp(1.5rem, 1.2rem + 1.2vi, 2.5rem);
+  --ty-page-gutter: clamp(1rem, 0.5rem + 2vi, 3rem);
+  --ty-section-gap: clamp(1.5rem, 1rem + 2vi, 4rem);
+  --ty-heading-size: clamp(1.5rem, 1.2rem + 1.2vi, 2.5rem);
 }
+```
 
-This gives the browser a minimum, preferred relationship, and maximum instead of a sequence of breakpoint overrides. clamp() is a common tool for intrinsic and contextual spacing.
+For reusable embedded components, prefer container-relative units where supported:
 
-For reusable embedded components, prefer container-relative units such as cqi over viewport units where supported:
+```css
+--ty-card-padding: clamp(0.75rem, 4cqi, 1.5rem);
+```
 
---ds-card-padding: clamp(0.75rem, 4cqi, 1.5rem);
-8. Separate component sizing from composition sizing
+## 8. Component Sizing vs. Composition Sizing
 
 This distinction is critical.
 
-Component owns
-internal padding;
-icon-label gap;
-minimum interaction target;
-label wrapping;
-intrinsic minimum and preferred size;
-internal alignment.
-Parent layout owns
-whether the component stretches;
-how siblings divide space;
-wrapping;
-ordering;
-available width;
-horizontal versus vertical composition.
+**Component owns:**
 
-For example, the button should not globally contain:
+- Internal padding
+- Icon-label gap
+- Minimum interaction target
+- Label wrapping
+- Intrinsic minimum and preferred size
+- Internal alignment
 
-:host {
-  flex: 1;
-}
+**Parent layout owns:**
 
-Instead, a button group decides:
+- Whether the component stretches
+- How siblings divide space
+- Wrapping
+- Ordering
+- Available width
+- Horizontal vs. vertical composition
 
-ds-button-group[distribution='equal'] > ds-button {
+A button should not globally contain `flex: 1`. Instead, a button group decides the distribution policy:
+
+```css
+tyui-button-group[distribution='equal'] > tyui-button {
   flex: 1 1 0;
 }
-ds-button-group[distribution='content'] > ds-button {
+
+tyui-button-group[distribution='content'] > tyui-button {
   flex: 0 1 auto;
 }
+```
 
 This keeps the component reusable in unrelated contexts.
 
-9. Use logical dimensions everywhere
+## 9. Composite Components
 
-To keep the design system adaptable across writing directions:
+Composite components own explicit internal layout contracts while using the same intrinsic layout model internally:
 
-padding-inline: var(--ds-control-padding-inline);
-padding-block: var(--ds-control-padding-block);
+- Dialog owns header, body, and footer regions; the body owns internal scroll containment.
+- Card owns media, header, body, and actions slots; parent layouts own card placement in grids or lists.
+- Form layout is primarily an app composition pattern; individual form controls own label/control internals only when they are composite components.
+- Table and data-grid own row, cell, header, and overflow rules.
+- Popover and menu own placement constraints, max block size, overflow behavior, and dismissal affordances.
 
-margin-inline-start: var(--ds-space-2);
+Each composite component document must state:
+
+- Slots and regions.
+- Which regions are flexible.
+- Which region, if any, scrolls.
+- Minimum and maximum inline/block constraints.
+- Which sizing and spacing tokens apply.
+- What the parent layout owns.
+
+## 10. Overlays, Stacking, and Scroll
+
+Prefer native top-layer APIs for overlays:
+
+- Use `<dialog>` where dialog semantics fit.
+- Use the Popover API for popovers, menus, tooltips, and combobox popups where browser support and semantics fit.
+- Use tokenized z-index only for non-top-layer surfaces.
+- Avoid global z-index ladders as the primary overlay architecture.
+
+Components own internal scroll containment. The app shell owns page-level scroll regions. Overlay component contracts must document max block size, overflow behavior, focus containment, dismissal behavior, and whether the component uses the top layer.
+
+```css
+:root {
+  --ty-z-index-raised: 1;
+  --ty-z-index-sticky: 10;
+  --ty-z-index-overlay: 100;
+}
+```
+
+These z-index tokens are for non-top-layer surfaces only. Top-layer components should rely on the browser's top layer rather than competing z-index values.
+
+## 11. Logical Dimensions Everywhere
+
+To keep the design system adaptable across writing directions, use logical properties. Avoid baking `left`, `right`, `width`, and `height` into low-level design tokens unless the concept is genuinely physical:
+
+```css
+padding-inline: var(--ty-control-padding-inline);
+padding-block: var(--ty-control-padding-block);
+
+margin-inline-start: var(--ty-space-2);
 
 min-inline-size: 0;
 max-inline-size: 100%;
+```
 
-Avoid baking left, right, width, and height into low-level design tokens unless the concept is genuinely physical.
+## 12. Slotted Content Participates Naturally
 
-This also makes platform themes less brittle.
+A custom element should not assume its label is a fixed string. Icons remain stable; text is allowed to shrink or wrap:
 
-10. Let slotted content participate naturally
-
-A custom element should not assume that its label is a fixed string.
-
-<ds-button>
-  <ds-icon slot="start"></ds-icon>
-  A very long translated action label
-</ds-button>
-
-Internal layout:
-
+```css
 [part='control'] {
   display: inline-flex;
   align-items: center;
-  gap: var(--ds-button-gap);
+  gap: var(--ty-button-gap);
 }
 
 [part='content'] {
@@ -312,103 +422,71 @@ Internal layout:
 ::slotted(:not([slot])) {
   min-inline-size: 0;
 }
+```
 
-Icons remain stable; text is allowed to shrink or wrap.
+## 13. Intrinsic Variants Express Policy, Not Pixels
 
-11. Intrinsic variants should express policy
+Rather than exposing pixel sizes, expose layout intent:
 
-Rather than components exposing pixel sizes:
+```html
+<tyui-button fit="content">…</tyui-button>
+<tyui-button fit="container">…</tyui-button>
+<tyui-button nowrap>…</tyui-button>
+```
 
-<ds-button width="140" height="32">
-
-Expose layout intent:
-
-<ds-button fit="content">
-<ds-button fit="container">
-<ds-button nowrap>
-
-Corresponding CSS:
-
+```css
 :host([fit='content']) {
   inline-size: fit-content;
 }
-
 :host([fit='container']) {
   display: block;
   inline-size: 100%;
 }
-
-:host([fit='container']) [part='control'] {
-  inline-size: 100%;
-}
-
 :host([nowrap]) [part='label'] {
   white-space: nowrap;
 }
+```
 
-The product design system can set defaults, but application composition can select the policy.
+The parent still owns whether to select these policies. `fit="container"` is an opt-in contract made available by the component; it is not a global declaration that the component should always stretch. Use it when the surrounding pattern calls for full-width controls, such as stacked mobile form actions.
 
-12. A practical FAST-like intrinsic token model
+## 14. Token Model Reference
 
-I would divide the token API like this:
-
+```css
 :root {
   /* Visual tokens */
-  --ds-control-radius: 0.375rem;
-  --ds-control-border-width: 1px;
+  --ty-control-radius: 0.375rem;
+  --ty-control-border-width: 1px;
 
   /* Intrinsic internal sizing */
-  --ds-control-padding-inline: 0.75rem;
-  --ds-control-padding-block: 0.375rem;
-  --ds-control-gap: 0.5rem;
-  --ds-control-min-block-size: 2rem;
+  --ty-control-padding-inline: 0.75rem;
+  --ty-control-padding-block: 0.375rem;
+  --ty-control-gap: 0.5rem;
+  --ty-control-min-block-size: 2rem;
 
   /* Content constraints */
-  --ds-control-min-inline-size: min-content;
-  --ds-control-max-inline-size: 100%;
+  --ty-control-min-inline-size: min-content;
+  --ty-control-max-inline-size: 100%;
 
   /* Composition */
-  --ds-layout-gap: 1rem;
-  --ds-layout-min-column-size: 16rem;
-  --ds-layout-sidebar-size: 18rem;
-  --ds-layout-content-measure: 65ch;
+  --ty-layout-gap: 1rem;
+  --ty-layout-min-column-size: 16rem;
+  --ty-layout-sidebar-size: 18rem;
+  --ty-layout-content-measure: 65ch;
 }
+```
 
-Then a product theme changes the parameters:
+Platform themes change these parameters. The theme changes the design language; intrinsic layout keeps it resilient.
 
-[data-design-system='macos'] {
-  --ds-control-radius: 0.5rem;
-  --ds-control-padding-inline: 0.875rem;
-  --ds-control-padding-block: 0.3125rem;
-  --ds-control-min-block-size: 2rem;
-}
+## The Governing Principle
 
-[data-design-system='windows'] {
-  --ds-control-radius: 0.25rem;
-  --ds-control-padding-inline: 0.75rem;
-  --ds-control-padding-block: 0.375rem;
-  --ds-control-min-block-size: 2rem;
-}
+Every component and layout is a negotiation among:
 
-[data-design-system='touch'] {
-  --ds-control-radius: 0.75rem;
-  --ds-control-padding-inline: 1rem;
-  --ds-control-padding-block: 0.625rem;
-  --ds-control-min-block-size: 2.75rem;
-}
-
-The theme changes the design language, while intrinsic layout keeps it resilient.
-
-The governing rule
-
-Treat every component and layout as a negotiation among:
-
-content’s intrinsic size
+```
+content's intrinsic size
 + design-system constraints
 + available container space
 + user preferences
 = final used size
+```
 
-The product should define the bounds and relationships, not the final pixels.
-
-That gives you a FAST-like adaptive visual system without turning the design tokens into a rigid geometry table—and it keeps layout changes almost entirely inside CSS, with no Solid rerenders or JavaScript measurement loops.
+The product defines bounds and relationships, not final pixels. Layout changes stay almost entirely inside CSS—no framework re-renders, no JavaScript measurement loops.

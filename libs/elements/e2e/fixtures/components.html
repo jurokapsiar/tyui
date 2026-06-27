@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>TYUI component e2e fixtures</title>
+    <script type="module" src="/e2e/fixtures/components.ts"></script>
+  </head>
+  <body>
+    <main>
+      <tyui-radio-group id="radio-group" label="Choose one" value="b">
+        <tyui-radio value="a">Alpha</tyui-radio>
+        <tyui-radio value="b">Beta</tyui-radio>
+        <tyui-radio value="c">Gamma</tyui-radio>
+      </tyui-radio-group>
+
+      <section aria-label="Button fixtures">
+        <tyui-button id="focusable-disabled" disabled-focusable>Focusable disabled</tyui-button>
+        <tyui-button id="disabled" disabled>Disabled</tyui-button>
+      </section>
+    </main>
+  </body>
+</html>

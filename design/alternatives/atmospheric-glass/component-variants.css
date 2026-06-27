@@ -1,0 +1,140 @@
+@layer product-components;
+
+@layer product-components {
+  [data-design-system='atmospheric-glass'] tyui-button {
+    --ty-button-radius: var(--ty-control-radius);
+    --ty-button-min-block-size: var(--ty-control-min-block-size);
+    --ty-button-padding-inline: var(--ty-space-6);
+    --ty-button-padding-block: var(--ty-space-3);
+    --ty-button-gap: var(--ty-space-2);
+    --ty-button-font-size: var(--ty-font-size-100);
+    --ty-button-font-weight: var(--ty-font-weight-semibold);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-button[appearance='primary'] {
+    --ty-button-background: var(--ty-color-accent);
+    --ty-button-background-hover: var(--ty-color-accent-hover);
+    --ty-button-background-active: var(--ty-color-accent-pressed);
+    --ty-button-foreground: var(--ty-color-on-accent);
+    --ty-button-border-color: transparent;
+    --ty-button-border-color-hover: transparent;
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-button[appearance='default'],
+  [data-design-system='atmospheric-glass'] tyui-button[appearance='secondary'],
+  [data-design-system='atmospheric-glass'] tyui-button[appearance='subtle'],
+  [data-design-system='atmospheric-glass'] tyui-button[appearance='transparent'] {
+    --ty-button-background: rgb(255 255 255 / 0.05);
+    --ty-button-background-hover: rgb(255 255 255 / 0.1);
+    --ty-button-background-active: rgb(255 255 255 / 0.16);
+    --ty-button-foreground: var(--ty-color-text);
+    --ty-button-border-color: var(--ty-glass-border-color);
+    --ty-button-border-color-hover: var(--ty-color-border-strong);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-button[shape='rounded'],
+  [data-design-system='atmospheric-glass'] tyui-button[shape='circular'] {
+    --ty-button-radius: var(--ty-radius-5);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-input {
+    --ty-input-background: var(--ty-glass-background-standard);
+    --ty-input-background-filled-darker: var(--ty-glass-background-elevated);
+    --ty-input-background-filled-lighter: rgb(255 255 255 / 0.14);
+    --ty-input-foreground: var(--ty-color-text);
+    --ty-input-placeholder-color: var(--ty-color-text-muted);
+    --ty-input-border-color: var(--ty-glass-border-color);
+    --ty-input-border-color-strong: var(--ty-color-border-strong);
+    --ty-input-invalid-border-color: var(--ty-color-danger);
+    --ty-input-focus-indicator-color: var(--ty-color-accent);
+    --ty-input-radius: var(--ty-control-radius);
+    --ty-input-min-block-size: var(--ty-control-min-block-size);
+    --ty-input-padding-inline: var(--ty-space-5);
+    --ty-input-padding-block: var(--ty-space-3);
+    --ty-input-gap: var(--ty-space-2);
+    --ty-input-font-size: var(--ty-font-size-200);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-input[appearance='outline'],
+  [data-design-system='atmospheric-glass'] tyui-input[appearance='filled-darker'],
+  [data-design-system='atmospheric-glass'] tyui-input[appearance='filled-lighter'] {
+    --ty-input-radius: var(--ty-radius-5);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-input::part(control) {
+    backdrop-filter: blur(var(--ty-glass-blur-standard));
+    box-shadow: var(--ty-glass-shadow);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-checkbox {
+    --ty-checkbox-foreground: var(--ty-color-text);
+    --ty-checkbox-border-color: var(--ty-glass-border-color);
+    --ty-checkbox-border-color-hover: var(--ty-color-border-strong);
+    --ty-checkbox-background: rgb(255 255 255 / 0.06);
+    --ty-checkbox-checked-background: var(--ty-color-accent);
+    --ty-checkbox-checked-background-hover: var(--ty-color-accent-hover);
+    --ty-checkbox-checked-background-active: var(--ty-color-accent-pressed);
+    --ty-checkbox-checked-foreground: var(--ty-color-on-accent);
+    --ty-checkbox-indeterminate-foreground: var(--ty-color-accent);
+    --ty-checkbox-indeterminate-border-color: var(--ty-color-accent);
+    --ty-checkbox-radius: var(--ty-radius-2);
+    --ty-checkbox-gap: var(--ty-space-2);
+  }
+
+  [data-design-system='atmospheric-glass'] tyui-radio,
+  [data-design-system='atmospheric-glass'] tyui-radio-group {
+    --ty-radio-foreground: var(--ty-color-text);
+    --ty-radio-border-color: var(--ty-glass-border-color);
+    --ty-radio-checked-color: var(--ty-color-accent);
+    --ty-radio-group-foreground: var(--ty-color-text);
+    --ty-radio-group-label-color: var(--ty-color-text-muted);
+    --ty-radio-group-gap: var(--ty-space-3);
+    --ty-radio-group-inline-gap: var(--ty-space-5);
+  }
+
+  [data-design-system='atmospheric-glass'] .ty-glass-surface {
+    color: var(--ty-color-text);
+    background: var(--ty-glass-background-standard);
+    border: var(--ty-stroke-thin) solid var(--ty-glass-border-color);
+    border-radius: var(--ty-radius-4);
+    box-shadow: var(--ty-glass-shadow);
+    backdrop-filter: blur(var(--ty-glass-blur-standard));
+  }
+
+  [data-design-system='atmospheric-glass'] .ty-glass-surface[data-elevation='elevated'] {
+    background: var(--ty-glass-background-elevated);
+    border-radius: var(--ty-radius-5);
+    box-shadow: var(--ty-elevation-2);
+    backdrop-filter: blur(var(--ty-glass-blur-elevated));
+  }
+
+  [data-design-system='atmospheric-glass'] .ty-glass-surface[data-shine='true'] {
+    box-shadow:
+      inset 1px 1px 0 var(--ty-glass-shine-color),
+      var(--ty-glass-shadow);
+  }
+
+  [data-design-system='atmospheric-glass'] .ty-weather-display {
+    color: var(--ty-color-text);
+    font-size: var(--ty-font-size-display);
+    font-weight: var(--ty-font-weight-bold);
+    line-height: var(--ty-line-height-display);
+    text-shadow: var(--ty-glass-text-shadow);
+  }
+
+  [data-design-system='atmospheric-glass'] .ty-metric-label {
+    color: var(--ty-color-text-muted);
+    font-size: var(--ty-font-size-100);
+    font-weight: var(--ty-font-weight-semibold);
+    line-height: var(--ty-line-height-100);
+    letter-spacing: var(--ty-letter-spacing-label);
+    text-shadow: var(--ty-glass-text-shadow);
+    text-transform: uppercase;
+  }
+
+  [data-design-system='atmospheric-glass'] .ty-weather-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--ty-layout-card-gap);
+  }
+}

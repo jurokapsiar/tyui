@@ -6,7 +6,8 @@
   "implicitDependencies": ["core"],
   "targets": {
     "build": {
-      "executor": "@tyui/tools-executors:build"
+      "executor": "@tyui/tools-executors:build",
+      "dependsOn": ["cem", "skills:validate", "ai-context"]
     },
     "test": {
       "executor": "@tyui/tools-executors:test",
@@ -41,9 +42,22 @@
       }
     },
     "e2e": {
-      "executor": "@tyui/tools-executors:storybook-e2e",
+      "executor": "@tyui/tools-executors:component-e2e",
       "options": {
         "port": 6011
+      }
+    },
+    "cem": {
+      "executor": "@tyui/tools-executors:cem"
+    },
+    "skills:validate": {
+      "executor": "@tyui/tools-executors:skills-validate"
+    },
+    "ai-context": {
+      "executor": "@tyui/tools-executors:ai-context",
+      "dependsOn": ["cem", "skills:validate"],
+      "options": {
+        "includeRootLlms": true
       }
     }
   },

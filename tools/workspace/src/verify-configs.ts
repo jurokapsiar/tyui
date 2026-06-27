@@ -9,6 +9,13 @@ const requiredFiles = [
   'tsconfig.base.json',
   'tools/executors/executors.json',
   'pipelines/playwright.Dockerfile',
+  'libs/elements/custom-elements.json',
+  'llms.txt',
+  'dist/ai/index.md',
+  'dist/ai/llms.txt',
+  'dist/ai/custom-elements.compact.json',
+  'dist/ai/tokens.resolved.json',
+  'dist/ai/context.json',
 ];
 
 const workspaceRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');

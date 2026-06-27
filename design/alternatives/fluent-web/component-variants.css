@@ -1,0 +1,248 @@
+@layer product-components;
+
+@layer product-components {
+  [data-design-system='fluent-web'] tyui-button {
+    --ty-button-radius: var(--ty-control-radius);
+    --ty-button-min-block-size: var(--ty-control-min-block-size);
+    --ty-button-padding-inline: var(--ty-space-3);
+    --ty-button-padding-block: var(--ty-space-1);
+    --ty-button-gap: var(--ty-space-2);
+    --ty-button-font-size: var(--ty-font-size-200);
+    --ty-button-font-weight: var(--ty-font-weight-semibold);
+    --ty-button-line-height: var(--ty-line-height-200);
+    --ty-button-border-width: var(--ty-stroke-thin);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[size='small'] {
+    --ty-button-min-block-size: 1.5rem;
+    --ty-button-padding-inline: var(--ty-space-2);
+    --ty-button-font-size: var(--ty-font-size-100);
+    --ty-button-line-height: var(--ty-line-height-100);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[size='large'] {
+    --ty-button-min-block-size: 2.5rem;
+    --ty-button-padding-inline: var(--ty-space-4);
+    --ty-button-font-size: var(--ty-font-size-300);
+    --ty-button-line-height: var(--ty-line-height-300);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[appearance='primary'] {
+    --ty-button-background: var(--ty-color-accent);
+    --ty-button-background-hover: var(--ty-color-accent-hover);
+    --ty-button-background-active: var(--ty-color-accent-pressed);
+    --ty-button-foreground: var(--ty-color-on-accent);
+    --ty-button-border-color: transparent;
+    --ty-button-border-color-hover: transparent;
+  }
+
+  [data-design-system='fluent-web'] tyui-button[appearance='default'],
+  [data-design-system='fluent-web'] tyui-button[appearance='secondary'] {
+    --ty-button-background: var(--ty-color-surface);
+    --ty-button-background-hover: var(--ty-color-surface-hover);
+    --ty-button-background-active: var(--ty-color-surface-pressed);
+    --ty-button-foreground: var(--ty-color-text);
+    --ty-button-border-color: var(--ty-color-border);
+    --ty-button-border-color-hover: var(--ty-color-border-strong);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[appearance='outline'] {
+    --ty-button-background: transparent;
+    --ty-button-background-hover: var(--ty-color-surface-hover);
+    --ty-button-background-active: var(--ty-color-surface-pressed);
+    --ty-button-foreground: var(--ty-color-text);
+    --ty-button-border-color: var(--ty-color-border);
+    --ty-button-border-color-hover: var(--ty-color-border-strong);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[appearance='subtle'] {
+    --ty-button-background: transparent;
+    --ty-button-background-hover: var(--ty-color-surface-hover);
+    --ty-button-background-active: var(--ty-color-surface-pressed);
+    --ty-button-foreground: var(--ty-color-text);
+    --ty-button-border-color: transparent;
+    --ty-button-border-color-hover: transparent;
+  }
+
+  [data-design-system='fluent-web'] tyui-button[appearance='transparent'] {
+    --ty-button-background: transparent;
+    --ty-button-background-hover: transparent;
+    --ty-button-background-active: var(--ty-color-surface-pressed);
+    --ty-button-foreground: var(--ty-color-text-muted);
+    --ty-button-foreground-hover: var(--ty-color-text);
+    --ty-button-border-color: transparent;
+    --ty-button-border-color-hover: transparent;
+  }
+
+  [data-design-system='fluent-web'] tyui-button[shape='rounded'] {
+    --ty-button-radius: var(--ty-radius-2);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[shape='circular'] {
+    --ty-button-radius: var(--ty-radius-pill);
+  }
+
+  [data-design-system='fluent-web'] tyui-button[shape='square'] {
+    --ty-button-radius: var(--ty-radius-0);
+  }
+
+  [data-design-system='fluent-web'] tyui-input {
+    --ty-input-background: var(--ty-color-surface);
+    --ty-input-background-filled-darker: var(--ty-color-surface-hover);
+    --ty-input-background-filled-lighter: var(--ty-color-surface);
+    --ty-input-foreground: var(--ty-color-text);
+    --ty-input-placeholder-color: var(--ty-color-text-muted);
+    --ty-input-border-color: var(--ty-color-border);
+    --ty-input-border-color-strong: var(--ty-color-border-strong);
+    --ty-input-invalid-border-color: var(--ty-color-danger);
+    --ty-input-focus-indicator-color: var(--ty-color-accent);
+    --ty-input-radius: var(--ty-control-radius);
+    --ty-input-min-block-size: var(--ty-control-min-block-size);
+    --ty-input-padding-inline: var(--ty-space-3);
+    --ty-input-padding-block: var(--ty-space-1);
+    --ty-input-gap: var(--ty-space-2);
+    --ty-input-font-size: var(--ty-font-size-200);
+  }
+
+  [data-design-system='fluent-web'] tyui-input[size='small'] {
+    --ty-input-min-block-size: 1.5rem;
+    --ty-input-padding-inline: var(--ty-space-2);
+    --ty-input-font-size: var(--ty-font-size-100);
+  }
+
+  [data-design-system='fluent-web'] tyui-input[size='large'] {
+    --ty-input-min-block-size: 2.5rem;
+    --ty-input-padding-inline: var(--ty-space-4);
+    --ty-input-font-size: var(--ty-font-size-300);
+  }
+
+  [data-design-system='fluent-web'] tyui-input::part(control) {
+    background:
+      linear-gradient(var(--ty-input-focus-indicator-color), var(--ty-input-focus-indicator-color))
+        bottom center / 0 2px no-repeat,
+      var(--ty-input-background);
+    transition:
+      background-size var(--ty-motion-feedback-duration, 120ms) var(--ty-motion-easing, ease),
+      background-color var(--ty-motion-feedback-duration, 120ms) var(--ty-motion-easing, ease),
+      border-color var(--ty-motion-feedback-duration, 120ms) var(--ty-motion-easing, ease),
+      box-shadow var(--ty-motion-feedback-duration, 120ms) var(--ty-motion-easing, ease);
+  }
+
+  [data-design-system='fluent-web'] tyui-input:focus-within::part(control) {
+    background-size:
+      100% 2px,
+      auto;
+    border-block-end-color: var(--ty-input-focus-indicator-color);
+    outline: 0;
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-design-system='fluent-web'] tyui-input::part(control) {
+      transition-duration: 0ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-design-system='fluent-web'] tyui-input::part(control) {
+      background:
+        linear-gradient(Highlight, Highlight) bottom center / 0 2px no-repeat,
+        Field;
+    }
+
+    [data-design-system='fluent-web'] tyui-input:focus-within::part(control) {
+      background-size:
+        100% 2px,
+        auto;
+      border-block-end-color: Highlight;
+    }
+  }
+
+  [data-design-system='fluent-web'] tyui-input.ty-fluent-input-underline {
+    --ty-input-radius: var(--ty-radius-0);
+    --ty-input-background: transparent;
+  }
+
+  [data-design-system='fluent-web'] tyui-input.ty-fluent-input-underline::part(control) {
+    border-block-start-color: transparent;
+    border-inline-color: transparent;
+    border-radius: 0;
+  }
+
+  [data-design-system='fluent-web'] tyui-input.ty-fluent-input-underline:hover::part(control) {
+    border-block-end-color: var(--ty-color-border-strong);
+  }
+
+  [data-design-system='fluent-web'] tyui-checkbox {
+    --ty-checkbox-foreground: var(--ty-color-text);
+    --ty-checkbox-font-size: var(--ty-font-size-200);
+    --ty-checkbox-line-height: var(--ty-line-height-200);
+    --ty-checkbox-size: 1rem;
+    --ty-checkbox-radius: var(--ty-radius-1);
+    --ty-checkbox-gap: var(--ty-space-2);
+    --ty-checkbox-border-color: var(--ty-color-border-strong);
+    --ty-checkbox-border-color-hover: var(--ty-color-accent);
+    --ty-checkbox-background: var(--ty-color-surface);
+    --ty-checkbox-checked-background: var(--ty-color-accent);
+    --ty-checkbox-checked-background-hover: var(--ty-color-accent-hover);
+    --ty-checkbox-checked-background-active: var(--ty-color-accent-pressed);
+    --ty-checkbox-checked-foreground: var(--ty-color-on-accent);
+    --ty-checkbox-indeterminate-foreground: var(--ty-color-accent);
+    --ty-checkbox-indeterminate-border-color: var(--ty-color-accent);
+  }
+
+  [data-design-system='fluent-web'] tyui-radio,
+  [data-design-system='fluent-web'] tyui-radio-group {
+    --ty-radio-foreground: var(--ty-color-text);
+    --ty-radio-font-size: var(--ty-font-size-200);
+    --ty-radio-line-height: var(--ty-line-height-200);
+    --ty-radio-size: 1rem;
+    --ty-radio-dot-size: 0.5rem;
+    --ty-radio-gap: var(--ty-space-2);
+    --ty-radio-border-color: var(--ty-color-border-strong);
+    --ty-radio-checked-color: var(--ty-color-accent);
+    --ty-radio-group-foreground: var(--ty-color-text);
+    --ty-radio-group-label-color: var(--ty-color-text);
+    --ty-radio-group-gap: var(--ty-space-2);
+    --ty-radio-group-inline-gap: var(--ty-space-4);
+  }
+
+  [data-design-system='fluent-web'] .ty-fluent-panel {
+    box-sizing: border-box;
+    color: var(--ty-color-text);
+    background: var(--ty-color-surface);
+    border: var(--ty-stroke-thin) solid var(--ty-color-border);
+    border-radius: var(--ty-radius-3);
+    box-shadow: none;
+  }
+
+  [data-design-system='fluent-web'] .ty-fluent-panel[data-elevation='raised'] {
+    box-shadow: var(--ty-elevation-1);
+  }
+
+  [data-design-system='fluent-web'] .ty-fluent-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ty-space-2);
+    align-items: center;
+  }
+
+  [data-design-system='fluent-web'] .ty-fluent-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--ty-space-4);
+  }
+
+  [data-design-system='fluent-web'] .ty-fluent-caption {
+    color: var(--ty-color-text-muted);
+    font-size: var(--ty-font-size-100);
+    line-height: var(--ty-line-height-100);
+  }
+
+  [data-design-system='fluent-web'] .ty-fluent-title {
+    color: var(--ty-color-text);
+    font-size: var(--ty-font-size-400);
+    font-weight: var(--ty-font-weight-semibold);
+    line-height: var(--ty-line-height-400);
+  }
+}

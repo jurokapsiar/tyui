@@ -8,11 +8,12 @@ export interface DefineTestingConfigOptions {
 
 export function defineTestingConfig(options: DefineTestingConfigOptions): PlaywrightTestConfig {
   const isCI = process.env.CI === '1' || process.env.CI === 'true';
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
 
   const config: PlaywrightTestConfig = {
     testDir: options.testDir,
     testMatch: '**/*.spec.ts',
-    fullyParallel: true,
+    fullyParallel: options.mode === 'visual',
     forbidOnly: isCI,
     retries: isCI ? 2 : 0,
     reporter: isCI ? [['list'], ['junit', { outputFile: 'test-results/junit.xml' }]] : [['list']],
@@ -26,6 +27,9 @@ export function defineTestingConfig(options: DefineTestingConfigOptions): Playwr
       },
     },
   };
+
+  if (options.mode === 'e2e') config.workers = 1;
+  if (executablePath) config.use = { ...config.use, launchOptions: { executablePath } };
 
   if (options.mode === 'visual') {
     if (!options.snapshotDir) {

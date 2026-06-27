@@ -1,0 +1,14 @@
+Fluent Web design alternative for TYUI.
+
+Source of truth:
+- design/alternatives/fluent-web/DESIGN.md
+
+Generated files:
+- design/alternatives/fluent-web/theme.css
+- design/alternatives/fluent-web/component-variants.css
+- design/alternatives/fluent-web/design-app.md
+- design/alternatives/fluent-web/patterns.md
+- design/alternatives/fluent-web/context.json
+- design/alternatives/fluent-web/tokens.resolved.json
+
+Use by applying data-design-system="fluent-web" to an app root and importing theme.css before component-variants.css.
