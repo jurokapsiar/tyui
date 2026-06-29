@@ -338,9 +338,166 @@ Consumer override order for this component:
 
 ## Examples
 
+### Storybook Examples
+
+```html story title="Default"
+<tyui-input aria-label="Project name" placeholder="Project name"></tyui-input>
+```
+
+```html story title="Appearances"
+<div style="display:grid;gap:14px;max-width:360px;">
+  <tyui-input aria-label="Outline input" appearance="outline" placeholder="outline"></tyui-input>
+  <tyui-input
+    aria-label="Filled darker input"
+    appearance="filled-darker"
+    placeholder="filled-darker"
+  ></tyui-input>
+  <tyui-input
+    aria-label="Filled lighter input"
+    appearance="filled-lighter"
+    placeholder="filled-lighter"
+  ></tyui-input>
+</div>
+```
+
+```html story title="States"
+<div style="display:grid;gap:14px;max-width:420px;">
+  <tyui-input aria-label="Required value" placeholder="Required" required></tyui-input>
+  <tyui-input
+    aria-label="Invalid value"
+    placeholder="Invalid"
+    invalid
+    value="not enough"
+  ></tyui-input>
+  <tyui-input
+    aria-label="Readonly value"
+    placeholder="Readonly"
+    readonly
+    value="Readonly value"
+  ></tyui-input>
+  <tyui-input
+    aria-label="Disabled value"
+    placeholder="Disabled"
+    disabled
+    value="Disabled value"
+  ></tyui-input>
+</div>
+```
+
+### Design Examples
+
+```html design title="Atmospheric Glass"
+<div
+  data-design-system="atmospheric-glass"
+  style="box-sizing:border-box;min-height:420px;padding:40px;display:flex;align-items:center;justify-content:center;"
+>
+  <section
+    class="ty-glass-surface"
+    data-elevation="elevated"
+    data-shine="true"
+    style="box-sizing:border-box;width:min(100%,720px);padding:28px;display:grid;gap:20px;"
+  >
+    <div style="display:grid;gap:8px;">
+      <div class="ty-metric-label">Atmospheric Glass</div>
+      <div style="font-size:28px;font-weight:700;line-height:1.15;">Input composition</div>
+    </div>
+    <div style="display:grid;gap:14px;">
+      <tyui-input aria-label="Search weather maps" type="search" placeholder="Search weather maps">
+        <svg
+          slot="contentBefore"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          style="width:1em;height:1em;"
+        >
+          <path
+            fill="currentColor"
+            d="M8.5 3a5.5 5.5 0 0 1 4.38 8.83l3.15 3.15-1.06 1.06-3.15-3.15A5.5 5.5 0 1 1 8.5 3Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
+          ></path>
+        </svg>
+      </tyui-input>
+      <tyui-input aria-label="System name" appearance="filled-darker" value="North Atlantic system">
+        <svg
+          slot="contentAfter"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          style="width:1em;height:1em;"
+        >
+          <path
+            fill="currentColor"
+            d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16Zm3.36 5.65-4.2 4.2-1.95-1.96-1.06 1.06 3.01 3.01 5.26-5.25-1.06-1.06Z"
+          ></path>
+        </svg>
+      </tyui-input>
+      <tyui-input
+        aria-label="Optional notes"
+        appearance="outline"
+        placeholder="Optional notes"
+      ></tyui-input>
+    </div>
+  </section>
+</div>
+```
+
+```html design title="Fluent Web"
+<div
+  data-design-system="fluent-web"
+  style="box-sizing:border-box;min-height:420px;padding:32px;background:var(--ty-color-background);"
+>
+  <section
+    class="ty-fluent-panel"
+    data-elevation="raised"
+    style="box-sizing:border-box;width:min(100%,760px);padding:20px;display:grid;gap:18px;"
+  >
+    <div style="display:grid;gap:4px;">
+      <div class="ty-fluent-title">Fluent Web inputs</div>
+      <div class="ty-fluent-caption">
+        Outline by default, Fluent underline for density, and filled search fields for app chrome.
+      </div>
+    </div>
+    <div class="ty-fluent-form-grid">
+      <tyui-input
+        aria-label="Display name"
+        placeholder="Display name"
+        value="Adele Vance"
+      ></tyui-input>
+      <tyui-input
+        aria-label="Email"
+        type="email"
+        placeholder="Email"
+        value="adele@example.com"
+      ></tyui-input>
+      <tyui-input
+        aria-label="Alias"
+        class="ty-fluent-input-underline"
+        placeholder="Alias"
+        value="adelev"
+      ></tyui-input>
+      <tyui-input
+        aria-label="Search people"
+        appearance="filled-lighter"
+        type="search"
+        placeholder="Search people"
+      >
+        <svg
+          slot="contentBefore"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          style="width:1em;height:1em;"
+        >
+          <path
+            fill="currentColor"
+            d="M8.5 3a5.5 5.5 0 0 1 4.38 8.83l3.15 3.15-1.06 1.06-3.15-3.15A5.5 5.5 0 1 1 8.5 3Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
+          ></path>
+        </svg>
+      </tyui-input>
+    </div>
+  </section>
+</div>
+```
+
 ### Valid Example
 
-```tsx
+```html
 <label for="email">Email</label>
 <tyui-input id="email" name="email" type="email" required placeholder="name@example.com" />
 ```
@@ -349,7 +506,7 @@ Consumer override order for this component:
 
 Reason: placeholder text is not a sufficient accessible label.
 
-```tsx
+```html
 <tyui-input placeholder="Email" />
 ```
 
@@ -357,7 +514,7 @@ Reason: placeholder text is not a sufficient accessible label.
 
 Reason: content slots may decorate the field but must not add unlabeled actions.
 
-```tsx
+```html
 <tyui-input aria-label="Search" type="search" placeholder="Search">
   <tyui-icon slot="contentBefore" name="search" aria-hidden="true" />
 </tyui-input>

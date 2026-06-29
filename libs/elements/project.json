@@ -26,14 +26,20 @@
     },
     "storybook": {
       "executor": "@tyui/tools-executors:storybook",
+      "dependsOn": ["storybook-docs"],
       "options": {
         "framework": "web-components",
         "port": 6006,
         "mode": "dev"
       }
     },
+    "storybook-docs": {
+      "executor": "@tyui/tools-executors:storybook-docs",
+      "outputs": ["{projectRoot}/src/generated/spec-docs"]
+    },
     "visual": {
       "executor": "@tyui/tools-executors:storybook-visual",
+      "dependsOn": ["storybook-docs"],
       "options": {
         "port": 6010,
         "themes": ["light", "dark"],

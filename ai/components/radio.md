@@ -17,6 +17,14 @@
 
 Radio represents one option in a mutually exclusive set. It renders native radio semantics but delegates coordinated selection, roving tabindex, group value, and form association to `tyui-radio-group`.
 
+## Selection Guidance
+
+- Use when: the component appears as one child option inside `tyui-radio-group`.
+- Do not use when: the user can select more than one option; use `tyui-checkbox` instead.
+- Prefer instead: `tyui-radio-group` for public app markup because the group owns keyboarding, value, required state, and form submission.
+- Product-level variant preferences: generated themes may tune indicator fill, label position, spacing, and focus tokens.
+- One semantic target / one action rule: the radio indicator and label select the same option only.
+
 ## Composition Contract
 
 - Allowed children: phrasing content label in the default slot.
@@ -85,6 +93,22 @@ Verification note: standalone Space selection is intentionally delegated to the 
 ## Accessibility
 
 The native radio input owns the radio semantics. Decorative circle and dot are hidden from assistive technology. `label-position` changes visual layout only.
+
+## Examples
+
+### Storybook Examples
+
+```html story title="Standalone Radio"
+<tyui-radio value="metric" checked>Metric</tyui-radio>
+```
+
+```html story title="Label Positions"
+<div style="display:flex;flex-wrap:wrap;gap:18px;align-items:start;">
+  <tyui-radio value="after" checked>Label after</tyui-radio>
+  <tyui-radio value="below" label-position="below" checked>Label below</tyui-radio>
+  <tyui-radio value="disabled" disabled>Disabled</tyui-radio>
+</div>
+```
 
 ## Tests
 

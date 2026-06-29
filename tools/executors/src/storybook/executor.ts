@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import type { ExecutorContext } from '@nx/devkit';
 import { resolveProjectPaths } from '../shared/workspace-paths';
+import storybookDocs from '../storybook-docs/executor';
 
 export interface StorybookOptions {
   framework: 'web-components' | 'solid';
@@ -15,6 +16,9 @@ export default async function storybook(
   context: ExecutorContext,
 ): Promise<{ success: boolean }> {
   const paths = resolveProjectPaths(context);
+  const docs = await storybookDocs({}, context);
+  if (!docs.success) return docs;
+
   const args =
     options.mode === 'dev' ? ['dev', '-p', String(options.port), '--no-open'] : ['build'];
   const storybookBin = resolveStorybookBin(paths.projectAbsRoot);

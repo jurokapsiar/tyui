@@ -21,6 +21,11 @@ const preview: Preview = {
     },
   ],
   parameters: {
+    options: {
+      storySort: {
+        order: ['Components', 'Unimplemented components'],
+      },
+    },
     backgrounds: {
       default: 'surface',
       values: [{ name: 'surface', value: 'Canvas' }],

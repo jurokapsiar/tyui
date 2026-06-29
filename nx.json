@@ -73,6 +73,15 @@
       ],
       "outputs": ["{workspaceRoot}/dist/ai", "{workspaceRoot}/llms.txt"]
     },
+    "storybook-docs": {
+      "cache": true,
+      "inputs": [
+        "production",
+        "{workspaceRoot}/ai/components/**/*",
+        "{workspaceRoot}/tools/executors/src/storybook-docs/**/*"
+      ],
+      "outputs": ["{projectRoot}/src/generated/spec-docs"]
+    },
     "storybook": {
       "cache": false
     },

@@ -133,6 +133,83 @@ Private helper variables use `--_ty-checkbox-*` and are not consumer hooks.
 - Preserve consumer ARIA on the host unless a field wrapper supplies explicit relationships in the future.
 - Forced-colors mode must use system colors for box, mark, disabled, and focus.
 
+## Examples
+
+### Storybook Examples
+
+```html story title="Default"
+<tyui-checkbox>Receive notifications</tyui-checkbox>
+```
+
+```html story title="States"
+<div style="display:grid;gap:12px;align-items:start;">
+  <tyui-checkbox>Unchecked</tyui-checkbox>
+  <tyui-checkbox checked>Checked</tyui-checkbox>
+  <tyui-checkbox indeterminate>Indeterminate</tyui-checkbox>
+  <tyui-checkbox disabled>Disabled</tyui-checkbox>
+  <tyui-checkbox disabled checked>Disabled checked</tyui-checkbox>
+  <tyui-checkbox disabled indeterminate>Disabled indeterminate</tyui-checkbox>
+  <tyui-checkbox required>Required</tyui-checkbox>
+</div>
+```
+
+### Design Examples
+
+```html design title="Atmospheric Glass"
+<div
+  data-design-system="atmospheric-glass"
+  style="box-sizing:border-box;min-height:320px;padding:40px;display:flex;align-items:center;justify-content:center;"
+>
+  <section
+    class="ty-glass-surface"
+    data-elevation="elevated"
+    data-shine="true"
+    style="box-sizing:border-box;width:min(100%,560px);padding:28px;display:grid;gap:16px;"
+  >
+    <div class="ty-metric-label">Atmospheric Glass</div>
+    <tyui-checkbox checked>Include wind alerts</tyui-checkbox>
+    <tyui-checkbox indeterminate>Some regions selected</tyui-checkbox>
+    <tyui-checkbox>Show experimental layers</tyui-checkbox>
+  </section>
+</div>
+```
+
+```html design title="Fluent Web"
+<div
+  data-design-system="fluent-web"
+  style="box-sizing:border-box;min-height:320px;padding:32px;background:var(--ty-color-background);"
+>
+  <section
+    class="ty-fluent-panel"
+    data-elevation="raised"
+    style="box-sizing:border-box;width:min(100%,560px);padding:20px;display:grid;gap:14px;"
+  >
+    <div>
+      <div class="ty-fluent-title">Preferences</div>
+      <div class="ty-fluent-caption">Independent choices use checkboxes.</div>
+    </div>
+    <tyui-checkbox checked>Email me updates</tyui-checkbox>
+    <tyui-checkbox>Enable preview features</tyui-checkbox>
+    <tyui-checkbox indeterminate>Some teams selected</tyui-checkbox>
+  </section>
+</div>
+```
+
+### Valid Example
+
+```html
+<tyui-checkbox name="alerts" value="wind" checked>Include wind alerts</tyui-checkbox>
+```
+
+### Invalid Example
+
+Reason: use radio when one option must win from a set.
+
+```html
+<tyui-checkbox name="unit" value="metric">Metric</tyui-checkbox>
+<tyui-checkbox name="unit" value="imperial">Imperial</tyui-checkbox>
+```
+
 ## Tests
 
 | Requirement                          | Setup                                         | Action                               | Validation                                                          |

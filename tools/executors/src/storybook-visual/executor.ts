@@ -2,6 +2,7 @@ import type { ExecutorContext } from '@nx/devkit';
 import { runInDocker } from '../shared/docker';
 import { startStorybook } from '../shared/storybook-server';
 import { resolveProjectPaths } from '../shared/workspace-paths';
+import storybookDocs from '../storybook-docs/executor';
 
 export interface StorybookVisualOptions {
   port: number;
@@ -22,6 +23,9 @@ export default async function storybookVisual(
   context: ExecutorContext,
 ): Promise<{ success: boolean }> {
   const paths = resolveProjectPaths(context);
+  const docs = await storybookDocs({}, context);
+  if (!docs.success) return docs;
+
   const storybook = await startStorybook({ cwd: paths.projectAbsRoot, port: options.port });
 
   try {

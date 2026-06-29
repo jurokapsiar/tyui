@@ -3,7 +3,7 @@ import { mergeConfig } from 'vite';
 import { workspaceAliases } from '../../../vite.aliases.ts';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/generated/spec-docs/**/*.stories.@(ts|tsx)'],
   addons: [],
   framework: {
     name: '@storybook/web-components-vite',
@@ -11,6 +11,10 @@ const config: StorybookConfig = {
   },
   core: {
     disableTelemetry: true,
+  },
+  features: {
+    changeDetection: false,
+    sidebarOnboardingChecklist: false,
   },
   viteFinal: (config) =>
     mergeConfig(config, {

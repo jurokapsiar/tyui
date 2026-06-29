@@ -17,6 +17,14 @@
 
 RadioGroup lets the user select exactly one option from a small set. It owns shared value, selection synchronization, roving tabindex, keyboard navigation, required state, disabled state, and form submission for child `tyui-radio` items.
 
+## Selection Guidance
+
+- Use when: the user must choose one option from a small visible set.
+- Do not use when: options can be combined, hidden in a long list, or loaded through search.
+- Prefer instead: `tyui-checkbox` for independent choices and future `tyui-select` for compact long lists.
+- Product-level variant preferences: generated themes may tune layout gaps, label treatment, radio indicator tokens, and focus tokens.
+- One semantic target / one action rule: each child radio selects exactly one group value.
+
 ## Composition Contract
 
 - Allowed children: `tyui-radio` elements and optional non-interactive text nodes.
@@ -89,6 +97,92 @@ Programmatic `value` changes do not emit `change`.
 - If `aria-labelledby` is supplied, preserve it. Otherwise generate a stable internal label ID from the `label` attribute or `label` slot.
 - Child radios keep native radio semantics.
 - ID references across shadow boundaries are avoided for child labels; the group label relationship is host-owned.
+
+## Examples
+
+### Storybook Examples
+
+```html story title="Default"
+<tyui-radio-group label="Pick one" name="choice">
+  <tyui-radio value="a">Option A</tyui-radio>
+  <tyui-radio value="b">Option B</tyui-radio>
+  <tyui-radio value="c">Option C</tyui-radio>
+</tyui-radio-group>
+```
+
+```html story title="Selected"
+<tyui-radio-group label="Pick one" name="choice" value="b">
+  <tyui-radio value="a">Option A</tyui-radio>
+  <tyui-radio value="b">Option B</tyui-radio>
+  <tyui-radio value="c">Option C</tyui-radio>
+</tyui-radio-group>
+```
+
+```html story title="Layouts"
+<div style="display:grid;gap:24px;">
+  <tyui-radio-group label="vertical" layout="vertical" value="b">
+    <tyui-radio value="a">A</tyui-radio>
+    <tyui-radio value="b">B</tyui-radio>
+    <tyui-radio value="c">C</tyui-radio>
+  </tyui-radio-group>
+  <tyui-radio-group label="horizontal" layout="horizontal" value="b">
+    <tyui-radio value="a">A</tyui-radio>
+    <tyui-radio value="b">B</tyui-radio>
+    <tyui-radio value="c">C</tyui-radio>
+  </tyui-radio-group>
+  <tyui-radio-group label="horizontal-stacked" layout="horizontal-stacked" value="b">
+    <tyui-radio value="a">A</tyui-radio>
+    <tyui-radio value="b">B</tyui-radio>
+    <tyui-radio value="c">C</tyui-radio>
+  </tyui-radio-group>
+</div>
+```
+
+### Design Examples
+
+```html design title="Atmospheric Glass"
+<div
+  data-design-system="atmospheric-glass"
+  style="box-sizing:border-box;min-height:360px;padding:40px;display:flex;align-items:center;justify-content:center;"
+>
+  <section
+    class="ty-glass-surface"
+    data-elevation="elevated"
+    data-shine="true"
+    style="box-sizing:border-box;width:min(100%,640px);padding:28px;display:grid;gap:18px;"
+  >
+    <div class="ty-metric-label">Atmospheric Glass</div>
+    <tyui-radio-group label="Temperature units" layout="horizontal-stacked" value="metric">
+      <tyui-radio value="imperial">Fahrenheit</tyui-radio>
+      <tyui-radio value="metric">Celsius</tyui-radio>
+      <tyui-radio value="kelvin">Kelvin</tyui-radio>
+    </tyui-radio-group>
+  </section>
+</div>
+```
+
+```html design title="Fluent Web"
+<div
+  data-design-system="fluent-web"
+  style="box-sizing:border-box;min-height:360px;padding:32px;background:var(--ty-color-background);"
+>
+  <section
+    class="ty-fluent-panel"
+    data-elevation="raised"
+    style="box-sizing:border-box;width:min(100%,640px);padding:20px;display:grid;gap:18px;"
+  >
+    <div>
+      <div class="ty-fluent-title">Default view</div>
+      <div class="ty-fluent-caption">Mutually exclusive choices use a radio group.</div>
+    </div>
+    <tyui-radio-group label="Startup page" value="dashboard">
+      <tyui-radio value="dashboard">Dashboard</tyui-radio>
+      <tyui-radio value="activity">Activity</tyui-radio>
+      <tyui-radio value="settings">Settings</tyui-radio>
+    </tyui-radio-group>
+  </section>
+</div>
+```
 
 ## Tests
 

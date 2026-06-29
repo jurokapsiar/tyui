@@ -16,6 +16,10 @@
       "implementation": "./src/storybook/executor.ts",
       "schema": "./src/storybook/schema.json"
     },
+    "storybook-docs": {
+      "implementation": "./src/storybook-docs/executor.ts",
+      "schema": "./src/storybook-docs/schema.json"
+    },
     "storybook-visual": {
       "implementation": "./src/storybook-visual/executor.ts",
       "schema": "./src/storybook-visual/schema.json"

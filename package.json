@@ -25,6 +25,7 @@
     "playwright:ensure-image": "scripts/ensure-playwright-image.sh",
     "dev:solid": "nx serve solid-example",
     "dev:vanilla": "nx serve vanilla-example",
+    "storybook": "nx run elements:storybook",
     "graph": "nx graph",
     "prepare": "husky"
   },
