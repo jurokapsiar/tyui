@@ -25,9 +25,33 @@
       "types": "./src/button/index.ts",
       "default": "./dist/button.js"
     },
+    "./center": {
+      "types": "./src/center/index.ts",
+      "default": "./dist/center.js"
+    },
     "./checkbox": {
       "types": "./src/checkbox/index.ts",
       "default": "./dist/checkbox.js"
+    },
+    "./cluster": {
+      "types": "./src/cluster/index.ts",
+      "default": "./dist/cluster.js"
+    },
+    "./container": {
+      "types": "./src/container/index.ts",
+      "default": "./dist/container.js"
+    },
+    "./flex": {
+      "types": "./src/flex/index.ts",
+      "default": "./dist/flex.js"
+    },
+    "./frame": {
+      "types": "./src/frame/index.ts",
+      "default": "./dist/frame.js"
+    },
+    "./grid": {
+      "types": "./src/grid/index.ts",
+      "default": "./dist/grid.js"
     },
     "./input": {
       "types": "./src/input/index.ts",
@@ -40,6 +64,10 @@
     "./radio-group": {
       "types": "./src/radio-group/index.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./sidebar": {
+      "types": "./src/sidebar/index.ts",
+      "default": "./dist/sidebar.js"
     },
     "./custom-elements.json": {
       "default": "./custom-elements.json"

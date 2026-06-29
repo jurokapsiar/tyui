@@ -83,11 +83,10 @@ Mirror the attributes with typed properties. `pressed` may be `true`, `false`, `
 
 ### CSS Parts
 
-| Name      | Description                                  | Allowed Use                             | Required State Qualifiers                             |
-| --------- | -------------------------------------------- | --------------------------------------- | ----------------------------------------------------- |
-| `button`  | internal native button if shadow DOM is used | spacing, layout, focus ring integration | must mirror disabled, pressed, loading, focus-visible |
-| `icon`    | icon wrapper                                 | size and alignment                      | decorative unless icon-only                           |
-| `spinner` | loading indicator                            | loading affordance                      | hidden when not loading                               |
+| Name      | Description                                       | Allowed Use                             | Required State Qualifiers                             |
+| --------- | ------------------------------------------------- | --------------------------------------- | ----------------------------------------------------- |
+| `control` | internal native button if shadow DOM is used      | spacing, layout, focus ring integration | must mirror disabled, pressed, loading, focus-visible |
+| `label`   | internal wrapper around the default label content | text overflow and alignment             | must preserve accessible-name content                 |
 
 ### CSS Custom Properties
 
@@ -211,7 +210,7 @@ Mirror the attributes with typed properties. `pressed` may be `true`, `false`, `
 - Minimum target token: public target-size token.
 - Minimum visual target: visual affordance may be smaller only if hit target remains intact.
 - Flexible slots: default label.
-- Fixed slots: icon, spinner.
+- Fixed slots: icon. Loading indicator support requires a future documented slot or part before consumers can target it structurally.
 - Parent owns: placement, margins, button groups.
 - Component owns: internal alignment, gap, padding, focus ring, loading overlay.
 - Container-query thresholds: N/A.
@@ -220,11 +219,11 @@ Mirror the attributes with typed properties. `pressed` may be `true`, `false`, `
 
 ### Regions / Slots
 
-| Region / Slot | Flex | Min Inline Size | Wraps | Scrolls | Notes        |
-| ------------- | ---- | --------------- | ----- | ------- | ------------ |
-| default       | 1    | content         | no    | no      | label text   |
-| icon          | 0    | icon token      | no    | no      | before/after |
-| spinner       | 0    | spinner token   | no    | no      | loading only |
+| Region / Slot      | Flex | Min Inline Size | Wraps | Scrolls | Notes                      |
+| ------------------ | ---- | --------------- | ----- | ------- | -------------------------- |
+| default            | 1    | content         | no    | no      | label text                 |
+| icon               | 0    | icon token      | no    | no      | before/after               |
+| loading affordance | 0    | component token | no    | no      | future implementation only |
 
 ## Styling Contract
 
@@ -238,7 +237,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API.
 
 ### CSS Parts
 
-`button`, `icon`, `spinner` when shadow DOM is used. If no shadow DOM is used, parts are N/A and host attributes/pseudo-classes are the public styling surface.
+`control` and `label` when shadow DOM is used. The slotted `icon` is consumer-owned light DOM, not a CSS part. If no shadow DOM is used, parts are N/A and host attributes/pseudo-classes are the public styling surface.
 
 ### Styling State Surface
 

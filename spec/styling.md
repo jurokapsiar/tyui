@@ -481,7 +481,75 @@ Rules for crossing boundaries:
 
 The document-level layer names (`reset`, `tokens`, `product-theme`, `components`, `product-components`, `utilities`, `overrides`) govern light-DOM CSS. The `ty.*` layer names used inside component stylesheets govern only that shadow root. A product override from outside a shadow root must use inherited custom properties or documented `::part()` selectors; it cannot rely on layer order to pierce encapsulation.
 
-## 10. Preference and System-Color Modes
+Light-DOM layout primitives and `.ty-*` utility classes must emit into the document-level `utilities` layer. They must not create a global `@layer ty.layout` or any other undeclared layer. Undeclared document layers sort after declared layers, which would let library layout rules beat product `overrides`.
+
+Component shadow styles may use `@layer ty.component-base` or other `ty.*` names inside the constructed stylesheet. Those names are local ordering tools for that shadow root only. A global stylesheet must not use `ty.*` layer names.
+
+## 10. Light-DOM Layout Surface
+
+The styling contract has two public surfaces:
+
+- Shadow DOM component styling: semantic tokens, component tokens, documented slots, documented CSS parts, reflected state attributes, and ARIA state.
+- Light-DOM layout styling: layout primitive elements (`tyui-flex`, `tyui-grid`, `tyui-center`, `tyui-container`, `tyui-frame`, `tyui-cluster`, `tyui-sidebar`), matching `.ty-*` utility classes, and documented child selectors such as `.ty-frame > img`.
+
+Layout primitives use one shared mechanism:
+
+1. A custom element normalizes its attributes.
+2. The element writes public CSS custom properties on itself with `style.setProperty`.
+3. The shared `utilities` stylesheet consumes those custom properties.
+
+Example:
+
+```html
+<tyui-flex direction="column" gap="2" align="start"></tyui-flex>
+```
+
+maps to:
+
+```css
+tyui-flex {
+  --ty-flex-direction: column;
+  --ty-flex-gap: var(--ty-space-2, 0.5rem);
+  --ty-flex-align: flex-start;
+}
+```
+
+and the public utility rule consumes it:
+
+```css
+@layer utilities {
+  .ty-flex,
+  tyui-flex {
+    display: flex;
+    flex-direction: var(--ty-flex-direction, row);
+    align-items: var(--ty-flex-align, stretch);
+    gap: var(--ty-flex-gap, var(--ty-layout-gap, var(--ty-space-3, 0.75rem)));
+  }
+}
+```
+
+The `.ty-*` class form consumes the same custom properties but does not run attribute mapping. Authors who use `.ty-flex` must set custom properties or data attributes themselves.
+
+Supported space aliases are `0`, `1`, `2`, `3`, and `4`, mapping to `--ty-space-0` through `--ty-space-4`. The library does not advertise `gap="5"`, `gap="6"`, or `gap="inherit"` until tokens and mapping code define those values.
+
+`tyui-frame` and `.ty-frame` size direct children to the frame. `fit` and `position` apply only to replaced media children (`img`, `video`, `iframe`, `canvas`) through the documented `.ty-frame > img` / `tyui-frame > img` family of selectors. Non-replaced children fill the frame box, but `object-fit` does not affect them.
+
+Layout primitives must not set `container-type`. Container queries belong to composite components or app-level product CSS where the query contract can name the structural breakpoint and affected regions.
+
+### How Do I Adjust X?
+
+| Goal                                               | Use                                                                                              | Surface / Layer                                                            | Avoid                                          |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- | ---------------------------------------------- |
+| Change the product space scale                     | `--ty-space-0` through `--ty-space-4`, `--ty-page-gutter`, `--ty-layout-gap`                     | `tokens` or `product-theme`                                                | Component-specific overrides for global rhythm |
+| Change one layout instance's gap or direction      | Primitive attributes (`gap`, `direction`) or public `--ty-*-gap` / `--ty-*-direction` properties | Host style, app class, `utilities`, or `overrides`                         | Undocumented child selectors                   |
+| Override a library layout utility                  | Selector for the host or `.ty-*` class                                                           | `overrides`                                                                | New undeclared document layers                 |
+| Change component color, radius, density, or motion | Semantic or component tokens                                                                     | `product-theme`, `product-components`, or inherited host custom properties | Private `--_ty-*` variables                    |
+| Style an internal shadow element                   | Documented `::part()` after checking for an existing token                                       | `overrides`                                                                | Private shadow DOM selectors                   |
+| Style slotted media or icons                       | Class on the slotted node, or documented slot contract                                           | App CSS in `utilities` / `overrides`                                       | Assuming slots create CSS parts                |
+| Change frame media fitting                         | `fit` / `position` attributes or `--ty-frame-fit` / `--ty-frame-position`                        | Layout primitive host                                                      | Applying `object-fit` to non-replaced elements |
+| Add a structural breakpoint                        | Composite component contract or app CSS container query                                          | Component or product CSS with a documented owner                           | Setting `container-type` inside a primitive    |
+
+## 11. Preference and System-Color Modes
 
 Product design bundles own light and dark values. Apps activate the design and color scheme on the same root:
 
@@ -528,7 +596,7 @@ Motion tokens must collapse under reduced motion:
 
 Support `prefers-contrast` where practical by increasing border and focus contrast through semantic tokens. V1 does not require a complete alternate contrast token set.
 
-## 11. Public Styling Contract
+## 12. Public Styling Contract
 
 Three levels of customization, from coarse to fine:
 
@@ -588,7 +656,7 @@ Nested components must forward public styling hooks with `exportparts` when the 
 
 Every slot, part, and forwarded part must be listed in the Custom Elements Manifest and the component contract document. Generated app CSS may target only documented parts and forwarded parts.
 
-## 12. Variant and State Architecture
+## 13. Variant and State Architecture
 
 Component variants should remap tokens rather than repeating style blocks:
 
@@ -627,7 +695,7 @@ Selection must expose both semantic state and a styling hook. A checkbox can ref
 
 Visual state changes should be expressed declaratively through CSS selectors and custom-property remapping. JavaScript may update attributes, ARIA, or `data-*` state; it must not imperatively write style properties for ordinary hover, selected, checked, invalid, or focused visuals.
 
-## 13. Package Structure
+## 14. Package Structure
 
 ```
 libs/
@@ -663,7 +731,7 @@ libs/
    └─ optional-wrappers/
 ```
 
-## 14. Headless vs. Styleable Boundaries
+## 15. Headless vs. Styleable Boundaries
 
 The **shared component layer** owns:
 
@@ -689,7 +757,7 @@ The **product design layer** owns:
 
 Tokens should transform the visual language. They should not pretend every platform interaction model is equivalent—some platform differences are structural, not merely visual (e.g., segmented controls vs. dropdowns, platform-specific date pickers, toolbar layout conventions).
 
-## 15. Component Author Checklist
+## 16. Component Author Checklist
 
 When adding or changing a component:
 

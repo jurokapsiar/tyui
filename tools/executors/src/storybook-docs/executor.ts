@@ -214,8 +214,8 @@ import '../../../../../design/alternatives/fluent-web/component-variants.css';
 
 ${registrations}
 
-const examples = ${JSON.stringify(examples, null, 2)};
-const designs = ${JSON.stringify(designs, null, 2)};
+const examples: Array<{ title: string; code: string }> = ${JSON.stringify(examples, null, 2)};
+const designs: Array<{ title: string; code: string }> = ${JSON.stringify(designs, null, 2)};
 
 const meta: Meta = {
   title: 'Components/${doc.componentName}',
@@ -371,23 +371,13 @@ export const ImplementationSpec: Story = {
 }
 
 function buildDefineImports(doc: ComponentDoc): string {
-  const imports = [
-    `// nx-ignore-next-line\nimport { ${doc.defineName} } from '@tyui/define/${doc.slug}';`,
-  ];
-
-  if (doc.slug === 'radio-group') {
-    imports.unshift(
-      `// nx-ignore-next-line\nimport { defineTyuiRadio } from '@tyui/define/radio';`,
-    );
-  }
-
-  return imports.join('\n');
+  void doc;
+  return `// nx-ignore-next-line\nimport { defineTyuiElements } from '@tyui/define/all';`;
 }
 
 function buildDefineRegistrations(doc: ComponentDoc): string {
-  const registrations = [`${doc.defineName}();`];
-  if (doc.slug === 'radio-group') registrations.unshift('defineTyuiRadio();');
-  return registrations.join('\n');
+  void doc;
+  return 'defineTyuiElements();';
 }
 
 function buildImplementationMarkdown(source: string): string {

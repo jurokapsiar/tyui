@@ -2,18 +2,15 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 // nx-ignore-next-line
-import { defineTyuiRadio } from '@tyui/define/radio';
-// nx-ignore-next-line
-import { defineTyuiRadioGroup } from '@tyui/define/radio-group';
+import { defineTyuiElements } from '@tyui/define/all';
 import '../../../../../design/alternatives/atmospheric-glass/theme.css';
 import '../../../../../design/alternatives/atmospheric-glass/component-variants.css';
 import '../../../../../design/alternatives/fluent-web/theme.css';
 import '../../../../../design/alternatives/fluent-web/component-variants.css';
 
-defineTyuiRadio();
-defineTyuiRadioGroup();
+defineTyuiElements();
 
-const examples = [
+const examples: Array<{ title: string; code: string }> = [
   {
     code: '<tyui-radio-group label="Pick one" name="choice">\n  <tyui-radio value="a">Option A</tyui-radio>\n  <tyui-radio value="b">Option B</tyui-radio>\n  <tyui-radio value="c">Option C</tyui-radio>\n</tyui-radio-group>',
     title: 'Default',
@@ -27,7 +24,7 @@ const examples = [
     title: 'Layouts',
   },
 ];
-const designs = [
+const designs: Array<{ title: string; code: string }> = [
   {
     code: '<div\n  data-design-system="atmospheric-glass"\n  style="box-sizing:border-box;min-height:360px;padding:40px;display:flex;align-items:center;justify-content:center;"\n>\n  <section\n    class="ty-glass-surface"\n    data-elevation="elevated"\n    data-shine="true"\n    style="box-sizing:border-box;width:min(100%,640px);padding:28px;display:grid;gap:18px;"\n  >\n    <div class="ty-metric-label">Atmospheric Glass</div>\n    <tyui-radio-group label="Temperature units" layout="horizontal-stacked" value="metric">\n      <tyui-radio value="imperial">Fahrenheit</tyui-radio>\n      <tyui-radio value="metric">Celsius</tyui-radio>\n      <tyui-radio value="kelvin">Kelvin</tyui-radio>\n    </tyui-radio-group>\n  </section>\n</div>',
     title: 'Atmospheric Glass',

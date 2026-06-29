@@ -22,6 +22,24 @@ describe('TyuiCheckboxElement', () => {
     element.remove();
   });
 
+  it('exposes only the documented public styling parts', () => {
+    const element = document.createElement(tagName) as TyuiCheckboxElement;
+
+    document.body.append(element);
+
+    const parts = Array.from(element.shadowRoot?.querySelectorAll('[part]') ?? []).flatMap((node) =>
+      (node.getAttribute('part') ?? '').split(/\s+/).filter(Boolean),
+    );
+
+    expect(parts.sort()).toEqual(['box', 'control', 'label']);
+    expect(element.shadowRoot?.querySelector('[part="root"]')).toBeNull();
+    expect(element.shadowRoot?.querySelector('[part="input"]')).toBeNull();
+    expect(element.shadowRoot?.querySelector('[part="mark"]')).toBeNull();
+    expect(element.shadowRoot?.querySelector('[data-ty-checkbox-mark]')).not.toBeNull();
+
+    element.remove();
+  });
+
   it('toggles on host click and emits a composed change event', () => {
     const element = document.createElement(tagName) as TyuiCheckboxElement;
     const onChange = vi.fn();

@@ -18,8 +18,32 @@ export const workspaceAliases: AliasOptions = [
     replacement: resolve(workspaceRoot, 'libs/elements/src/button/index.ts'),
   },
   {
+    find: /^@tyui\/elements\/center$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/center/index.ts'),
+  },
+  {
     find: /^@tyui\/elements\/checkbox$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/checkbox/index.ts'),
+  },
+  {
+    find: /^@tyui\/elements\/cluster$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/cluster/index.ts'),
+  },
+  {
+    find: /^@tyui\/elements\/container$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/container/index.ts'),
+  },
+  {
+    find: /^@tyui\/elements\/flex$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/flex/index.ts'),
+  },
+  {
+    find: /^@tyui\/elements\/frame$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/frame/index.ts'),
+  },
+  {
+    find: /^@tyui\/elements\/grid$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/grid/index.ts'),
   },
   {
     find: /^@tyui\/elements\/input$/,
@@ -34,6 +58,10 @@ export const workspaceAliases: AliasOptions = [
     replacement: resolve(workspaceRoot, 'libs/elements/src/radio-group/index.ts'),
   },
   {
+    find: /^@tyui\/elements\/sidebar$/,
+    replacement: resolve(workspaceRoot, 'libs/elements/src/sidebar/index.ts'),
+  },
+  {
     find: /^@tyui\/define$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/index.ts'),
   },
@@ -42,8 +70,32 @@ export const workspaceAliases: AliasOptions = [
     replacement: resolve(workspaceRoot, 'libs/define/src/button.ts'),
   },
   {
+    find: /^@tyui\/define\/center$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/center.ts'),
+  },
+  {
     find: /^@tyui\/define\/checkbox$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/checkbox.ts'),
+  },
+  {
+    find: /^@tyui\/define\/cluster$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/cluster.ts'),
+  },
+  {
+    find: /^@tyui\/define\/container$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/container.ts'),
+  },
+  {
+    find: /^@tyui\/define\/flex$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/flex.ts'),
+  },
+  {
+    find: /^@tyui\/define\/frame$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/frame.ts'),
+  },
+  {
+    find: /^@tyui\/define\/grid$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/grid.ts'),
   },
   {
     find: /^@tyui\/define\/input$/,
@@ -56,6 +108,14 @@ export const workspaceAliases: AliasOptions = [
   {
     find: /^@tyui\/define\/radio-group$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/radio-group.ts'),
+  },
+  {
+    find: /^@tyui\/define\/sidebar$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/sidebar.ts'),
+  },
+  {
+    find: /^@tyui\/define\/all$/,
+    replacement: resolve(workspaceRoot, 'libs/define/src/all.ts'),
   },
   {
     find: /^@tyui\/solid$/,

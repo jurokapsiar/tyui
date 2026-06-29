@@ -16,9 +16,33 @@
       "types": "./src/button.ts",
       "default": "./dist/button.js"
     },
+    "./center": {
+      "types": "./src/center.ts",
+      "default": "./dist/center.js"
+    },
     "./checkbox": {
       "types": "./src/checkbox.ts",
       "default": "./dist/checkbox.js"
+    },
+    "./cluster": {
+      "types": "./src/cluster.ts",
+      "default": "./dist/cluster.js"
+    },
+    "./container": {
+      "types": "./src/container.ts",
+      "default": "./dist/container.js"
+    },
+    "./flex": {
+      "types": "./src/flex.ts",
+      "default": "./dist/flex.js"
+    },
+    "./frame": {
+      "types": "./src/frame.ts",
+      "default": "./dist/frame.js"
+    },
+    "./grid": {
+      "types": "./src/grid.ts",
+      "default": "./dist/grid.js"
     },
     "./input": {
       "types": "./src/input.ts",
@@ -31,6 +55,10 @@
     "./radio-group": {
       "types": "./src/radio-group.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./sidebar": {
+      "types": "./src/sidebar.ts",
+      "default": "./dist/sidebar.js"
     },
     "./all": {
       "types": "./src/all.ts",

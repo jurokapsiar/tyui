@@ -21,14 +21,14 @@ checkboxSheet.replaceSync(`
       cursor: not-allowed;
     }
 
-    [part='root'] {
+    [part='control'] {
       display: inline-flex;
       align-items: center;
       gap: var(--ty-checkbox-gap, var(--ty-control-gap, 0.5rem));
       cursor: inherit;
     }
 
-    [part='input'] {
+    input[type='checkbox'] {
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
@@ -101,16 +101,10 @@ checkboxSheet.replaceSync(`
       border-color: var(--ty-checkbox-disabled-border-color, var(--ty-color-disabled-border, GrayText));
     }
 
-    [part='mark'] {
+    [data-ty-checkbox-mark] {
       inline-size: calc(var(--ty-checkbox-size, 1rem) * 0.75);
       block-size: calc(var(--ty-checkbox-size, 1rem) * 0.75);
-      opacity: 0;
       color: inherit;
-    }
-
-    :host([checked]) [part='mark'],
-    :host([indeterminate]) [part='mark'] {
-      opacity: 1;
     }
 
     [part='label'] {
@@ -157,8 +151,8 @@ checkboxSheet.replaceSync(`
 const template = document.createElement('template');
 
 template.innerHTML = `
-  <label part="root">
-    <input part="input" type="checkbox" />
+  <label part="control">
+    <input type="checkbox" />
     <span part="box" aria-hidden="true"></span>
     <span part="label"><slot></slot></span>
   </label>
@@ -353,7 +347,7 @@ export class TyuiCheckboxElement extends HTMLElement {
 
   #createMark(): SVGSVGElement {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('part', 'mark');
+    svg.setAttribute('data-ty-checkbox-mark', '');
     svg.setAttribute('viewBox', '0 0 12 12');
     svg.setAttribute('aria-hidden', 'true');
     svg.setAttribute('fill', 'currentColor');

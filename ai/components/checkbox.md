@@ -24,7 +24,7 @@ Do not use Checkbox for mutually exclusive choices; use `tyui-radio-group` with 
 - Use when: the user can toggle one independent option, accept a term, or mark an item as included.
 - Do not use when: exactly one option from a set must be selected.
 - Prefer instead: `tyui-radio-group` for mutually exclusive choices.
-- Product-level variant preferences: generated themes may tune box, mark, color, spacing, and focus tokens.
+- Product-level variant preferences: generated themes may tune box, color, spacing, and focus tokens.
 - One semantic target / one action rule: the label and box activate the same checkbox only.
 
 ## Composition Contract
@@ -68,12 +68,11 @@ Programmatic property or attribute changes do not emit `change`.
 
 ### CSS Parts
 
-| Name    | Description                     |
-| ------- | ------------------------------- |
-| `root`  | Internal label wrapper.         |
-| `box`   | Decorative checkbox square.     |
-| `mark`  | Decorative check or mixed mark. |
-| `label` | Label content wrapper.          |
+| Name      | Description                 |
+| --------- | --------------------------- |
+| `control` | Internal label/control row. |
+| `box`     | Decorative checkbox square. |
+| `label`   | Label content wrapper.      |
 
 ### Public Tokens
 
@@ -129,9 +128,9 @@ Private helper variables use `--_ty-checkbox-*` and are not consumer hooks.
 
 - The native input owns checkbox semantics.
 - The slotted label is associated through the wrapping label.
-- Decorative box and mark are `aria-hidden`.
+- Decorative box is `aria-hidden`.
 - Preserve consumer ARIA on the host unless a field wrapper supplies explicit relationships in the future.
-- Forced-colors mode must use system colors for box, mark, disabled, and focus.
+- Forced-colors mode must use system colors for box, disabled, and focus.
 
 ## Examples
 
@@ -212,13 +211,13 @@ Reason: use radio when one option must win from a set.
 
 ## Tests
 
-| Requirement                          | Setup                                         | Action                               | Validation                                                          |
-| ------------------------------------ | --------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------- |
-| Native checkbox exists.              | Mount `<tyui-checkbox>Label</tyui-checkbox>`. | Query shadow DOM.                    | `input[type='checkbox']` exists; host is tabbable.                  |
-| Click toggles.                       | Mount enabled checkbox with change spy.       | Call host `.click()`.                | `checked=true`; one composed bubbling `change` fires.               |
-| Space toggles.                       | Focus checkbox.                               | Dispatch Space keydown.              | State toggles and `change` fires.                                   |
-| Indeterminate clears on user toggle. | Mount `indeterminate`.                        | Click host.                          | `indeterminate=false`; `checked=true`.                              |
-| Disabled blocks interaction.         | Mount `disabled`.                             | Click host.                          | State does not change; input disabled; host `tabIndex=-1`.          |
-| Form submission.                     | Put named checked checkbox in a form.         | Construct `FormData`.                | Submitted value is `on` by default.                                 |
-| Required validity.                   | Mount required unchecked then checked.        | Call `checkValidity()`.              | Unchecked is invalid; checked is valid.                             |
-| Styling hooks exist.                 | Mount states.                                 | Inspect shadow parts and host attrs. | `root`, `box`, `mark`, `label` parts exist and state attrs reflect. |
+| Requirement                          | Setup                                         | Action                               | Validation                                                     |
+| ------------------------------------ | --------------------------------------------- | ------------------------------------ | -------------------------------------------------------------- |
+| Native checkbox exists.              | Mount `<tyui-checkbox>Label</tyui-checkbox>`. | Query shadow DOM.                    | `input[type='checkbox']` exists; host is tabbable.             |
+| Click toggles.                       | Mount enabled checkbox with change spy.       | Call host `.click()`.                | `checked=true`; one composed bubbling `change` fires.          |
+| Space toggles.                       | Focus checkbox.                               | Dispatch Space keydown.              | State toggles and `change` fires.                              |
+| Indeterminate clears on user toggle. | Mount `indeterminate`.                        | Click host.                          | `indeterminate=false`; `checked=true`.                         |
+| Disabled blocks interaction.         | Mount `disabled`.                             | Click host.                          | State does not change; input disabled; host `tabIndex=-1`.     |
+| Form submission.                     | Put named checked checkbox in a form.         | Construct `FormData`.                | Submitted value is `on` by default.                            |
+| Required validity.                   | Mount required unchecked then checked.        | Call `checkValidity()`.              | Unchecked is invalid; checked is valid.                        |
+| Styling hooks exist.                 | Mount states.                                 | Inspect shadow parts and host attrs. | `control`, `box`, `label` parts exist and state attrs reflect. |

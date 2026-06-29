@@ -2,15 +2,15 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 // nx-ignore-next-line
-import { defineTyuiInput } from '@tyui/define/input';
+import { defineTyuiElements } from '@tyui/define/all';
 import '../../../../../design/alternatives/atmospheric-glass/theme.css';
 import '../../../../../design/alternatives/atmospheric-glass/component-variants.css';
 import '../../../../../design/alternatives/fluent-web/theme.css';
 import '../../../../../design/alternatives/fluent-web/component-variants.css';
 
-defineTyuiInput();
+defineTyuiElements();
 
-const examples = [
+const examples: Array<{ title: string; code: string }> = [
   {
     code: '<tyui-input aria-label="Project name" placeholder="Project name"></tyui-input>',
     title: 'Default',
@@ -24,7 +24,7 @@ const examples = [
     title: 'States',
   },
 ];
-const designs = [
+const designs: Array<{ title: string; code: string }> = [
   {
     code: '<div\n  data-design-system="atmospheric-glass"\n  style="box-sizing:border-box;min-height:420px;padding:40px;display:flex;align-items:center;justify-content:center;"\n>\n  <section\n    class="ty-glass-surface"\n    data-elevation="elevated"\n    data-shine="true"\n    style="box-sizing:border-box;width:min(100%,720px);padding:28px;display:grid;gap:20px;"\n  >\n    <div style="display:grid;gap:8px;">\n      <div class="ty-metric-label">Atmospheric Glass</div>\n      <div style="font-size:28px;font-weight:700;line-height:1.15;">Input composition</div>\n    </div>\n    <div style="display:grid;gap:14px;">\n      <tyui-input aria-label="Search weather maps" type="search" placeholder="Search weather maps">\n        <svg\n          slot="contentBefore"\n          viewBox="0 0 20 20"\n          aria-hidden="true"\n          style="width:1em;height:1em;"\n        >\n          <path\n            fill="currentColor"\n            d="M8.5 3a5.5 5.5 0 0 1 4.38 8.83l3.15 3.15-1.06 1.06-3.15-3.15A5.5 5.5 0 1 1 8.5 3Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"\n          ></path>\n        </svg>\n      </tyui-input>\n      <tyui-input aria-label="System name" appearance="filled-darker" value="North Atlantic system">\n        <svg\n          slot="contentAfter"\n          viewBox="0 0 20 20"\n          aria-hidden="true"\n          style="width:1em;height:1em;"\n        >\n          <path\n            fill="currentColor"\n            d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16Zm3.36 5.65-4.2 4.2-1.95-1.96-1.06 1.06 3.01 3.01 5.26-5.25-1.06-1.06Z"\n          ></path>\n        </svg>\n      </tyui-input>\n      <tyui-input\n        aria-label="Optional notes"\n        appearance="outline"\n        placeholder="Optional notes"\n      ></tyui-input>\n    </div>\n  </section>\n</div>',
     title: 'Atmospheric Glass',

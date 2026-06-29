@@ -119,6 +119,14 @@ tyui-toolbar {
 
 The component library includes a small number of layout primitives. Each ships as a custom element for the primary documented API and as a CSS utility for low-level use. Both forms use the same tokens and layout contracts.
 
+See [`spec/styling.md`](./styling.md) for the styling surface, cascade layers, and override rules. Layout primitive rules are light-DOM utilities and must emit into the public `utilities` layer from the declared document order:
+
+```css
+@layer reset, tokens, product-theme, components, product-components, utilities, overrides;
+```
+
+No layout primitive may create a global undeclared layer such as `ty.layout`. Product CSS that needs to beat primitive layout rules uses the declared `overrides` layer.
+
 Required v1 primitives:
 
 | Primitive               | Primary element    | Utility class   | Purpose                            |
@@ -132,6 +140,22 @@ Required v1 primitives:
 | `Sidebar`               | `<tyui-sidebar>`   | `.ty-sidebar`   | Fixed-plus-fluid two-column layout |
 
 `Switcher` is a useful intrinsic-layout pattern but is not required in v1. Add it later if product patterns need explicit column-to-row switching beyond `Flex`, `Cluster`, and container-query composition.
+
+### Element and Utility Parity
+
+The custom element and utility class forms share the same CSS custom properties. The element form owns attribute normalization; the utility class form only consumes CSS.
+
+| Author input                        | Element mapping                                         | Utility consumption                                                   |
+| ----------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------- |
+| `<tyui-flex direction="column">`    | sets `--ty-flex-direction: column`                      | `.ty-flex` consumes `--ty-flex-direction` if the author sets it       |
+| `<tyui-flex gap="2">`               | sets `--ty-flex-gap: var(--ty-space-2, 0.5rem)`         | `.ty-flex` consumes `--ty-flex-gap` if the author sets it             |
+| `<tyui-flex align="start">`         | maps `start` to `flex-start` and sets `--ty-flex-align` | `.ty-flex` consumes `--ty-flex-align` if the author sets it           |
+| `<tyui-grid min-item-size="18rem">` | sets `--ty-grid-min-item-size: 18rem`                   | `.ty-grid` consumes `--ty-grid-min-item-size` if the author sets it   |
+| `<tyui-sidebar side="end">`         | sets `--ty-sidebar-direction: row-reverse`              | `.ty-sidebar` consumes `--ty-sidebar-direction` if the author sets it |
+
+Supported gap values are `0`, `1`, `2`, `3`, and `4`, matching `--ty-space-0` through `--ty-space-4`. Do not document or generate `gap="5"`, `gap="6"`, or `gap="inherit"` until the token scale and element mapping support them. Invalid gap values fall back to each primitive's default.
+
+Layout primitives must not set `container-type`. Container queries belong in app composition CSS or composite component contracts, where the structural breakpoint and affected regions can be named.
 
 ### Flex
 
@@ -217,7 +241,18 @@ tyui-frame {
 tyui-frame > * {
   block-size: 100%;
   inline-size: 100%;
+}
+
+.ty-frame > img,
+.ty-frame > video,
+.ty-frame > iframe,
+.ty-frame > canvas,
+tyui-frame > img,
+tyui-frame > video,
+tyui-frame > iframe,
+tyui-frame > canvas {
   object-fit: var(--ty-frame-fit, cover);
+  object-position: var(--ty-frame-position, center);
 }
 ```
 

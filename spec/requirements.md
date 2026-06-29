@@ -72,7 +72,7 @@ Accessibility testing should happen in layers:
 - Components must remain usable in `forced-colors: active` through system-color fallbacks and explicit focus styling.
 - Each component module must define exactly one constructed stylesheet (`CSSStyleSheet`) and share it across all shadow roots; do not create per-instance `<style>` elements.
 - Density is controlled by relational padding calculations (`calc()` against a unit variable and an offset); never use a fixed control height token.
-- Declare a public cascade layer order at the document level (`reset`, `tokens`, `product-theme`, `components`, `product-components`, `utilities`, `overrides`).
+- Declare a public cascade layer order at the document level (`reset`, `tokens`, `product-theme`, `components`, `product-components`, `utilities`, `overrides`). Light-DOM layout primitives and `.ty-*` utilities must emit into `utilities`; global stylesheets must not introduce undeclared `ty.*` layers.
 - The public styling contract has three levels: semantic tokens (for most products), component tokens (for component-specific design), and `::part()` (for advanced structural overrides only).
 - Apps and generated design bundles must follow this override order: component attributes/properties, host classes or app-local CSS, public CSS custom properties, documented `::part()` selectors, then inline styles only for dynamic per-instance values.
 - Host classes and app-local CSS may style custom-element hosts for layout, containment, width, margin, and scoped token overrides; they must not depend on private shadow DOM selectors.

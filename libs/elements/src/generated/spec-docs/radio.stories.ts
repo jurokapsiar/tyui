@@ -2,15 +2,15 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 // nx-ignore-next-line
-import { defineTyuiRadio } from '@tyui/define/radio';
+import { defineTyuiElements } from '@tyui/define/all';
 import '../../../../../design/alternatives/atmospheric-glass/theme.css';
 import '../../../../../design/alternatives/atmospheric-glass/component-variants.css';
 import '../../../../../design/alternatives/fluent-web/theme.css';
 import '../../../../../design/alternatives/fluent-web/component-variants.css';
 
-defineTyuiRadio();
+defineTyuiElements();
 
-const examples = [
+const examples: Array<{ title: string; code: string }> = [
   {
     code: '<tyui-radio value="metric" checked>Metric</tyui-radio>',
     title: 'Standalone Radio',
@@ -20,7 +20,7 @@ const examples = [
     title: 'Label Positions',
   },
 ];
-const designs = [];
+const designs: Array<{ title: string; code: string }> = [];
 
 const meta: Meta = {
   title: 'Components/Radio',
