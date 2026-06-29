@@ -1,0 +1,70 @@
+name: Deploy Storybook
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/deploy-storybook.yml'
+      - 'apps/**'
+      - 'libs/**'
+      - 'tools/**'
+      - 'design/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'nx.json'
+      - 'tsconfig*.json'
+      - 'vite.aliases.ts'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build Elements Storybook
+        run: yarn nx run elements:storybook --mode=build
+
+      - name: Disable Jekyll
+        run: touch libs/elements/storybook-static/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: libs/elements/storybook-static
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
