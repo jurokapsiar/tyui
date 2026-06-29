@@ -40,7 +40,7 @@ Desing is proposed to be a separate layer. It should be possible to generate the
 
 ## Availability
 
-Storybook is deployed as (Github page)[https://jurokapsiar.github.io/tyui/].
+Storybook is deployed as [Github page](https://jurokapsiar.github.io/tyui/).
 Packages are not yet available - they might be if I decide to use the library in my personal projects.
 
 ## Architecture
