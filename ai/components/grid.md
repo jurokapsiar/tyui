@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-grid`
-- Define: `@tyui/define/grid`
+- Define: `@toyu-ui/define/grid`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -152,7 +152,7 @@ Attributes and public tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Grid adds no interaction and does not implement ARIA grid behavior.
 - Define idempotently through `defineTyuiGrid`.
-- Export `@tyui/elements/grid` and `@tyui/define/grid`.
+- Export `@toyu-ui/elements/grid` and `@toyu-ui/define/grid`.
 - Provide `.ty-grid` utility CSS.
 - Use CSS Grid auto-fit; do not calculate columns in JavaScript.
 - Do not add ARIA grid semantics.

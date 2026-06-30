@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-select`
-- Define: `@tyui/define/select`
+- Define: `@toyu-ui/define/select`
 - Status: draft
 - Native substrate: **native `<select>`** (Fluent v9's Select is itself a thin wrapper around `<select>`).
 - Shadow DOM: minimal. Shadow root holds a styled wrapper + `<slot>` for the `<select>` **or** a forwarded `<select part="select">` plus a decorative chevron `<span part="icon">`. The `<option>` list, popup, keyboard, typeahead, and form submission stay 100% native.

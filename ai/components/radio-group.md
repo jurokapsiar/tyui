@@ -4,7 +4,7 @@
 
 - Component name: RadioGroup
 - Tag name: `tyui-radio-group`
-- Package entry point: `@tyui/elements/radio-group`
+- Package entry point: `@toyu-ui/elements/radio-group`
 - Status: planned / implementation-ready
 - Source file: `libs/elements/src/radio-group/tyui-radio-group.ts`
 - Component family: form controls

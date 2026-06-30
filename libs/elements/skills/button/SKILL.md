@@ -4,8 +4,8 @@ description: Use and integrate the tyui-button custom element correctly, includi
 license: Apache-2.0
 metadata:
   type: library
-  library: '@tyui/elements'
-  library_version: '0.0.0'
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
   source: src/button/tyui-button.ts
   manifest: ../../custom-elements.json
 ---
@@ -18,13 +18,13 @@ Use `tyui-button` to trigger an immediate in-page action. Use a link for navigat
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`. Do not copy
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`. Do not copy
 attribute or event types from memory.
 
 ## Registration
 
 ```ts
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 
 defineTyuiButton();
 ```

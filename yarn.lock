@@ -2847,6 +2847,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/pluginutils@npm:^5.1.4":
+  version: 5.4.0
+  resolution: "@rollup/pluginutils@npm:5.4.0"
+  dependencies:
+    "@types/estree": "npm:^1.0.0"
+    estree-walker: "npm:^2.0.2"
+    picomatch: "npm:^4.0.2"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 10c0/ccc2cbd3a05df642df60ab05ffb81b2e564bd945e2a118bb8a474ea75b941033c8f44273133d4865643cca1492d0c80b14de1281f74779a64285a80fc3a194d8
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-android-arm-eabi@npm:4.62.2":
   version: 4.62.2
   resolution: "@rollup/rollup-android-arm-eabi@npm:4.62.2"
@@ -3375,6 +3391,76 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@toyu-ui/core@npm:^0.1.0, @toyu-ui/core@workspace:libs/core":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/core@workspace:libs/core"
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/define@npm:^0.1.0, @toyu-ui/define@workspace:*, @toyu-ui/define@workspace:libs/define":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/define@workspace:libs/define"
+  dependencies:
+    "@toyu-ui/elements": "npm:^0.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/elements@npm:^0.1.0, @toyu-ui/elements@workspace:*, @toyu-ui/elements@workspace:libs/elements":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/elements@workspace:libs/elements"
+  dependencies:
+    "@toyu-ui/core": "npm:^0.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/solid@workspace:*, @toyu-ui/solid@workspace:libs/solid":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/solid@workspace:libs/solid"
+  dependencies:
+    "@toyu-ui/define": "npm:^0.1.0"
+    "@toyu-ui/elements": "npm:^0.1.0"
+  peerDependencies:
+    solid-js: ^1.9.13
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/testing@workspace:libs/testing":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/testing@workspace:libs/testing"
+  dependencies:
+    "@toyu-ui/tools-executors": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/tools-executors@workspace:*, @toyu-ui/tools-executors@workspace:tools/executors":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/tools-executors@workspace:tools/executors"
+  dependencies:
+    "@nx/devkit": "npm:^22.6.5"
+    nx: "npm:^22.6.5"
+    vite: "npm:7.1.11"
+    vitest: "npm:^4.1.5"
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/tools-generators@workspace:tools/generators":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/tools-generators@workspace:tools/generators"
+  dependencies:
+    "@nx/devkit": "npm:^22.6.5"
+    nx: "npm:^22.6.5"
+  languageName: unknown
+  linkType: soft
+
+"@toyu-ui/tools-workspace@workspace:tools/workspace":
+  version: 0.0.0-use.local
+  resolution: "@toyu-ui/tools-workspace@workspace:tools/workspace"
+  dependencies:
+    "@nx/devkit": "npm:^22.6.5"
+    nx: "npm:^22.6.5"
+  languageName: unknown
+  linkType: soft
+
 "@tybys/wasm-util@npm:0.9.0, @tybys/wasm-util@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tybys/wasm-util@npm:0.9.0"
@@ -3505,81 +3591,6 @@ __metadata:
   checksum: 10c0/61aff1129143fcc4312f083bc9e9e168aa3026b7dd6e70796276dcfb2c8211c4292603f9c4864fae702f2ed86e4abd4d38aa421831c2fd7f856c931a481afbab
   languageName: node
   linkType: hard
-
-"@tyui/core@workspace:*, @tyui/core@workspace:libs/core":
-  version: 0.0.0-use.local
-  resolution: "@tyui/core@workspace:libs/core"
-  dependencies:
-    "@tyui/tools-executors": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@tyui/define@workspace:*, @tyui/define@workspace:libs/define":
-  version: 0.0.0-use.local
-  resolution: "@tyui/define@workspace:libs/define"
-  dependencies:
-    "@tyui/elements": "workspace:*"
-    "@tyui/tools-executors": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@tyui/elements@workspace:*, @tyui/elements@workspace:libs/elements":
-  version: 0.0.0-use.local
-  resolution: "@tyui/elements@workspace:libs/elements"
-  dependencies:
-    "@tyui/core": "workspace:*"
-    "@tyui/tools-executors": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@tyui/solid@workspace:*, @tyui/solid@workspace:libs/solid":
-  version: 0.0.0-use.local
-  resolution: "@tyui/solid@workspace:libs/solid"
-  dependencies:
-    "@tyui/define": "workspace:*"
-    "@tyui/elements": "workspace:*"
-    "@tyui/tools-executors": "workspace:*"
-  peerDependencies:
-    solid-js: ^1.9.13
-  languageName: unknown
-  linkType: soft
-
-"@tyui/testing@workspace:libs/testing":
-  version: 0.0.0-use.local
-  resolution: "@tyui/testing@workspace:libs/testing"
-  dependencies:
-    "@tyui/tools-executors": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@tyui/tools-executors@workspace:*, @tyui/tools-executors@workspace:tools/executors":
-  version: 0.0.0-use.local
-  resolution: "@tyui/tools-executors@workspace:tools/executors"
-  dependencies:
-    "@nx/devkit": "npm:^22.6.5"
-    nx: "npm:^22.6.5"
-    vite: "npm:7.1.11"
-    vitest: "npm:^4.1.5"
-  languageName: unknown
-  linkType: soft
-
-"@tyui/tools-generators@workspace:tools/generators":
-  version: 0.0.0-use.local
-  resolution: "@tyui/tools-generators@workspace:tools/generators"
-  dependencies:
-    "@nx/devkit": "npm:^22.6.5"
-    nx: "npm:^22.6.5"
-  languageName: unknown
-  linkType: soft
-
-"@tyui/tools-workspace@workspace:tools/workspace":
-  version: 0.0.0-use.local
-  resolution: "@tyui/tools-workspace@workspace:tools/workspace"
-  dependencies:
-    "@nx/devkit": "npm:^22.6.5"
-    nx: "npm:^22.6.5"
-  languageName: unknown
-  linkType: soft
 
 "@vitest/browser-playwright@npm:^4.1.5":
   version: 4.1.9
@@ -3773,7 +3784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@volar/typescript@npm:2.4.28":
+"@volar/typescript@npm:2.4.28, @volar/typescript@npm:^2.4.26":
   version: 2.4.28
   resolution: "@volar/typescript@npm:2.4.28"
   dependencies:
@@ -3816,7 +3827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.15.0":
+"acorn@npm:^8.15.0, acorn@npm:^8.16.0":
   version: 8.17.0
   resolution: "acorn@npm:8.17.0"
   bin:
@@ -4357,6 +4368,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"compare-versions@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "compare-versions@npm:6.1.1"
+  checksum: 10c0/415205c7627f9e4f358f571266422980c9fe2d99086be0c9a48008ef7c771f32b0fbe8e97a441ffedc3910872f917a0675fe0fe3c3b6d331cda6d8690be06338
+  languageName: node
+  linkType: hard
+
+"confbox@npm:^0.1.8":
+  version: 0.1.8
+  resolution: "confbox@npm:0.1.8"
+  checksum: 10c0/fc2c68d97cb54d885b10b63e45bd8da83a8a71459d3ecf1825143dd4c7f9f1b696b3283e07d9d12a144c1301c2ebc7842380bdf0014e55acc4ae1c9550102418
+  languageName: node
+  linkType: hard
+
+"confbox@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "confbox@npm:0.2.4"
+  checksum: 10c0/4c36af33d9df7034300c452f7b289179264493bd0671fa81b995a0d70dc897b1d37f1af10d3ffb187f178d17ba1ed2ba167ed0f599ba3a139c271205dd553f73
+  languageName: node
+  linkType: hard
+
 "conventional-changelog-angular@npm:^8.2.0":
   version: 8.3.1
   resolution: "conventional-changelog-angular@npm:8.3.1"
@@ -4460,7 +4492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.4.1, debug@npm:^4.4.3":
+"debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.4.0, debug@npm:^4.4.1, debug@npm:^4.4.3":
   version: 4.4.3
   resolution: "debug@npm:4.4.3"
   dependencies:
@@ -4947,6 +4979,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-walker@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "estree-walker@npm:2.0.2"
+  checksum: 10c0/53a6c54e2019b8c914dc395890153ffdc2322781acf4bd7d1a32d7aedc1710807bdcd866ac133903d5629ec601fbb50abe8c2e5553c7f5a0afdd9b6af6c945af
+  languageName: node
+  linkType: hard
+
 "estree-walker@npm:^3.0.3":
   version: 3.0.3
   resolution: "estree-walker@npm:3.0.3"
@@ -4981,6 +5020,13 @@ __metadata:
   version: 3.1.3
   resolution: "exponential-backoff@npm:3.1.3"
   checksum: 10c0/77e3ae682b7b1f4972f563c6dbcd2b0d54ac679e62d5d32f3e5085feba20483cf28bd505543f520e287a56d4d55a28d7874299941faf637e779a1aa5994d1267
+  languageName: node
+  linkType: hard
+
+"exsolve@npm:^1.0.8":
+  version: 1.1.0
+  resolution: "exsolve@npm:1.1.0"
+  checksum: 10c0/38ecec58d6e4ddfe31b5e6773a0193057fcb8462e1c0959aee3c9441729b4db901f3b23af68963cb871fb3f83b46c49ed2f69e0ef6d5254951f483c68cc934e9
   languageName: node
   linkType: hard
 
@@ -5531,6 +5577,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"kolorist@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "kolorist@npm:1.8.0"
+  checksum: 10c0/73075db44a692bf6c34a649f3b4b3aea4993b84f6b754cbf7a8577e7c7db44c0bad87752bd23b0ce533f49de2244ce2ce03b7b1b667a85ae170a94782cc50f9b
+  languageName: node
+  linkType: hard
+
 "lightningcss-android-arm64@npm:1.32.0":
   version: 1.32.0
   resolution: "lightningcss-android-arm64@npm:1.32.0"
@@ -5726,6 +5779,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"local-pkg@npm:^1.1.1":
+  version: 1.2.1
+  resolution: "local-pkg@npm:1.2.1"
+  dependencies:
+    mlly: "npm:^1.7.4"
+    pkg-types: "npm:^2.3.0"
+    quansync: "npm:^0.2.11"
+  checksum: 10c0/d21ccfc2595b2eddf7369f19797533573feb06820d8b5766467902a7a54e36b3a1f2b8cc2aa4481a2ad432c8e798576eabfac2f1ec0646a8e11a68694c2ef9d4
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -5772,7 +5836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.21":
+"magic-string@npm:^0.30.17, magic-string@npm:^0.30.21":
   version: 0.30.21
   resolution: "magic-string@npm:0.30.21"
   dependencies:
@@ -5870,6 +5934,18 @@ __metadata:
   dependencies:
     minipass: "npm:^7.1.2"
   checksum: 10c0/5aad75ab0090b8266069c9aabe582c021ae53eb33c6c691054a13a45db3b4f91a7fb1bd79151e6b4e9e9a86727b522527c0a06ec7d45206b745d54cd3097bcec
+  languageName: node
+  linkType: hard
+
+"mlly@npm:^1.7.4":
+  version: 1.8.2
+  resolution: "mlly@npm:1.8.2"
+  dependencies:
+    acorn: "npm:^8.16.0"
+    pathe: "npm:^2.0.3"
+    pkg-types: "npm:^1.3.1"
+    ufo: "npm:^1.6.3"
+  checksum: 10c0/aa826683a6daddf2aef65f9c8142e362731cf8e415a5591faf92fd51040a76697e45ab6dbb7a3b38be74e0f8c464825a7eabe827750455c7472421953f5da733
   languageName: node
   linkType: hard
 
@@ -6515,7 +6591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pathe@npm:^2.0.3":
+"pathe@npm:^2.0.1, pathe@npm:^2.0.3":
   version: 2.0.3
   resolution: "pathe@npm:2.0.3"
   checksum: 10c0/c118dc5a8b5c4166011b2b70608762e260085180bb9e33e80a50dcdb1e78c010b1624f4280c492c92b05fc276715a4c357d1f9edc570f8f1b3d90b6839ebaca1
@@ -6536,7 +6612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:4.0.4, picomatch@npm:^4.0.3, picomatch@npm:^4.0.4":
+"picomatch@npm:4.0.4, picomatch@npm:^4.0.2, picomatch@npm:^4.0.3, picomatch@npm:^4.0.4":
   version: 4.0.4
   resolution: "picomatch@npm:4.0.4"
   checksum: 10c0/e2c6023372cc7b5764719a5ffb9da0f8e781212fa7ca4bd0562db929df8e117460f00dff3cb7509dacfc06b86de924b247f504d0ce1806a37fac4633081466b0
@@ -6547,6 +6623,28 @@ __metadata:
   version: 4.0.7
   resolution: "pirates@npm:4.0.7"
   checksum: 10c0/a51f108dd811beb779d58a76864bbd49e239fa40c7984cd11596c75a121a8cc789f1c8971d8bb15f0dbf9d48b76c05bb62fcbce840f89b688c0fa64b37e8478a
+  languageName: node
+  linkType: hard
+
+"pkg-types@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "pkg-types@npm:1.3.1"
+  dependencies:
+    confbox: "npm:^0.1.8"
+    mlly: "npm:^1.7.4"
+    pathe: "npm:^2.0.1"
+  checksum: 10c0/19e6cb8b66dcc66c89f2344aecfa47f2431c988cfa3366bdfdcfb1dd6695f87dcce37fbd90fe9d1605e2f4440b77f391e83c23255347c35cf84e7fd774d7fcea
+  languageName: node
+  linkType: hard
+
+"pkg-types@npm:^2.3.0":
+  version: 2.3.1
+  resolution: "pkg-types@npm:2.3.1"
+  dependencies:
+    confbox: "npm:^0.2.4"
+    exsolve: "npm:^1.0.8"
+    pathe: "npm:^2.0.3"
+  checksum: 10c0/dd9b20682426abaddcac9dc786aa22542e12df15a03dea2afa7bf54da0933358c6c7f545c0c3c1c7b24a2904ab4a451bf4e34a50c6837e458359eea30c257ed4
   languageName: node
   linkType: hard
 
@@ -6603,6 +6701,13 @@ __metadata:
   version: 2.1.0
   resolution: "proxy-from-env@npm:2.1.0"
   checksum: 10c0/ed01729fd4d094eab619cd7e17ce3698b3413b31eb102c4904f9875e677cd207392795d5b4adee9cec359dfd31c44d5ad7595a3a3ad51c40250e141512281c58
+  languageName: node
+  linkType: hard
+
+"quansync@npm:^0.2.11":
+  version: 0.2.11
+  resolution: "quansync@npm:0.2.11"
+  checksum: 10c0/cb9a1f8ebce074069f2f6a78578873ffedd9de9f6aa212039b44c0870955c04a71c3b1311b5d97f8ac2f2ec476de202d0a5c01160cb12bc0a11b7ef36d22ef56
   languageName: node
   linkType: hard
 
@@ -7055,9 +7160,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "solid-example@workspace:apps/solid-example"
   dependencies:
-    "@tyui/define": "workspace:*"
-    "@tyui/solid": "workspace:*"
-    "@tyui/tools-executors": "workspace:*"
+    "@toyu-ui/define": "workspace:*"
+    "@toyu-ui/solid": "workspace:*"
+    "@toyu-ui/tools-executors": "workspace:*"
     solid-js: "npm:1.9.13"
   languageName: unknown
   linkType: soft
@@ -7392,6 +7497,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"toyu-ui@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "toyu-ui@workspace:."
+  dependencies:
+    "@commitlint/cli": "npm:^20.5.0"
+    "@commitlint/config-conventional": "npm:^20.5.0"
+    "@nx/devkit": "npm:^22.6.5"
+    "@nx/js": "npm:^22.6.5"
+    "@playwright/test": "npm:^1.59.1"
+    "@storybook/web-components": "npm:^10.3.5"
+    "@storybook/web-components-vite": "npm:^10.3.5"
+    "@swc-node/register": "npm:^1.11.1"
+    "@swc/core": "npm:^1.15.43"
+    "@types/node": "npm:^25.6.0"
+    "@vitest/browser": "npm:^4.1.5"
+    "@vitest/browser-playwright": "npm:^4.1.5"
+    "@vitest/ui": "npm:^4.1.5"
+    happy-dom: "npm:^20.10.6"
+    husky: "npm:^9.1.7"
+    lint-staged: "npm:^16.4.0"
+    lit: "npm:^3.3.2"
+    nx: "npm:^22.6.5"
+    oxfmt: "npm:^0.46.0"
+    oxlint: "npm:^1.61.0"
+    playwright: "npm:^1.59.1"
+    solid-js: "npm:^1.9.13"
+    storybook: "npm:^10.3.5"
+    storybook-solidjs-vite: "npm:^10.0.12"
+    tsx: "npm:^4.21.0"
+    typescript: "npm:^6.0.3"
+    vite: "npm:7.1.11"
+    vite-plugin-dts: "npm:^5.0.3"
+    vite-plugin-solid: "npm:^2.11.12"
+    vitest: "npm:^4.1.5"
+  languageName: unknown
+  linkType: soft
+
 "tree-kill@npm:1.2.2":
   version: 1.2.2
   resolution: "tree-kill@npm:1.2.2"
@@ -7461,41 +7603,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tyui@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "tyui@workspace:."
-  dependencies:
-    "@commitlint/cli": "npm:^20.5.0"
-    "@commitlint/config-conventional": "npm:^20.5.0"
-    "@nx/devkit": "npm:^22.6.5"
-    "@nx/js": "npm:^22.6.5"
-    "@playwright/test": "npm:^1.59.1"
-    "@storybook/web-components": "npm:^10.3.5"
-    "@storybook/web-components-vite": "npm:^10.3.5"
-    "@swc-node/register": "npm:^1.11.1"
-    "@swc/core": "npm:^1.15.43"
-    "@types/node": "npm:^25.6.0"
-    "@vitest/browser": "npm:^4.1.5"
-    "@vitest/browser-playwright": "npm:^4.1.5"
-    "@vitest/ui": "npm:^4.1.5"
-    happy-dom: "npm:^20.10.6"
-    husky: "npm:^9.1.7"
-    lint-staged: "npm:^16.4.0"
-    lit: "npm:^3.3.2"
-    nx: "npm:^22.6.5"
-    oxfmt: "npm:^0.46.0"
-    oxlint: "npm:^1.61.0"
-    playwright: "npm:^1.59.1"
-    solid-js: "npm:^1.9.13"
-    storybook: "npm:^10.3.5"
-    storybook-solidjs-vite: "npm:^10.0.12"
-    tsx: "npm:^4.21.0"
-    typescript: "npm:^6.0.3"
-    vite: "npm:7.1.11"
-    vite-plugin-solid: "npm:^2.11.12"
-    vitest: "npm:^4.1.5"
-  languageName: unknown
-  linkType: soft
+"ufo@npm:^1.6.3":
+  version: 1.6.4
+  resolution: "ufo@npm:1.6.4"
+  checksum: 10c0/3a2b29e7e3d772fbf6893d7d23bf442981457adb2fe122828abdbda89bedcb81aafd0dcc080e41b45f9a877db00cb42cbfee9639753a19d9b9bd39b5627039cf
+  languageName: node
+  linkType: hard
 
 "undici-types@npm:>=7.24.0 <7.24.7":
   version: 7.24.6
@@ -7549,7 +7662,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin@npm:^2.3.5":
+"unplugin-dts@npm:1.0.3":
+  version: 1.0.3
+  resolution: "unplugin-dts@npm:1.0.3"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.1.4"
+    "@volar/typescript": "npm:^2.4.26"
+    compare-versions: "npm:^6.1.1"
+    debug: "npm:^4.4.0"
+    kolorist: "npm:^1.8.0"
+    local-pkg: "npm:^1.1.1"
+    magic-string: "npm:^0.30.17"
+    unplugin: "npm:^2.3.2"
+  peerDependencies:
+    "@microsoft/api-extractor": ">=7"
+    "@rspack/core": ^1
+    "@vue/language-core": ^3.1.5
+    esbuild: "*"
+    rolldown: "*"
+    rollup: ">=3"
+    typescript: ">=4"
+    vite: ">=3"
+    webpack: ^4 || ^5
+  peerDependenciesMeta:
+    "@microsoft/api-extractor":
+      optional: true
+    "@rspack/core":
+      optional: true
+    "@vue/language-core":
+      optional: true
+    esbuild:
+      optional: true
+    rolldown:
+      optional: true
+    rollup:
+      optional: true
+    vite:
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10c0/885ec4c65c7328ac3cb021a7584eed9130ab389edd55c996633c99a347012cee34c913fc6d1f29364c594d82e2395a586236156bbdee3987235a4c06c3215ee7
+  languageName: node
+  linkType: hard
+
+"unplugin@npm:^2.3.2, unplugin@npm:^2.3.5":
   version: 2.3.11
   resolution: "unplugin@npm:2.3.11"
   dependencies:
@@ -7595,11 +7751,31 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vanilla-example@workspace:apps/vanilla-example"
   dependencies:
-    "@tyui/define": "workspace:*"
-    "@tyui/elements": "workspace:*"
-    "@tyui/tools-executors": "workspace:*"
+    "@toyu-ui/define": "workspace:*"
+    "@toyu-ui/elements": "workspace:*"
+    "@toyu-ui/tools-executors": "workspace:*"
   languageName: unknown
   linkType: soft
+
+"vite-plugin-dts@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "vite-plugin-dts@npm:5.0.3"
+  dependencies:
+    unplugin-dts: "npm:1.0.3"
+  peerDependencies:
+    "@microsoft/api-extractor": ">=7"
+    rollup: ">=3"
+    vite: ">=3"
+  peerDependenciesMeta:
+    "@microsoft/api-extractor":
+      optional: true
+    rollup:
+      optional: true
+    vite:
+      optional: true
+  checksum: 10c0/2ff23a23f8142084b93c21a52f9b3b589f8ca2454dd485d495128e7c5b8edbff664d0415b89ba2613e416fdd8c262254354aefe8089f97f1b318655211075a93
+  languageName: node
+  linkType: hard
 
 "vite-plugin-solid@npm:^2.11.12":
   version: 2.11.12

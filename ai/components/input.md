@@ -12,7 +12,7 @@ designMetadata: ../../libs/elements/src/input/input.design.json
 
 - Component name: Input
 - Tag name: `tyui-input`
-- Package entry point: `@tyui/elements/input`
+- Package entry point: `@toyu-ui/elements/input`
 - Status: Draft
 - Source file: `libs/elements/src/input/input.ts`
 - Manifest reference: `custom-elements.json#/modules/.../declarations/TyuiInput`

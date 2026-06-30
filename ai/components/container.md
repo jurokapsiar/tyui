@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-container`
-- Define: `@tyui/define/container`
+- Define: `@toyu-ui/define/container`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -147,7 +147,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Container adds no interaction.
 - Define idempotently through `defineTyuiContainer`.
-- Export `@tyui/elements/container` and `@tyui/define/container`.
+- Export `@toyu-ui/elements/container` and `@toyu-ui/define/container`.
 - Provide `.ty-container` utility CSS.
 - Do not use viewport-specific JavaScript.
 

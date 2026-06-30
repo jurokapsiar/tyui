@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-field`
-- Define: `@tyui/define/field`
+- Define: `@toyu-ui/define/field`
 - Status: draft
 - Native substrate: composition of native `<label>` + the slotted control + native text nodes for hint/validation. Wiring is done with **native `id`/`for`/`aria-describedby`/`aria-errormessage`**.
 - Shadow DOM: **no (light DOM)** — Field's entire purpose is to associate a label/description with a control via id references. Those references **cannot cross a shadow boundary**, so Field must live in light DOM and arrange light-DOM children. This is the decisive case where shadow DOM is the wrong tool.

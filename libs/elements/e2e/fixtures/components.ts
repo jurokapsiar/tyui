@@ -1,4 +1,4 @@
-import { defineTyuiElements } from '@tyui/define';
+import { defineTyuiElements } from '@toyu-ui/define';
 
 defineTyuiElements();
 

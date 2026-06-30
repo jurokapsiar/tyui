@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-button`
-- Define: `@tyui/define/button`
+- Define: `@toyu-ui/define/button`
 - Status: draft
 - Native substrate: native `<button>` as the semantic core. If shadow DOM is used, the host must expose native-equivalent button behavior and delegate activation/state to the internal button.
 - Shadow DOM: allowed only when it does not hide button semantics from consumers, trigger wrappers, forms, or accessibility APIs.

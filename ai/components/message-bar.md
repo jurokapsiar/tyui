@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-message-bar` (+ optional `tyui-message-bar-group`)
-- Define: `@tyui/define/message-bar`
+- Define: `@toyu-ui/define/message-bar`
 - Status: draft
 - Native substrate: semantic `<div>` container with an ARIA live role; icon, body, and actions are slotted native elements (`tyui-button` for actions, `tyui-link` for inline links).
 - Shadow DOM: minimal. Shadow root holds the layout grid (icon / body / actions) with `part`s and `<slot>`s. The live-region role sits on the host (or an inner wrapper) so announcements work.

@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-sidebar`
-- Define: `@tyui/define/sidebar`
+- Define: `@toyu-ui/define/sidebar`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -157,7 +157,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Sidebar adds no interaction.
 - Define idempotently through `defineTyuiSidebar`.
-- Export `@tyui/elements/sidebar` and `@tyui/define/sidebar`.
+- Export `@toyu-ui/elements/sidebar` and `@toyu-ui/define/sidebar`.
 - Provide `.ty-sidebar` utility CSS.
 - Warn in development when direct child count is not two.
 - Do not calculate collapse with JavaScript.

@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-progress-bar`
-- Define: `@tyui/define/progress-bar`
+- Define: `@toyu-ui/define/progress-bar`
 - Status: draft
 - Native substrate: **native `<progress>`** (determinate). Indeterminate also uses `<progress>` with no `value`, restyled.
 - Shadow DOM: minimal. Shadow root holds one `<progress part="bar">` (or a track `<div part="track">` + `<div part="bar">` when `<progress>` styling proves too limited — see quirks). Status semantics stay native.

@@ -5,10 +5,10 @@
   "sourceRoot": "libs/testing/src",
   "targets": {
     "build": {
-      "executor": "@tyui/tools-executors:build"
+      "executor": "@toyu-ui/tools-executors:build"
     },
     "test": {
-      "executor": "@tyui/tools-executors:test",
+      "executor": "@toyu-ui/tools-executors:test",
       "options": {
         "browser": true,
         "watch": false,

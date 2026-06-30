@@ -4,7 +4,7 @@
 
 - Component name: Radio
 - Tag name: `tyui-radio`
-- Package entry point: `@tyui/elements/radio`
+- Package entry point: `@toyu-ui/elements/radio`
 - Status: planned / implementation-ready
 - Source file: `libs/elements/src/radio/tyui-radio.ts`
 - Component family: form controls

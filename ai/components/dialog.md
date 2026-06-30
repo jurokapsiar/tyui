@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-dialog` (+ `tyui-dialog-surface`, `tyui-dialog-title`, `tyui-dialog-body`, `tyui-dialog-actions`, `tyui-dialog-trigger`)
-- Define: `@tyui/define/dialog`
+- Define: `@toyu-ui/define/dialog`
 - Status: draft
 - Native substrate: **native `<dialog>`** with `showModal()` (modal/alert) / `show()` (non-modal).
 - Shadow DOM: minimal. The host renders a `<dialog part="surface">` plus slots for title/body/actions. Light-dismiss/backdrop/focus-trap/Esc come from the platform, not JS.

@@ -9,7 +9,7 @@
 ## Identity
 
 - Tag: `tyui-badge`
-- Define: `@tyui/define/badge`
+- Define: `@toyu-ui/define/badge`
 - Status: draft
 - Native substrate: `<span>` (host itself; no inner control)
 - Shadow DOM: **no** — Badge is pure decoration. A shadow root + `<slot>` buys nothing and only adds a boundary that label text must cross. Style the host directly (Oat-style classless/contextual CSS via `:host`).
@@ -389,6 +389,7 @@ How the agentic pipeline (`DESIGN.md` + `custom-elements.json` + `ai/components/
 | behavior.md | Disabled/readonly/loading → N/A, documented.                               |
 | behavior.md | Motion decorates only, reduced-motion safe.                                |
 
+
 ## breadcrumb
 
 # Breadcrumb — Implementation Spec
@@ -398,7 +399,7 @@ How the agentic pipeline (`DESIGN.md` + `custom-elements.json` + `ai/components/
 ## Identity
 
 - Tags: `tyui-breadcrumb`, `tyui-breadcrumb-item`, `tyui-breadcrumb-divider` (divider may be CSS-generated)
-- Define: `@tyui/define/breadcrumb`
+- Define: `@toyu-ui/define/breadcrumb`
 - Status: draft
 - Native substrate: `<nav>` → `<ol>` → `<li>`, with native `<a href>` (links) / `<button>` (in-app actions) inside each item.
 - Shadow DOM: minimal on the root (renders `<nav><ol><slot></slot></ol></nav>`); items are light-DOM `<li>`s so the ordered-list semantics and `aria-current` stay intact. Dividers are decorative (`aria-hidden`), ideally CSS `::before` content rather than elements.
@@ -776,6 +777,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled-focusable parity available.                                            |
 | behavior.md | Motion tokenized, reduced-motion safe.                                          |
 
+
 ## button
 
 # Button — Implementation Spec
@@ -785,7 +787,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-button`
-- Define: `@tyui/define/button`
+- Define: `@toyu-ui/define/button`
 - Status: draft
 - Native substrate: native `<button>` as the semantic core. If shadow DOM is used, the host must expose native-equivalent button behavior and delegate activation/state to the internal button.
 - Shadow DOM: allowed only when it does not hide button semantics from consumers, trigger wrappers, forms, or accessibility APIs.
@@ -1324,6 +1326,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API.
 | behavior.md | Disabled/loading suppress activation; disabled-focusable is explicit.                 |
 | behavior.md | Motion decorates state and never decides activation.                                  |
 
+
 ## card
 
 # Card — Implementation Spec
@@ -1333,7 +1336,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API.
 ## Identity
 
 - Tags: `tyui-card` (+ `tyui-card-header`, `tyui-card-footer`, `tyui-card-preview` as light structural slots/elements)
-- Define: `@tyui/define/card`
+- Define: `@toyu-ui/define/card`
 - Status: draft
 - Native substrate: `<article>` (or `<div role="group">`); selectable cards use a **native `<input type="checkbox">`** in the floating-action slot; a primary-action card uses a native `<a>`/`<button>` overlay.
 - Shadow DOM: minimal (root renders the appearance container + `<slot>`s for preview/header/body/footer). Content stays light-DOM for headings/links.
@@ -1704,6 +1707,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | `disabled` doesn't cascade to children.                                                  |
 | behavior.md | Motion tokenized, reduced-motion safe.                                                   |
 
+
 ## center
 
 # Center - Implementation Spec
@@ -1713,7 +1717,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-center`
-- Define: `@tyui/define/center`
+- Define: `@toyu-ui/define/center`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -1853,7 +1857,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Center adds no interaction.
 - Define idempotently through `defineTyuiCenter`.
-- Export `@tyui/elements/center` and `@tyui/define/center`.
+- Export `@toyu-ui/elements/center` and `@toyu-ui/define/center`.
 - Provide `.ty-center` utility CSS.
 - Do not use JavaScript measurement.
 
@@ -1912,6 +1916,7 @@ Attributes and tokens only.
 - Pair Center with Flex for vertical spacing rather than inventing local margins.
 - Do not use Center to align individual controls inside a toolbar.
 
+
 ## checkbox
 
 # Checkbox Component Contract
@@ -1920,7 +1925,7 @@ Attributes and tokens only.
 
 - Component name: Checkbox
 - Tag name: `tyui-checkbox`
-- Package entry point: `@tyui/elements/checkbox`
+- Package entry point: `@toyu-ui/elements/checkbox`
 - Status: planned / implementation-ready
 - Source file: `libs/elements/src/checkbox/tyui-checkbox.ts`
 - Component family: form controls
@@ -2138,6 +2143,7 @@ Reason: use radio when one option must win from a set.
 | Required validity.                   | Mount required unchecked then checked.        | Call `checkValidity()`.              | Unchecked is invalid; checked is valid.                        |
 | Styling hooks exist.                 | Mount states.                                 | Inspect shadow parts and host attrs. | `control`, `box`, `label` parts exist and state attrs reflect. |
 
+
 ## cluster
 
 # Cluster - Implementation Spec
@@ -2147,7 +2153,7 @@ Reason: use radio when one option must win from a set.
 ## Identity
 
 - Tag: `tyui-cluster`
-- Define: `@tyui/define/cluster`
+- Define: `@toyu-ui/define/cluster`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -2301,7 +2307,7 @@ Attributes and public tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Cluster adds no interaction.
 - Define idempotently through `defineTyuiCluster`.
-- Export `@tyui/elements/cluster` and `@tyui/define/cluster`.
+- Export `@toyu-ui/elements/cluster` and `@toyu-ui/define/cluster`.
 - Provide `.ty-cluster` utility CSS.
 - Map alignment aliases to valid CSS values.
 - Keep child DOM stable.
@@ -2361,6 +2367,7 @@ Attributes and public tokens only.
 - Use Grid when the design calls for repeated columns.
 - Do not make Cluster responsible for toolbar keyboard behavior.
 
+
 ## container
 
 # Container - Implementation Spec
@@ -2370,7 +2377,7 @@ Attributes and public tokens only.
 ## Identity
 
 - Tag: `tyui-container`
-- Define: `@tyui/define/container`
+- Define: `@toyu-ui/define/container`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -2512,7 +2519,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Container adds no interaction.
 - Define idempotently through `defineTyuiContainer`.
-- Export `@tyui/elements/container` and `@tyui/define/container`.
+- Export `@toyu-ui/elements/container` and `@toyu-ui/define/container`.
 - Provide `.ty-container` utility CSS.
 - Do not use viewport-specific JavaScript.
 
@@ -2566,6 +2573,7 @@ Attributes and tokens only.
 - Do not solve component spacing by adding Container around controls.
 - Put app shell decisions in `DESIGN.md` / `design-app.md`, then map them to Container tokens.
 
+
 ## dialog
 
 # Dialog — Implementation Spec
@@ -2575,7 +2583,7 @@ Attributes and tokens only.
 ## Identity
 
 - Tags: `tyui-dialog` (+ `tyui-dialog-surface`, `tyui-dialog-title`, `tyui-dialog-body`, `tyui-dialog-actions`, `tyui-dialog-trigger`)
-- Define: `@tyui/define/dialog`
+- Define: `@toyu-ui/define/dialog`
 - Status: draft
 - Native substrate: **native `<dialog>`** with `showModal()` (modal/alert) / `show()` (non-modal).
 - Shadow DOM: minimal. The host renders a `<dialog part="surface">` plus slots for title/body/actions. Light-dismiss/backdrop/focus-trap/Esc come from the platform, not JS.
@@ -2963,6 +2971,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Pending uses `aria-busy`, not full disable.                                                     |
 | behavior.md | Motion tokenized; logically closed during exit; reduced-motion safe.                            |
 
+
 ## field
 
 # Field — Implementation Spec
@@ -2972,7 +2981,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-field`
-- Define: `@tyui/define/field`
+- Define: `@toyu-ui/define/field`
 - Status: draft
 - Native substrate: composition of native `<label>` + the slotted control + native text nodes for hint/validation. Wiring is done with **native `id`/`for`/`aria-describedby`/`aria-errormessage`**.
 - Shadow DOM: **no (light DOM)** — Field's entire purpose is to associate a label/description with a control via id references. Those references **cannot cross a shadow boundary**, so Field must live in light DOM and arrange light-DOM children. This is the decisive case where shadow DOM is the wrong tool.
@@ -3361,6 +3370,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled control keeps readable label.                                        |
 | behavior.md | Motion reduced-motion safe, never blocks announcement.                        |
 
+
 ## flex
 
 # Flex - Implementation Spec
@@ -3370,7 +3380,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-flex`
-- Define: `@tyui/define/flex`
+- Define: `@toyu-ui/define/flex`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none. Children must stay in light DOM so layout applies directly to slotted content.
@@ -3540,7 +3550,7 @@ Attributes are public styling surface. There are no interactive states.
 - Do not attach shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Flex adds no interaction.
 - Define idempotently through `defineTyuiFlex`.
-- Export `@tyui/elements/flex` and `@tyui/define/flex`.
+- Export `@toyu-ui/elements/flex` and `@toyu-ui/define/flex`.
 - Provide `.ty-flex` utility CSS with the same behavior as the element.
 - Attribute changes must mutate host style or reflected attributes without rebuilding children.
 - Use logical alignment aliases: `start` -> `flex-start`, `end` -> `flex-end`, `between` -> `space-between`.
@@ -3598,6 +3608,7 @@ Attributes are public styling surface. There are no interactive states.
 - Use `tyui-grid` when items form responsive tracks.
 - Do not put component-specific styling in Flex. The primitive arranges children; components own their internals.
 
+
 ## frame
 
 # Frame - Implementation Spec
@@ -3607,7 +3618,7 @@ Attributes are public styling surface. There are no interactive states.
 ## Identity
 
 - Tag: `tyui-frame`
-- Define: `@tyui/define/frame`
+- Define: `@toyu-ui/define/frame`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -3748,7 +3759,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Frame adds no interaction.
 - Define idempotently through `defineTyuiFrame`.
-- Export `@tyui/elements/frame` and `@tyui/define/frame`.
+- Export `@toyu-ui/elements/frame` and `@toyu-ui/define/frame`.
 - Provide `.ty-frame` utility CSS.
 - Use CSS `aspect-ratio`; do not calculate height in JavaScript.
 - Apply child fill rules only to direct children.
@@ -3798,6 +3809,7 @@ Attributes and tokens only.
 - Keep alt text and media semantics on the child element.
 - Do not put forms or dense interactive surfaces in Frame.
 
+
 ## grid
 
 # Grid - Implementation Spec
@@ -3807,7 +3819,7 @@ Attributes and tokens only.
 ## Identity
 
 - Tag: `tyui-grid`
-- Define: `@tyui/define/grid`
+- Define: `@toyu-ui/define/grid`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -3954,7 +3966,7 @@ Attributes and public tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Grid adds no interaction and does not implement ARIA grid behavior.
 - Define idempotently through `defineTyuiGrid`.
-- Export `@tyui/elements/grid` and `@tyui/define/grid`.
+- Export `@toyu-ui/elements/grid` and `@toyu-ui/define/grid`.
 - Provide `.ty-grid` utility CSS.
 - Use CSS Grid auto-fit; do not calculate columns in JavaScript.
 - Do not add ARIA grid semantics.
@@ -4022,6 +4034,7 @@ Attributes and public tokens only.
 - Set `min-item-size` from content, not viewport width.
 - Keep item semantics inside the child elements.
 
+
 ## image
 
 # Image — Implementation Spec
@@ -4031,7 +4044,7 @@ Attributes and public tokens only.
 ## Identity
 
 - Tag: `tyui-image`
-- Define: `@tyui/define/image`
+- Define: `@toyu-ui/define/image`
 - Status: draft
 - Native substrate: **native `<img>`**
 - Shadow DOM: optional/minimal. A thin shadow root holding one `<img part="img">` is acceptable so `shape`/`fit`/`bordered` styling is encapsulated, but `alt`, `src`, `loading`, native fallback and the broken-image glyph must be forwarded to the real `<img>`. If encapsulation is not needed, render the `<img>` in light DOM (lighter, Oat-preferred).
@@ -4400,16 +4413,15 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | No interactive state; disabled N/A.                                        |
 | behavior.md | Motion optional, reduced-motion safe.                                      |
 
+
 ## input
 
 ---
-
 component: tyui-input
 status: draft
 manifest: ../../custom-elements.json
 source: ../../libs/elements/src/input/input.ts
 designMetadata: ../../libs/elements/src/input/input.design.json
-
 ---
 
 # Input
@@ -4418,7 +4430,7 @@ designMetadata: ../../libs/elements/src/input/input.design.json
 
 - Component name: Input
 - Tag name: `tyui-input`
-- Package entry point: `@tyui/elements/input`
+- Package entry point: `@toyu-ui/elements/input`
 - Status: Draft
 - Source file: `libs/elements/src/input/input.ts`
 - Manifest reference: `custom-elements.json#/modules/.../declarations/TyuiInput`
@@ -5032,6 +5044,7 @@ Reason: content slots may decorate the field but must not add unlabeled actions.
 - Manifest/doc sync: required.
 - Design metadata sync: required.
 
+
 ## label
 
 # Label — Implementation Spec
@@ -5041,7 +5054,7 @@ Reason: content slots may decorate the field but must not add unlabeled actions.
 ## Identity
 
 - Tag: `tyui-label`
-- Define: `@tyui/define/label`
+- Define: `@toyu-ui/define/label`
 - Status: draft
 - Native substrate: **native `<label>`** (host renders/upgrades to or wraps a `<label>`)
 - Shadow DOM: **no** — a label's whole job is the native `for`/implicit-wrapping association, which a shadow boundary breaks. Render light DOM so `<label for>` reaches the control in the same tree.
@@ -5415,6 +5428,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled is visual, control owns interactive state.                |
 | behavior.md | No motion.                                                         |
 
+
 ## link
 
 # Link — Implementation Spec
@@ -5424,7 +5438,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-link`
-- Define: `@tyui/define/link`
+- Define: `@toyu-ui/define/link`
 - Status: draft
 - Native substrate: **native `<a href>`** when navigating; **native `<button>`** when there is no `href` (action styled as a link). `<span role=button>` only for the inline-wrapping edge case.
 - Shadow DOM: optional/minimal. Prefer light DOM or a shadow root that renders the chosen native element with `part="control"`; native `href`, focus, context menu, middle-click, and "open in new tab" must be preserved on a real `<a>`.
@@ -5805,6 +5819,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled removes from tab order; readonly N/A.                  |
 | behavior.md | Motion tokenized, reduced-motion safe.                          |
 
+
 ## menu
 
 # Menu / MenuItem — Implementation Spec
@@ -5814,7 +5829,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tags: `tyui-menu`, `tyui-menu-trigger`, `tyui-menu-popover`, `tyui-menu-list`, `tyui-menu-item`, `tyui-menu-item-checkbox`, `tyui-menu-item-radio`, `tyui-menu-item-link`, `tyui-menu-group`, `tyui-menu-group-header`, `tyui-menu-divider`
-- Define: `@tyui/define/menu`
+- Define: `@toyu-ui/define/menu`
 - Status: draft
 - Native substrate: **Popover API** (`popover`) for the surface + **CSS Anchor Positioning**; items are native `<button>`/`<a>` (link items) carrying menu roles; roving focus via the **`focusgroup` polyfill**. There is **no** native menu _widget_, so this is the one component here that genuinely needs an ARIA composite — but the surface/dismiss/top-layer still come from the platform.
 - Shadow DOM: minimal (surface + slots). Items are light-DOM native buttons/links with menu roles.
@@ -6223,6 +6238,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled items focusable for stable order; loading via `aria-busy`.                                                                    |
 | behavior.md | Motion tokenized; logically closed during exit; reduced-motion safe.                                                                   |
 
+
 ## message-bar
 
 # MessageBar — Implementation Spec
@@ -6232,7 +6248,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-message-bar` (+ optional `tyui-message-bar-group`)
-- Define: `@tyui/define/message-bar`
+- Define: `@toyu-ui/define/message-bar`
 - Status: draft
 - Native substrate: semantic `<div>` container with an ARIA live role; icon, body, and actions are slotted native elements (`tyui-button` for actions, `tyui-link` for inline links).
 - Shadow DOM: minimal. Shadow root holds the layout grid (icon / body / actions) with `part`s and `<slot>`s. The live-region role sits on the host (or an inner wrapper) so announcements work.
@@ -6619,6 +6635,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Dismissal user-initiated → public event.                                               |
 | behavior.md | Motion tokenized, no load-time enter, reduced-motion safe, logical-closed during exit. |
 
+
 ## popover
 
 # Popover — Implementation Spec
@@ -6628,7 +6645,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tags: `tyui-popover` (+ `tyui-popover-trigger`, `tyui-popover-surface`)
-- Define: `@tyui/define/popover`
+- Define: `@toyu-ui/define/popover`
 - Status: draft
 - Native substrate: **HTML Popover API** (`popover` attribute + `popovertarget`) for the surface; **CSS Anchor Positioning** for placement; native `<dialog>`-style focus trap only when `trap-focus` is set.
 - Shadow DOM: minimal. Host renders `<div popover part="surface">`; trigger projected via slot. Top-layer, light-dismiss, and Esc come from the platform.
@@ -7015,6 +7032,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled trigger inert; loading via `aria-busy`.                                               |
 | behavior.md | Motion tokenized; logically closed during exit; reduced-motion safe.                           |
 
+
 ## progress-bar
 
 # ProgressBar — Implementation Spec
@@ -7024,7 +7042,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-progress-bar`
-- Define: `@tyui/define/progress-bar`
+- Define: `@toyu-ui/define/progress-bar`
 - Status: draft
 - Native substrate: **native `<progress>`** (determinate). Indeterminate also uses `<progress>` with no `value`, restyled.
 - Shadow DOM: minimal. Shadow root holds one `<progress part="bar">` (or a track `<div part="track">` + `<div part="bar">` when `<progress>` styling proves too limited — see quirks). Status semantics stay native.
@@ -7396,6 +7414,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Motion decorative + reduced-motion fallback (text status).      |
 | behavior.md | Disabled/readonly N/A, documented.                              |
 
+
 ## radio-group
 
 # RadioGroup Component Contract
@@ -7404,7 +7423,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 
 - Component name: RadioGroup
 - Tag name: `tyui-radio-group`
-- Package entry point: `@tyui/elements/radio-group`
+- Package entry point: `@toyu-ui/elements/radio-group`
 - Status: planned / implementation-ready
 - Source file: `libs/elements/src/radio-group/tyui-radio-group.ts`
 - Component family: form controls
@@ -7601,6 +7620,7 @@ Programmatic `value` changes do not emit `change`.
 | Required validity.          | Mount required without value, then set value.  | Call `checkValidity()`.    | Missing value invalid; selected value valid.                                      |
 | Non-radio children ignored. | Slot an extra checkbox.                        | Click extra control.       | Group value remains unchanged.                                                    |
 
+
 ## radio
 
 # Radio Component Contract
@@ -7609,7 +7629,7 @@ Programmatic `value` changes do not emit `change`.
 
 - Component name: Radio
 - Tag name: `tyui-radio`
-- Package entry point: `@tyui/elements/radio`
+- Package entry point: `@toyu-ui/elements/radio`
 - Status: planned / implementation-ready
 - Source file: `libs/elements/src/radio/tyui-radio.ts`
 - Component family: form controls
@@ -7732,6 +7752,7 @@ The native radio input owns the radio semantics. Decorative circle and dot are h
 | Styling hooks exist.                | Mount radio.                                                    | Query parts.                    | `root`, `indicator`, `circle`, `dot`, `label` exist.                                                            |
 | Checked visual is filled.           | Mount radio with `checked`.                                     | Inspect CSS/styling.            | Circle fill uses `--ty-radio-checked-color`; dot uses `--ty-radio-checked-dot-color`.                           |
 
+
 ## select
 
 # Select — Implementation Spec
@@ -7741,7 +7762,7 @@ The native radio input owns the radio semantics. Decorative circle and dot are h
 ## Identity
 
 - Tag: `tyui-select`
-- Define: `@tyui/define/select`
+- Define: `@toyu-ui/define/select`
 - Status: draft
 - Native substrate: **native `<select>`** (Fluent v9's Select is itself a thin wrapper around `<select>`).
 - Shadow DOM: minimal. Shadow root holds a styled wrapper + `<slot>` for the `<select>` **or** a forwarded `<select part="select">` plus a decorative chevron `<span part="icon">`. The `<option>` list, popup, keyboard, typeahead, and form submission stay 100% native.
@@ -8123,6 +8144,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Composite rules N/A (single native control).                                |
 | behavior.md | No custom motion.                                                           |
 
+
 ## sidebar
 
 # Sidebar - Implementation Spec
@@ -8132,7 +8154,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-sidebar`
-- Define: `@tyui/define/sidebar`
+- Define: `@toyu-ui/define/sidebar`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -8284,7 +8306,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Sidebar adds no interaction.
 - Define idempotently through `defineTyuiSidebar`.
-- Export `@tyui/elements/sidebar` and `@tyui/define/sidebar`.
+- Export `@toyu-ui/elements/sidebar` and `@toyu-ui/define/sidebar`.
 - Provide `.ty-sidebar` utility CSS.
 - Warn in development when direct child count is not two.
 - Do not calculate collapse with JavaScript.
@@ -8356,6 +8378,7 @@ Attributes and tokens only.
 - Put landmarks inside children when regions need names.
 - Use Grid for more than two peer columns.
 
+
 ## table
 
 # Table — Implementation Spec
@@ -8365,7 +8388,7 @@ Attributes and tokens only.
 ## Identity
 
 - Tags: `tyui-table`, `tyui-table-header`, `tyui-table-header-cell`, `tyui-table-body`, `tyui-table-row`, `tyui-table-cell`, `tyui-table-selection-cell`, `tyui-table-cell-layout`
-- Define: `@tyui/define/table`
+- Define: `@toyu-ui/define/table`
 - Status: draft
 - Native substrate: **native `<table> <thead> <tbody> <tr> <th> <td>`** (Fluent's "primitive, low-level" table). Sort control = native `<button>` inside `<th>`; selection = native `<input type=checkbox/radio>`.
 - Shadow DOM: minimal/none. Prefer **light DOM** so native table semantics and the `grid` keyboard pattern work without re-mapping roles. Styling via tokens + parts on the host.
@@ -8763,6 +8786,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Cell actions keyboard-reachable (not hover-only).                                  |
 | behavior.md | Motion tokenized, reduced-motion safe.                                             |
 
+
 ## toolbar
 
 # Toolbar — Implementation Spec
@@ -8772,7 +8796,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tags: `tyui-toolbar` (+ `tyui-toolbar-group`, `tyui-toolbar-divider`; buttons are `tyui-button`/`tyui-toggle-button` with a toolbar context)
-- Define: `@tyui/define/toolbar`
+- Define: `@toyu-ui/define/toolbar`
 - Status: draft
 - Native substrate: `<div role="toolbar">` containing native buttons/links; grouping via `<div role="group">`; dividers decorative.
 - Shadow DOM: minimal (root renders `role="toolbar"` wrapper + `<slot>`). Controls are light-DOM native buttons.
@@ -9150,6 +9174,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | Disabled commands use disabled-focusable parity.                                 |
 | behavior.md | Motion tokenized, reduced-motion safe.                                           |
 
+
 ## tooltip
 
 # Tooltip — Implementation Spec
@@ -9159,7 +9184,7 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 ## Identity
 
 - Tag: `tyui-tooltip`
-- Define: `@tyui/define/tooltip`
+- Define: `@toyu-ui/define/tooltip`
 - Status: draft
 - Native substrate: **HTML Popover API** (`popover="manual"`) surface positioned with **CSS Anchor Positioning**; the trigger is the wrapped interactive control. The relationship to the trigger is wired with native `aria-describedby`/`aria-labelledby`.
 - Shadow DOM: minimal. Host renders a `<div popover="manual" part="content" role="tooltip">`; the trigger is the slotted child.
@@ -9542,20 +9567,19 @@ Private variables use the `--_ty-*` prefix and are not consumer API. Do not docu
 | behavior.md | disabled-focusable keeps hint reachable when needed.                     |
 | behavior.md | Motion minimal; timing preserved under reduced motion.                   |
 
+
 ## Skill: button
 
 ---
-
 name: button
 description: Use and integrate the tyui-button custom element correctly, including registration, intent, states, events, and anti-patterns.
 license: Apache-2.0
 metadata:
-type: library
-library: '@tyui/elements'
-library_version: '0.0.0'
-source: src/button/tyui-button.ts
-manifest: ../../custom-elements.json
-
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/button/tyui-button.ts
+  manifest: ../../custom-elements.json
 ---
 
 # tyui-button
@@ -9566,13 +9590,13 @@ Use `tyui-button` to trigger an immediate in-page action. Use a link for navigat
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`. Do not copy
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`. Do not copy
 attribute or event types from memory.
 
 ## Registration
 
 ```ts
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 
 defineTyuiButton();
 ```
@@ -9596,20 +9620,68 @@ defineTyuiButton();
 - Do not place focusable controls inside the button label.
 - Do not restyle private shadow DOM; use public tokens, attributes, and parts.
 
+
+## Skill: center
+
+---
+name: center
+description: Use tyui-center to constrain readable content to a centered measure with tokenized gutters.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/center/tyui-center.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-center
+
+## Intent
+
+Use `tyui-center` to constrain readable content to a maximum inline measure and center it inside the available space.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-center measure="60ch" gutter="page">
+  <tyui-flex direction="column" gap="3">
+    <h1>Profile</h1>
+    <tyui-input label="Display name"></tyui-input>
+  </tyui-flex>
+</tyui-center>
+```
+
+## Selection Guidance
+
+- Use Center for prose, forms, narrow settings pages, and focused empty states.
+- Use Container for page or section rails.
+- Use Grid or Sidebar when the content has multiple peer regions.
+- Use the `intrinsic` attribute when children should also center as a column.
+
+## Anti-Patterns
+
+- Do not wrap every individual control in Center.
+- Do not use Center as a card or surface.
+- Do not nest Center repeatedly without a specific measure change.
+
+
 ## Skill: checkbox
 
 ---
-
 name: checkbox
 description: Use and integrate the tyui-checkbox custom element for independent boolean choices and avoid radio or command-button misuse.
 license: Apache-2.0
 metadata:
-type: library
-library: '@tyui/elements'
-library_version: '0.0.0'
-source: src/checkbox/tyui-checkbox.ts
-manifest: ../../custom-elements.json
-
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/checkbox/tyui-checkbox.ts
+  manifest: ../../custom-elements.json
 ---
 
 # tyui-checkbox
@@ -9620,7 +9692,7 @@ Use `tyui-checkbox` for an independent yes/no or on/off choice.
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`.
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
 
 ## Correct Usage
 
@@ -9640,20 +9712,313 @@ Authoritative API facts live in `@tyui/elements/custom-elements.json`.
 - Do not use checkbox for mutually exclusive options.
 - Do not hide the label without providing an accessible name.
 
+
+## Skill: cluster
+
+---
+name: cluster
+description: Use tyui-cluster for compact wrapping rows of intrinsic items such as actions, tags, chips, and toolbar-like groups.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/cluster/tyui-cluster.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-cluster
+
+## Intent
+
+Use `tyui-cluster` for compact groups of peer items that keep their intrinsic size and wrap to new lines when space runs out.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-cluster gap="2">
+  <tyui-button appearance="primary">Save</tyui-button>
+  <tyui-button>Cancel</tyui-button>
+  <tyui-button appearance="subtle">Reset</tyui-button>
+</tyui-cluster>
+```
+
+## Selection Guidance
+
+- Use Cluster for action rows, tags, chips, checkbox rows, radio rows, and short metadata groups.
+- Use Flex when one-axis distribution, direction, or optional wrapping matters more than wrap-first behavior.
+- Use Grid when children should form equal responsive tracks.
+- Preserve list markup when the items are a semantic list.
+
+## Anti-Patterns
+
+- Do not use Cluster for table rows or data grids.
+- Do not remove list semantics just to get a wrapping row.
+- Do not make Cluster responsible for toolbar keyboard behavior.
+
+
+## Skill: components
+
+---
+name: components
+description: Load the TYUI component guidance set for choosing and using shipped custom elements and layout primitives.
+license: Apache-2.0
+requires:
+  - '@toyu-ui/elements#button'
+  - '@toyu-ui/elements#input'
+  - '@toyu-ui/elements#checkbox'
+  - '@toyu-ui/elements#radio'
+  - '@toyu-ui/elements#radio-group'
+  - '@toyu-ui/elements#flex'
+  - '@toyu-ui/elements#cluster'
+  - '@toyu-ui/elements#grid'
+  - '@toyu-ui/elements#center'
+  - '@toyu-ui/elements#container'
+  - '@toyu-ui/elements#frame'
+  - '@toyu-ui/elements#sidebar'
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: skills/components/SKILL.md
+  manifest: ../../custom-elements.json
+---
+
+# TYUI components
+
+## Intent
+
+Use `@toyu-ui/elements#components` when an agent or developer needs the complete shipped TYUI component guidance set before choosing controls or layout primitives.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`. This aggregate skill only gathers intent and selection guidance; individual component skills remain the source for component-specific advice.
+
+## Correct Usage
+
+```sh
+yarn dlx @tanstack/intent@latest load @toyu-ui/elements#components
+```
+
+## Selection Guidance
+
+- Load this skill at the start of a TYUI UI task when the component choice is not known yet.
+- Use the required component skills for exact intent, selection guidance, anti-patterns, and usage examples.
+- Use `@toyu-ui/solid#setup` as the companion setup skill for Solid apps.
+- Use `custom-elements.json` for exact attributes, events, slots, CSS parts, and CSS custom properties.
+
+## Anti-Patterns
+
+- Do not duplicate component selection rules in app docs when this aggregate skill can load the versioned component guidance.
+- Do not treat this skill as an API reference; use the manifest for exact API facts.
+- Do not load every component at runtime just because every component skill was loaded for agent guidance.
+
+
+## Skill: container
+
+---
+name: container
+description: Use tyui-container to constrain page or section width with named rails and tokenized gutters.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/container/tyui-container.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-container
+
+## Intent
+
+Use `tyui-container` to create a page or section rail that controls maximum inline size and horizontal gutter.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-container size="wide" gutter="page">
+  <tyui-grid min-item-size="18rem" gap="4"></tyui-grid>
+</tyui-container>
+```
+
+## Selection Guidance
+
+- Use Container for page shells, section rails, dashboard content bounds, and full-width page regions.
+- Use Center for readable single-column content.
+- Use Frame for aspect-ratio media.
+- Use `bleed` only when content intentionally reaches the container edge.
+
+## Anti-Patterns
+
+- Do not use Container to set a button or input width.
+- Do not use card padding as page gutters.
+- Do not nest containers without a named rail change.
+
+
+## Skill: flex
+
+---
+name: flex
+description: Use tyui-flex for one-axis sibling composition with tokenized direction, alignment, wrapping, and gap.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/flex/tyui-flex.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-flex
+
+## Intent
+
+Use `tyui-flex` when sibling content follows one axis and the parent owns direction, wrapping, alignment, justification, and gap.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-flex direction="column" gap="3">
+  <h2>Settings</h2>
+  <tyui-input label="Name"></tyui-input>
+  <tyui-button appearance="primary">Save</tyui-button>
+</tyui-flex>
+```
+
+## Selection Guidance
+
+- Use Flex for row or column composition of siblings.
+- Use Flex when the design may switch direction or wrapping through attributes.
+- Use Cluster for wrap-first action rows, chips, and tags.
+- Use Grid for repeated peer cards or panels.
+- Use native block flow for simple prose.
+
+## Anti-Patterns
+
+- Do not use Flex to create data tables or two-dimensional card grids.
+- Do not force every child to `flex: 1` unless equal distribution is the container intent.
+- Do not use visual reverse direction to fix incorrect DOM reading order.
+
+
+## Skill: frame
+
+---
+name: frame
+description: Use tyui-frame to reserve aspect ratio for media, previews, charts, thumbnails, and embeds.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/frame/tyui-frame.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-frame
+
+## Intent
+
+Use `tyui-frame` to reserve a stable aspect ratio for one primary child while the parent owns width.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-frame ratio="16/9" fit="cover">
+  <img src="/preview.jpg" alt="Project preview" />
+</tyui-frame>
+```
+
+## Selection Guidance
+
+- Use Frame for images, video, canvas, iframe embeds, charts, thumbnails, and preview surfaces.
+- Use natural block flow for text-heavy cards.
+- Use Grid for collections of framed peers.
+- Apply `fit` and `position` only when the direct child is replaced media.
+
+## Anti-Patterns
+
+- Do not place full forms or complex scrollable interactive regions inside Frame.
+- Do not use Frame to crop text cards.
+- Do not expect `object-fit` to affect non-replaced elements.
+
+
+## Skill: grid
+
+---
+name: grid
+description: Use tyui-grid for responsive peer-card and panel collections that auto-fit columns from container width.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/grid/tyui-grid.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-grid
+
+## Intent
+
+Use `tyui-grid` for repeated peer items that should form responsive columns from the container width and a minimum item size.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-grid min-item-size="14rem" gap="4">
+  <section>Alpha</section>
+  <section>Beta</section>
+  <section>Gamma</section>
+</tyui-grid>
+```
+
+## Selection Guidance
+
+- Use Grid for cards, tiles, metric panels, image groups, and settings panels.
+- Use Cluster for compact wrapping action rows and tags.
+- Use Flex for one-axis composition.
+- Use table or data-grid components for tabular data with row and column relationships.
+
+## Anti-Patterns
+
+- Do not use Grid for data tables or keyboard-navigable ARIA grids.
+- Do not use dense visual reordering when DOM order must match reading order.
+- Do not calculate columns in JavaScript.
+
+
 ## Skill: input
 
 ---
-
 name: input
 description: Use and integrate the tyui-input custom element for accessible single-line text entry without confusing base component features with design-system variants.
 license: Apache-2.0
 metadata:
-type: library
-library: '@tyui/elements'
-library_version: '0.0.0'
-source: src/input/tyui-input.ts
-manifest: ../../custom-elements.json
-
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/input/tyui-input.ts
+  manifest: ../../custom-elements.json
 ---
 
 # tyui-input
@@ -9665,12 +10030,12 @@ search terms, telephone numbers, URLs, passwords, and numeric text.
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`.
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
 
 ## Registration
 
 ```ts
-import { defineTyuiInput } from '@tyui/define/input';
+import { defineTyuiInput } from '@toyu-ui/define/input';
 
 defineTyuiInput();
 ```
@@ -9689,6 +10054,14 @@ layers may add visual variants through public tokens, host classes, and
 documented parts. For example, Fluent's focused underline is a Fluent design
 layer feature, not a base `appearance` value.
 
+## Selection Guidance
+
+- Use Input for short single-line text entry.
+- Use a textarea component, when available, for multiline text.
+- Use Select, Combobox, RadioGroup, or Checkbox when the user chooses from known options.
+- Use Field or a visible native label to provide the accessible label.
+- Keep design-system-specific visuals in the design layer rather than adding base appearances.
+
 ## Anti-Patterns
 
 - Do not rely on placeholder as the only label.
@@ -9696,20 +10069,19 @@ layer feature, not a base `appearance` value.
 - Do not invent unsupported input appearances; use design-layer classes for
   product-specific visuals.
 
+
 ## Skill: radio
 
 ---
-
 name: radio
 description: Use tyui-radio only as a radio option coordinated by tyui-radio-group, with native input focus and group-owned selection.
 license: Apache-2.0
 metadata:
-type: library
-library: '@tyui/elements'
-library_version: '0.0.0'
-source: src/radio/tyui-radio.ts
-manifest: ../../custom-elements.json
-
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/radio/tyui-radio.ts
+  manifest: ../../custom-elements.json
 ---
 
 # tyui-radio
@@ -9720,7 +10092,7 @@ Use `tyui-radio` to represent one option inside `tyui-radio-group`.
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`.
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
 
 ## Correct Usage
 
@@ -9737,26 +10109,32 @@ Authoritative API facts live in `@tyui/elements/custom-elements.json`.
 tab stop to the native shadow input so real browser `Tab` enters the group and
 arrow keys move focus and selection.
 
+## Selection Guidance
+
+- Use Radio only as an option inside RadioGroup.
+- Use RadioGroup for the field label, name, value ownership, and keyboard coordination.
+- Use Checkbox for unrelated independent boolean choices.
+- Use Select or Combobox for larger option sets.
+
 ## Anti-Patterns
 
 - Do not use standalone radio buttons for unrelated boolean choices.
 - Do not manage checked state independently when inside a group.
 - Do not replace native radio keyboard behavior with app-level key handlers.
 
+
 ## Skill: radio-group
 
 ---
-
 name: radio-group
 description: Use and integrate tyui-radio-group for mutually exclusive choices, including value ownership, keyboard behavior, and form participation.
 license: Apache-2.0
 metadata:
-type: library
-library: '@tyui/elements'
-library_version: '0.0.0'
-source: src/radio-group/tyui-radio-group.ts
-manifest: ../../custom-elements.json
-
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/radio-group/tyui-radio-group.ts
+  manifest: ../../custom-elements.json
 ---
 
 # tyui-radio-group
@@ -9768,7 +10146,7 @@ set.
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`.
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
 
 ## Correct Usage
 
@@ -9786,42 +10164,593 @@ Authoritative API facts live in `@tyui/elements/custom-elements.json`.
 - Arrow keys move focus and selection, wrapping and skipping disabled radios.
 - `Space` selects the focused radio.
 
+## Selection Guidance
+
+- Use RadioGroup when the user chooses exactly one option from a small set.
+- Use Checkbox for independent boolean choices or multi-select checklists.
+- Use Select or Combobox for long option lists, async options, or compact forms.
+- Keep only `tyui-radio` choices in the default slot.
+
 ## Anti-Patterns
 
 - Do not place non-radio interactive elements in the default slot.
 - Do not use radio group for multi-select choices.
 - Do not create custom roving tabindex outside the group.
 
+
+## Skill: sidebar
+
+---
+name: sidebar
+description: Use tyui-sidebar for two-region fixed-plus-fluid layouts such as filters beside results or navigation beside content.
+license: Apache-2.0
+metadata:
+  type: library
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
+  source: src/sidebar/tyui-sidebar.ts
+  manifest: ../../custom-elements.json
+---
+
+# tyui-sidebar
+
+## Intent
+
+Use `tyui-sidebar` for a two-region layout where one child has a preferred fixed size and the other child takes remaining space.
+
+## API Source
+
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
+
+## Correct Usage
+
+```html
+<tyui-sidebar side-size="16rem" content-min="55%" gap="4">
+  <aside>Filters</aside>
+  <main>Results</main>
+</tyui-sidebar>
+```
+
+## Selection Guidance
+
+- Use Sidebar for filters beside results, navigation beside content, metadata beside detail, or media beside body.
+- Use Grid when regions are peer cards or equal columns.
+- Use Container for page rails.
+- Use dialog or drawer components for overlay side panels.
+
+## Anti-Patterns
+
+- Do not add more than two direct children.
+- Do not use Sidebar for overlay drawer behavior.
+- Do not use `side="end"` to fix an incorrect DOM reading order.
+
+
+## Skill: button
+
+---
+name: button
+description: Solid-facing alias for tyui-button guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#button']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/button/SKILL.md
+---
+
+# TYUI Solid button
+
+## Intent
+
+Use `@toyu-ui/solid#button` to load Solid setup plus the authoritative `@toyu-ui/elements#button` guidance.
+
+## Correct Usage
+
+```tsx
+import { Button } from '@toyu-ui/solid';
+
+<Button appearance="primary">Save</Button>;
+```
+
+## Selection Guidance
+
+- Use the `Button` wrapper for ordinary Solid app code.
+- Use raw `tyui-button` only when direct custom-element access is needed.
+
+## Anti-Patterns
+
+- Do not duplicate button behavior in a Solid wrapper.
+
+
+## Skill: center
+
+---
+name: center
+description: Solid-facing alias for tyui-center guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#center']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/center/SKILL.md
+---
+
+# TYUI Solid center
+
+## Intent
+
+Use `@toyu-ui/solid#center` to load Solid setup plus the authoritative `@toyu-ui/elements#center` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiCenter } from '@toyu-ui/solid/define/center';
+
+defineTyuiCenter();
+
+<tyui-center measure="60ch" gutter="page" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-center` in TSX for readable centered regions.
+- Register it through `@toyu-ui/solid/define/center`.
+
+## Anti-Patterns
+
+- Do not use Center as a card or surface.
+
+
+## Skill: checkbox
+
+---
+name: checkbox
+description: Solid-facing alias for tyui-checkbox guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#checkbox']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/checkbox/SKILL.md
+---
+
+# TYUI Solid checkbox
+
+## Intent
+
+Use `@toyu-ui/solid#checkbox` to load Solid setup plus the authoritative `@toyu-ui/elements#checkbox` guidance.
+
+## Correct Usage
+
+```tsx
+import { Checkbox } from '@toyu-ui/solid';
+
+<Checkbox name="updates" value="yes">
+  Send updates
+</Checkbox>;
+```
+
+## Selection Guidance
+
+- Use Checkbox for independent boolean choices in Solid.
+- Use RadioGroup and Radio for mutually exclusive choices.
+
+## Anti-Patterns
+
+- Do not use Checkbox as a command button.
+
+
+## Skill: cluster
+
+---
+name: cluster
+description: Solid-facing alias for tyui-cluster guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#cluster']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/cluster/SKILL.md
+---
+
+# TYUI Solid cluster
+
+## Intent
+
+Use `@toyu-ui/solid#cluster` to load Solid setup plus the authoritative `@toyu-ui/elements#cluster` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiCluster } from '@toyu-ui/solid/define/cluster';
+
+defineTyuiCluster();
+
+<tyui-cluster gap="2" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-cluster` in TSX for wrapping action rows and tags.
+- Register it through `@toyu-ui/solid/define/cluster`.
+
+## Anti-Patterns
+
+- Do not use Cluster for table or data-grid semantics.
+
+
+## Skill: components
+
+---
+name: components
+description: Load the Solid setup guidance and the complete TYUI component guidance set for Solid apps.
+license: Apache-2.0
+requires:
+  - '@toyu-ui/solid#setup'
+  - '@toyu-ui/elements#components'
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/components/SKILL.md
+---
+
+# TYUI Solid components
+
+## Intent
+
+Use `@toyu-ui/solid#components` when a Solid app needs the full TYUI component selection and usage guidance.
+
+## Correct Usage
+
+```sh
+yarn dlx @tanstack/intent@latest load @toyu-ui/solid#components
+```
+
+## Selection Guidance
+
+- Start Solid app guidance from this skill when component choice is not known.
+- Use `@toyu-ui/solid#setup` for Solid registration and JSX rules.
+- Use required `@toyu-ui/elements#*` skills for component-specific intent and anti-patterns.
+- Use `@toyu-ui/solid` exports and `@toyu-ui/solid/define/*` paths in app code.
+
+## Anti-Patterns
+
+- Do not ask Solid apps to install `@toyu-ui/define` or `@toyu-ui/elements` directly for normal use.
+- Do not duplicate component guidance in Solid skills.
+
+
+## Skill: container
+
+---
+name: container
+description: Solid-facing alias for tyui-container guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#container']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/container/SKILL.md
+---
+
+# TYUI Solid container
+
+## Intent
+
+Use `@toyu-ui/solid#container` to load Solid setup plus the authoritative `@toyu-ui/elements#container` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiContainer } from '@toyu-ui/solid/define/container';
+
+defineTyuiContainer();
+
+<tyui-container size="wide" gutter="page" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-container` in TSX for page or section rails.
+- Register it through `@toyu-ui/solid/define/container`.
+
+## Anti-Patterns
+
+- Do not use Container to set individual control widths.
+
+
+## Skill: flex
+
+---
+name: flex
+description: Solid-facing alias for tyui-flex guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#flex']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/flex/SKILL.md
+---
+
+# TYUI Solid flex
+
+## Intent
+
+Use `@toyu-ui/solid#flex` to load Solid setup plus the authoritative `@toyu-ui/elements#flex` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiFlex } from '@toyu-ui/solid/define/flex';
+
+defineTyuiFlex();
+
+<tyui-flex direction="column" gap="3" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-flex` in TSX for one-axis composition.
+- Register it through `@toyu-ui/solid/define/flex`.
+
+## Anti-Patterns
+
+- Do not import registration helpers from `@toyu-ui/define` in normal Solid app code.
+
+
+## Skill: frame
+
+---
+name: frame
+description: Solid-facing alias for tyui-frame guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#frame']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/frame/SKILL.md
+---
+
+# TYUI Solid frame
+
+## Intent
+
+Use `@toyu-ui/solid#frame` to load Solid setup plus the authoritative `@toyu-ui/elements#frame` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiFrame } from '@toyu-ui/solid/define/frame';
+
+defineTyuiFrame();
+
+<tyui-frame ratio="16/9" fit="cover" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-frame` in TSX for aspect-ratio media and previews.
+- Register it through `@toyu-ui/solid/define/frame`.
+
+## Anti-Patterns
+
+- Do not put complex forms inside Frame.
+
+
+## Skill: grid
+
+---
+name: grid
+description: Solid-facing alias for tyui-grid guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#grid']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/grid/SKILL.md
+---
+
+# TYUI Solid grid
+
+## Intent
+
+Use `@toyu-ui/solid#grid` to load Solid setup plus the authoritative `@toyu-ui/elements#grid` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiGrid } from '@toyu-ui/solid/define/grid';
+
+defineTyuiGrid();
+
+<tyui-grid min-item-size="16rem" gap="4" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-grid` in TSX for responsive peer cards and panels.
+- Register it through `@toyu-ui/solid/define/grid`.
+
+## Anti-Patterns
+
+- Do not use Grid for tabular data.
+
+
+## Skill: input
+
+---
+name: input
+description: Solid-facing alias for tyui-input guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#input']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/input/SKILL.md
+---
+
+# TYUI Solid input
+
+## Intent
+
+Use `@toyu-ui/solid#input` to load Solid setup plus the authoritative `@toyu-ui/elements#input` guidance.
+
+## Correct Usage
+
+```tsx
+import { Input } from '@toyu-ui/solid';
+
+<Input name="email" type="email" required>
+  Email
+</Input>;
+```
+
+## Selection Guidance
+
+- Use the `Input` wrapper for single-line text entry in Solid.
+- Use `event.detail.value` from typed `onInput` handlers.
+
+## Anti-Patterns
+
+- Do not rely on placeholder text as the only label.
+
+
+## Skill: radio
+
+---
+name: radio
+description: Solid-facing alias for tyui-radio guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#radio']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/radio/SKILL.md
+---
+
+# TYUI Solid radio
+
+## Intent
+
+Use `@toyu-ui/solid#radio` to load Solid setup plus the authoritative `@toyu-ui/elements#radio` guidance.
+
+## Correct Usage
+
+```tsx
+import { Radio, RadioGroup } from '@toyu-ui/solid';
+
+<RadioGroup label="Plan" name="plan">
+  <Radio value="team">Team</Radio>
+</RadioGroup>;
+```
+
+## Selection Guidance
+
+- Use Radio only inside RadioGroup.
+- Use Checkbox for independent boolean choices.
+
+## Anti-Patterns
+
+- Do not manage Radio checked state outside the group.
+
+
+## Skill: radio-group
+
+---
+name: radio-group
+description: Solid-facing alias for tyui-radio-group guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#radio-group']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/radio-group/SKILL.md
+---
+
+# TYUI Solid radio group
+
+## Intent
+
+Use `@toyu-ui/solid#radio-group` to load Solid setup plus the authoritative `@toyu-ui/elements#radio-group` guidance.
+
+## Correct Usage
+
+```tsx
+import { Radio, RadioGroup } from '@toyu-ui/solid';
+
+<RadioGroup label="Frequency" name="frequency">
+  <Radio value="daily">Daily</Radio>
+  <Radio value="weekly">Weekly</Radio>
+</RadioGroup>;
+```
+
+## Selection Guidance
+
+- Use RadioGroup when the user chooses one option from a small set.
+- Use `event.detail.value` from typed change handlers.
+
+## Anti-Patterns
+
+- Do not put non-radio controls in the default slot.
+
+
 ## Skill: setup
 
 ---
-
 name: setup
 description: Set up TYUI custom elements for Solid, including registration, JSX typing, wrappers, and typed custom events.
 license: Apache-2.0
-requires: ['@tyui/elements#button', '@tyui/elements#input']
+requires: ['@toyu-ui/elements#components']
 metadata:
-type: framework
-library: '@tyui/solid'
-library_version: '0.0.0'
-framework: solid
-source: src/index.ts
-
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: src/index.ts
 ---
 
 # TYUI Solid setup
 
 ## Intent
 
-Use `@tyui/solid` when a Solid app wants typed JSX ergonomics for TYUI custom
-elements. The implementation remains in `@tyui/elements`.
+Use `@toyu-ui/solid` when a Solid app wants typed JSX ergonomics for TYUI custom
+elements. The implementation remains in `@toyu-ui/elements`.
 
 ## Registration
 
 Register only the elements you use:
 
 ```ts
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/solid/define/button';
 
 defineTyuiButton();
 ```
@@ -9843,5 +10772,47 @@ behavior from the underlying custom element.
 ## Anti-Patterns
 
 - Do not reimplement TYUI behavior in Solid wrappers.
-- Do not use Solid signals inside `@tyui/elements`.
+- Do not use Solid signals inside `@toyu-ui/elements`.
 - Do not register all elements in a library module that should tree-shake.
+
+
+## Skill: sidebar
+
+---
+name: sidebar
+description: Solid-facing alias for tyui-sidebar guidance.
+license: Apache-2.0
+requires: ['@toyu-ui/solid#setup', '@toyu-ui/elements#sidebar']
+metadata:
+  type: framework
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
+  framework: solid
+  source: skills/sidebar/SKILL.md
+---
+
+# TYUI Solid sidebar
+
+## Intent
+
+Use `@toyu-ui/solid#sidebar` to load Solid setup plus the authoritative `@toyu-ui/elements#sidebar` guidance.
+
+## Correct Usage
+
+```tsx
+import '@toyu-ui/solid/jsx';
+import { defineTyuiSidebar } from '@toyu-ui/solid/define/sidebar';
+
+defineTyuiSidebar();
+
+<tyui-sidebar side-size="16rem" content-min="55%" />;
+```
+
+## Selection Guidance
+
+- Use raw `tyui-sidebar` in TSX for two-region fixed-plus-fluid layout.
+- Register it through `@toyu-ui/solid/define/sidebar`.
+
+## Anti-Patterns
+
+- Do not use Sidebar for overlay drawer behavior.

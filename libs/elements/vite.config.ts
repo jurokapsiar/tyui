@@ -2,13 +2,56 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { configDefaults } from 'vitest/config';
+import dts from 'vite-plugin-dts';
 import { workspaceAliases } from '../../vite.aliases';
 
 const root = dirname(fileURLToPath(import.meta.url));
+const componentEntries = [
+  'button',
+  'center',
+  'checkbox',
+  'cluster',
+  'container',
+  'flex',
+  'frame',
+  'grid',
+  'input',
+  'radio',
+  'radio-group',
+  'sidebar',
+] as const;
 
 export default defineConfig({
   root,
   cacheDir: '../../node_modules/.vite/libs/elements',
+  plugins: [
+    dts({
+      entryRoot: 'src',
+      outDirs: process.env.TYUI_OUT_DIR ?? 'dist',
+      tsconfigPath: resolve(root, 'tsconfig.lib.json'),
+      exclude: [
+        'src/**/*.spec.ts',
+        'src/**/*.test.ts',
+        'src/**/*.stories.ts',
+        'src/generated/**/*',
+      ],
+      beforeWriteFile(filePath, content) {
+        for (const entryName of componentEntries) {
+          const suffix = `/${entryName}/index.d.ts`;
+          if (filePath.endsWith(suffix)) {
+            return {
+              filePath: filePath.slice(0, -suffix.length) + `/${entryName}.d.ts`,
+              content: content
+                .replaceAll(`'./`, `'./${entryName}/`)
+                .replaceAll(`"./`, `"./${entryName}/`),
+            };
+          }
+        }
+
+        return { filePath, content };
+      },
+    }),
+  ],
   resolve: {
     alias: workspaceAliases,
   },
@@ -35,7 +78,7 @@ export default defineConfig({
       fileName: (_format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
-      external: ['@tyui/core'],
+      external: ['@toyu-ui/core'],
     },
   },
   test: {

@@ -1,10 +1,19 @@
 {
-  "name": "@tyui/elements",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@toyu-ui/elements",
+  "version": "0.1.0",
   "keywords": [
     "tanstack-intent"
   ],
+  "homepage": "https://github.com/jurokapsiar/tyui#readme",
+  "bugs": {
+    "url": "https://github.com/jurokapsiar/tyui/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jurokapsiar/tyui.git",
+    "directory": "libs/elements"
+  },
   "files": [
     "dist",
     "skills",
@@ -15,63 +24,66 @@
   "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./button": {
-      "types": "./src/button/index.ts",
+      "types": "./dist/button.d.ts",
       "default": "./dist/button.js"
     },
     "./center": {
-      "types": "./src/center/index.ts",
+      "types": "./dist/center.d.ts",
       "default": "./dist/center.js"
     },
     "./checkbox": {
-      "types": "./src/checkbox/index.ts",
+      "types": "./dist/checkbox.d.ts",
       "default": "./dist/checkbox.js"
     },
     "./cluster": {
-      "types": "./src/cluster/index.ts",
+      "types": "./dist/cluster.d.ts",
       "default": "./dist/cluster.js"
     },
     "./container": {
-      "types": "./src/container/index.ts",
+      "types": "./dist/container.d.ts",
       "default": "./dist/container.js"
     },
     "./flex": {
-      "types": "./src/flex/index.ts",
+      "types": "./dist/flex.d.ts",
       "default": "./dist/flex.js"
     },
     "./frame": {
-      "types": "./src/frame/index.ts",
+      "types": "./dist/frame.d.ts",
       "default": "./dist/frame.js"
     },
     "./grid": {
-      "types": "./src/grid/index.ts",
+      "types": "./dist/grid.d.ts",
       "default": "./dist/grid.js"
     },
     "./input": {
-      "types": "./src/input/index.ts",
+      "types": "./dist/input.d.ts",
       "default": "./dist/input.js"
     },
     "./radio": {
-      "types": "./src/radio/index.ts",
+      "types": "./dist/radio.d.ts",
       "default": "./dist/radio.js"
     },
     "./radio-group": {
-      "types": "./src/radio-group/index.ts",
+      "types": "./dist/radio-group.d.ts",
       "default": "./dist/radio-group.js"
     },
     "./sidebar": {
-      "types": "./src/sidebar/index.ts",
+      "types": "./dist/sidebar.d.ts",
       "default": "./dist/sidebar.js"
     },
     "./custom-elements.json": {
       "default": "./custom-elements.json"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "vite build",
@@ -79,9 +91,6 @@
     "typecheck": "tsc -p tsconfig.lib.json --noEmit"
   },
   "dependencies": {
-    "@tyui/core": "workspace:*"
-  },
-  "devDependencies": {
-    "@tyui/tools-executors": "workspace:*"
+    "@toyu-ui/core": "^0.1.0"
   }
 }

@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-popover` (+ `tyui-popover-trigger`, `tyui-popover-surface`)
-- Define: `@tyui/define/popover`
+- Define: `@toyu-ui/define/popover`
 - Status: draft
 - Native substrate: **HTML Popover API** (`popover` attribute + `popovertarget`) for the surface; **CSS Anchor Positioning** for placement; native `<dialog>`-style focus trap only when `trap-focus` is set.
 - Shadow DOM: minimal. Host renders `<div popover part="surface">`; trigger projected via slot. Top-layer, light-dismiss, and Esc come from the platform.

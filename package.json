@@ -1,5 +1,5 @@
 {
-  "name": "tyui",
+  "name": "toyu-ui",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -20,6 +20,9 @@
     "sync-configs": "nx run workspace:sync-configs",
     "report-bundle-sizes": "nx run workspace:bundle-sizes",
     "design-system:context": "nx run elements:ai-context",
+    "release:prepare": "nx run workspace:release:prepare",
+    "release:checklist": "nx run workspace:release:checklist",
+    "release:postpublish": "nx run workspace:release:postpublish",
     "skills:validate": "nx run-many -t skills:validate",
     "playwright:image": "scripts/build-playwright-image.sh",
     "playwright:ensure-image": "scripts/ensure-playwright-image.sh",
@@ -57,6 +60,7 @@
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "vite": "7.1.11",
+    "vite-plugin-dts": "^5.0.3",
     "vite-plugin-solid": "^2.11.12",
     "vitest": "^4.1.5"
   },

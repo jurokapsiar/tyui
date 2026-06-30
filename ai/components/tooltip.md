@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-tooltip`
-- Define: `@tyui/define/tooltip`
+- Define: `@toyu-ui/define/tooltip`
 - Status: draft
 - Native substrate: **HTML Popover API** (`popover="manual"`) surface positioned with **CSS Anchor Positioning**; the trigger is the wrapped interactive control. The relationship to the trigger is wired with native `aria-describedby`/`aria-labelledby`.
 - Shadow DOM: minimal. Host renders a `<div popover="manual" part="content" role="tooltip">`; the trigger is the slotted child.

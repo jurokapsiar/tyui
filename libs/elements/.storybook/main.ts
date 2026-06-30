@@ -16,8 +16,8 @@ const config: StorybookConfig = {
     changeDetection: false,
     sidebarOnboardingChecklist: false,
   },
-  viteFinal: (config) =>
-    mergeConfig(config, {
+  viteFinal: (cfg) =>
+    mergeConfig(cfg, {
       resolve: {
         alias: workspaceAliases,
       },

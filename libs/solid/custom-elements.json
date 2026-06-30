@@ -1,0 +1,715 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "package": "@toyu-ui/elements",
+  "version": "0.0.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "./src/button/tyui-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiButtonElement",
+            "module": "./src/button/tyui-button.ts"
+          },
+          "name": "TyuiButtonElement",
+          "tagName": "tyui-button",
+          "customElement": true,
+          "summary": "Native custom element button for immediate actions.",
+          "attributes": [
+            {
+              "name": "appearance",
+              "type": "default | secondary | primary | outline | subtle | transparent",
+              "default": "default",
+              "description": "Visual emphasis."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Disables the native button."
+            },
+            {
+              "name": "disabled-focusable",
+              "type": "boolean",
+              "default": "false",
+              "description": "Keeps the button focusable while suppressing activation."
+            },
+            {
+              "name": "icon-position",
+              "type": "before | after",
+              "default": "before",
+              "description": "Places slotted icon before or after text."
+            },
+            {
+              "name": "shape",
+              "type": "rounded | circular | square",
+              "default": "rounded",
+              "description": "Control corner treatment."
+            },
+            {
+              "name": "size",
+              "type": "small | medium | large",
+              "default": "medium",
+              "description": "Control density."
+            },
+            {
+              "name": "type",
+              "type": "button | submit | reset",
+              "default": "button",
+              "description": "Native button type."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "appearance",
+              "type": {
+                "text": "TyuiButtonAppearance"
+              },
+              "attribute": "appearance",
+              "description": "Reflected visual emphasis."
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "disabled",
+              "description": "Reflected disabled state."
+            },
+            {
+              "kind": "field",
+              "name": "disabledFocusable",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "disabled-focusable",
+              "description": "Focusable disabled state."
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "TyuiButtonType"
+              },
+              "attribute": "type",
+              "description": "Native button type."
+            }
+          ],
+          "events": [
+            {
+              "name": "click",
+              "type": {
+                "text": "MouseEvent"
+              },
+              "description": "Native composed click from the internal button."
+            }
+          ],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Button label."
+            },
+            {
+              "name": "icon",
+              "description": "Decorative or named icon."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "control",
+              "description": "Internal native button."
+            },
+            {
+              "name": "label",
+              "description": "Label wrapper."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--ty-button-background",
+              "description": "Resting background."
+            },
+            {
+              "name": "--ty-button-foreground",
+              "description": "Text color."
+            },
+            {
+              "name": "--ty-button-border-color",
+              "description": "Border color."
+            },
+            {
+              "name": "--ty-button-radius",
+              "description": "Corner radius."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Trigger an immediate in-page action.",
+            "pattern": "Native button",
+            "layoutOwnership": "Component owns internal padding and icon-label gap; parent owns width and placement.",
+            "accessibility": [
+              "Use a button for actions, not navigation.",
+              "Icon-only buttons require an accessible name."
+            ],
+            "misuse": [
+              "Do not use for navigation.",
+              "Do not place interactive controls inside the label slot."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-button",
+          "declaration": {
+            "name": "TyuiButtonElement",
+            "module": "./src/button/tyui-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/input/tyui-input.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiInputElement",
+            "module": "./src/input/tyui-input.ts"
+          },
+          "name": "TyuiInputElement",
+          "tagName": "tyui-input",
+          "customElement": true,
+          "summary": "Form-associated single-line text input.",
+          "attributes": [
+            {
+              "name": "appearance",
+              "type": "outline | filled-darker | filled-lighter",
+              "default": "outline",
+              "description": "Base field style."
+            },
+            {
+              "name": "default-value",
+              "type": "string",
+              "default": "",
+              "description": "Initial uncontrolled value."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Disables the native input."
+            },
+            {
+              "name": "invalid",
+              "type": "boolean",
+              "default": "false",
+              "description": "Reflects invalid visual/ARIA state."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "default": "",
+              "description": "Form field name."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "default": "",
+              "description": "Native placeholder, not a label."
+            },
+            {
+              "name": "readonly",
+              "type": "boolean",
+              "default": "false",
+              "description": "Forwards native readOnly."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "default": "false",
+              "description": "Participates in validity."
+            },
+            {
+              "name": "size",
+              "type": "small | medium | large",
+              "default": "medium",
+              "description": "Control density."
+            },
+            {
+              "name": "type",
+              "type": "text | email | password | search | tel | url | number",
+              "default": "text",
+              "description": "Supported native input type."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "default": "",
+              "description": "Current value."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "value",
+              "description": "Updates internal input and form value."
+            },
+            {
+              "kind": "field",
+              "name": "defaultValue",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "default-value",
+              "description": "Seeds initial value once."
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "invalid",
+              "description": "Reflected invalid state."
+            }
+          ],
+          "events": [
+            {
+              "name": "input",
+              "type": {
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "User text input after host value updates."
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Native change re-dispatched from host."
+            }
+          ],
+          "slots": [
+            {
+              "name": "contentBefore",
+              "description": "Decorative content before text."
+            },
+            {
+              "name": "contentAfter",
+              "description": "Decorative content after text."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "control",
+              "description": "Input surface wrapper."
+            },
+            {
+              "name": "input",
+              "description": "Internal native input."
+            },
+            {
+              "name": "content-before",
+              "description": "Before slot wrapper."
+            },
+            {
+              "name": "content-after",
+              "description": "After slot wrapper."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--ty-input-background",
+              "description": "Resting field background."
+            },
+            {
+              "name": "--ty-input-border-color",
+              "description": "Resting border."
+            },
+            {
+              "name": "--ty-input-focus-indicator-color",
+              "description": "Focus indicator color."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Capture short single-line text.",
+            "pattern": "Native input",
+            "layoutOwnership": "Component owns internal padding, gap, and native input; field wrapper owns label and messages.",
+            "accessibility": [
+              "Requires a visible label or accessible name.",
+              "Placeholder is not a label."
+            ],
+            "misuse": [
+              "Do not put focusable controls in content slots.",
+              "Use combobox/search components for popups or clear buttons."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-input",
+          "declaration": {
+            "name": "TyuiInputElement",
+            "module": "./src/input/tyui-input.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/checkbox/tyui-checkbox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiCheckboxElement",
+            "module": "./src/checkbox/tyui-checkbox.ts"
+          },
+          "name": "TyuiCheckboxElement",
+          "tagName": "tyui-checkbox",
+          "customElement": true,
+          "summary": "Native checkbox custom element.",
+          "attributes": [
+            {
+              "name": "checked",
+              "type": "boolean",
+              "default": "false",
+              "description": "Checked state."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Disabled state."
+            },
+            {
+              "name": "indeterminate",
+              "type": "boolean",
+              "default": "false",
+              "description": "Mixed visual state."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "default": "on",
+              "description": "Submitted value."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "checked",
+              "description": "Reflected checked state."
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "indeterminate",
+              "description": "Reflected mixed state."
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent<{ checked: boolean }>"
+              },
+              "description": "User change event."
+            }
+          ],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Checkbox label."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "control",
+              "description": "Native input."
+            },
+            {
+              "name": "box",
+              "description": "Visual box."
+            },
+            {
+              "name": "label",
+              "description": "Label wrapper."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--ty-checkbox-size",
+              "description": "Checkbox visual size."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Toggle an independent boolean choice.",
+            "pattern": "Native checkbox",
+            "layoutOwnership": "Component owns indicator/label gap; parent owns grouping.",
+            "accessibility": [
+              "Use for independent choices.",
+              "Use radio for mutually exclusive choices."
+            ],
+            "misuse": ["Do not use checkbox as a command button."]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-checkbox",
+          "declaration": {
+            "name": "TyuiCheckboxElement",
+            "module": "./src/checkbox/tyui-checkbox.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/radio/tyui-radio.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiRadioElement",
+            "module": "./src/radio/tyui-radio.ts"
+          },
+          "name": "TyuiRadioElement",
+          "tagName": "tyui-radio",
+          "customElement": true,
+          "summary": "Radio option used inside tyui-radio-group.",
+          "attributes": [
+            {
+              "name": "checked",
+              "type": "boolean",
+              "default": "false",
+              "description": "Checked state controlled by group."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Disabled state."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "default": "",
+              "description": "Option value."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "value",
+              "description": "Option value."
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Native input change reflected to host."
+            }
+          ],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Radio label."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "root",
+              "description": "Label root."
+            },
+            {
+              "name": "input",
+              "description": "Native radio input."
+            },
+            {
+              "name": "circle",
+              "description": "Visual circle."
+            },
+            {
+              "name": "dot",
+              "description": "Selected dot."
+            },
+            {
+              "name": "label",
+              "description": "Label wrapper."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--ty-radio-checked-color",
+              "description": "Selected fill and border."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Represent one option in a mutually exclusive set.",
+            "pattern": "Native radio",
+            "layoutOwnership": "Radio owns native input and indicator; radio group owns value and roving tabindex.",
+            "accessibility": ["Use inside tyui-radio-group for coordinated keyboard behavior."],
+            "misuse": ["Do not use standalone radios for unrelated boolean choices."]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-radio",
+          "declaration": {
+            "name": "TyuiRadioElement",
+            "module": "./src/radio/tyui-radio.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/radio-group/tyui-radio-group.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiRadioGroupElement",
+            "module": "./src/radio-group/tyui-radio-group.ts"
+          },
+          "name": "TyuiRadioGroupElement",
+          "tagName": "tyui-radio-group",
+          "customElement": true,
+          "summary": "Form-associated radio group coordinating tyui-radio children.",
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Disables the group."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "default": "",
+              "description": "Group label text."
+            },
+            {
+              "name": "layout",
+              "type": "vertical | horizontal | horizontal-stacked",
+              "default": "vertical",
+              "description": "Child layout."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "default": "",
+              "description": "Form field name."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "default": "false",
+              "description": "Requires selection."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "default": "",
+              "description": "Selected radio value."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "value",
+              "description": "Selected value."
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "User selection change."
+            }
+          ],
+          "slots": [
+            {
+              "name": "default",
+              "description": "tyui-radio children."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "label",
+              "description": "Group label."
+            },
+            {
+              "name": "items",
+              "description": "Radio item container."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--ty-radio-group-gap",
+              "description": "Gap between radio items."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Select one option from a small set.",
+            "pattern": "ARIA radiogroup with native radio children",
+            "layoutOwnership": "Group owns child layout, value, roving tabindex, and form state.",
+            "accessibility": [
+              "Tab enters one active radio.",
+              "Arrow keys move focus and selection."
+            ],
+            "misuse": ["Do not put non-radio interactive controls in the default slot."]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-radio-group",
+          "declaration": {
+            "name": "TyuiRadioGroupElement",
+            "module": "./src/radio-group/tyui-radio-group.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

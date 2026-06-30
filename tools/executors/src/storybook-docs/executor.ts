@@ -372,7 +372,7 @@ export const ImplementationSpec: Story = {
 
 function buildDefineImports(doc: ComponentDoc): string {
   void doc;
-  return `// nx-ignore-next-line\nimport { defineTyuiElements } from '@tyui/define/all';`;
+  return `// nx-ignore-next-line\nimport { defineTyuiElements } from '@toyu-ui/define/all';`;
 }
 
 function buildDefineRegistrations(doc: ComponentDoc): string {
@@ -411,7 +411,8 @@ function readSections(source: string): Array<{ title: string; body: string }> {
 
   for (const [index, match] of matches.entries()) {
     const next = matches[index + 1];
-    const title = match[1].trim();
+    const title = match[1]?.trim();
+    if (!title) continue;
     const start = (match.index ?? 0) + match[0].length;
     const end = next?.index ?? source.length;
     sections.push({ title, body: source.slice(start, end).trim() });
@@ -449,10 +450,12 @@ function extractBlocks(source: string, marker: string): ExampleBlock[] {
   const pattern = /```([^\n`]*)\n([\s\S]*?)```/g;
 
   for (const match of source.matchAll(pattern)) {
-    const info = match[1].trim();
+    const info = match[1]?.trim() ?? '';
+    const code = match[2]?.trim();
+    if (!code) continue;
     if (!new RegExp(`(^|\\s)${escapeRegExp(marker)}($|\\s)`).test(info)) continue;
     examples.push({
-      code: match[2].trim(),
+      code,
       title: readFenceTitle(info) ?? `Example ${examples.length + 1}`,
     });
   }
@@ -518,8 +521,10 @@ function markdownToHtml(markdown: string): string {
     const heading = line.match(/^(#{1,4})\s+(.+)$/);
     if (heading) {
       closeList();
-      const level = heading[1].length;
-      html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+      const level = heading[1]?.length;
+      const text = heading[2];
+      if (!level || !text) continue;
+      html.push(`<h${level}>${inlineMarkdown(text)}</h${level}>`);
       continue;
     }
 
@@ -529,7 +534,9 @@ function markdownToHtml(markdown: string): string {
         html.push('<ul>');
         listOpen = true;
       }
-      html.push(`<li>${inlineMarkdown(bullet[1])}</li>`);
+      const text = bullet[1];
+      if (!text) continue;
+      html.push(`<li>${inlineMarkdown(text)}</li>`);
       continue;
     }
 
@@ -550,6 +557,7 @@ function tableToHtml(rows: string[][]): string {
   const usableRows = rows.filter((row) => !row.every((cell) => /^:?-{3,}:?$/.test(cell.trim())));
   if (usableRows.length === 0) return '';
   const [head, ...body] = usableRows;
+  if (!head) return '';
   const header = `<thead><tr>${head.map((cell) => `<th>${inlineMarkdown(cell)}</th>`).join('')}</tr></thead>`;
   const rowsHtml = body
     .map((row) => `<tr>${row.map((cell) => `<td>${inlineMarkdown(cell)}</td>`).join('')}</tr>`)
@@ -583,7 +591,7 @@ function inlineMarkdown(value: string): string {
 
 function readListValue(source: string, label: string): string | undefined {
   const match = source.match(new RegExp(`^- ${escapeRegExp(label)}:\\s+(.+)$`, 'm'));
-  return match?.[1].replace(/`/g, '').trim();
+  return match?.[1]?.replace(/`/g, '').trim();
 }
 
 function titleCase(value: string): string {

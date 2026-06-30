@@ -4,8 +4,8 @@ description: Use and integrate the tyui-checkbox custom element for independent 
 license: Apache-2.0
 metadata:
   type: library
-  library: '@tyui/elements'
-  library_version: '0.0.0'
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
   source: src/checkbox/tyui-checkbox.ts
   manifest: ../../custom-elements.json
 ---
@@ -18,7 +18,7 @@ Use `tyui-checkbox` for an independent yes/no or on/off choice.
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`.
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
 
 ## Correct Usage
 

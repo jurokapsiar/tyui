@@ -8,6 +8,7 @@ TYUI is a framework-neutral Custom Elements component library with generated age
 - custom-elements.compact.json
 - tokens.resolved.json
 - components.md
+- selection.md
 - context.json
 
 ## Source docs

@@ -5,7 +5,7 @@
 ## Imports
 
 ```ts
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 
 defineTyuiButton();
 ```
@@ -13,7 +13,7 @@ defineTyuiButton();
 Solid consumers can use the thin wrapper:
 
 ```tsx
-import { Button } from '@tyui/solid';
+import { Button } from '@toyu-ui/solid';
 ```
 
 ## Attributes And Properties

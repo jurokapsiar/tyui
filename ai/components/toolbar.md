@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-toolbar` (+ `tyui-toolbar-group`, `tyui-toolbar-divider`; buttons are `tyui-button`/`tyui-toggle-button` with a toolbar context)
-- Define: `@tyui/define/toolbar`
+- Define: `@toyu-ui/define/toolbar`
 - Status: draft
 - Native substrate: `<div role="toolbar">` containing native buttons/links; grouping via `<div role="group">`; dividers decorative.
 - Shadow DOM: minimal (root renders `role="toolbar"` wrapper + `<slot>`). Controls are light-DOM native buttons.

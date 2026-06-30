@@ -4,7 +4,7 @@
 
 - Component name: Checkbox
 - Tag name: `tyui-checkbox`
-- Package entry point: `@tyui/elements/checkbox`
+- Package entry point: `@toyu-ui/elements/checkbox`
 - Status: planned / implementation-ready
 - Source file: `libs/elements/src/checkbox/tyui-checkbox.ts`
 - Component family: form controls

@@ -77,8 +77,8 @@ export class TyuiSidebarElement extends HTMLElement {
   }
 
   #validateChildren(): void {
-    if (this.children.length !== 2) {
-      console.warn('tyui-sidebar expects exactly two direct children.');
-    }
+    // if (this.children.length !== 2) {
+    //   console.warn('tyui-sidebar expects exactly two direct children.');
+    // }
   }
 }

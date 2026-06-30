@@ -1,4 +1,4 @@
-import { TyuiFlexElement } from '@tyui/elements/flex';
+import { TyuiFlexElement } from '@toyu-ui/elements/flex';
 
 export const tyuiFlexTagName = 'tyui-flex';
 

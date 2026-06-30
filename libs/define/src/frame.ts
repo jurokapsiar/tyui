@@ -1,4 +1,4 @@
-import { TyuiFrameElement } from '@tyui/elements/frame';
+import { TyuiFrameElement } from '@toyu-ui/elements/frame';
 
 export const tyuiFrameTagName = 'tyui-frame';
 

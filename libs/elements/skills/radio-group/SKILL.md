@@ -4,8 +4,8 @@ description: Use and integrate tyui-radio-group for mutually exclusive choices, 
 license: Apache-2.0
 metadata:
   type: library
-  library: '@tyui/elements'
-  library_version: '0.0.0'
+  library: '@toyu-ui/elements'
+  library_version: '0.1.0'
   source: src/radio-group/tyui-radio-group.ts
   manifest: ../../custom-elements.json
 ---
@@ -19,7 +19,7 @@ set.
 
 ## API Source
 
-Authoritative API facts live in `@tyui/elements/custom-elements.json`.
+Authoritative API facts live in `@toyu-ui/elements/custom-elements.json`.
 
 ## Correct Usage
 
@@ -36,6 +36,13 @@ Authoritative API facts live in `@tyui/elements/custom-elements.json`.
 - `Tab` enters the checked enabled radio, or the first enabled radio.
 - Arrow keys move focus and selection, wrapping and skipping disabled radios.
 - `Space` selects the focused radio.
+
+## Selection Guidance
+
+- Use RadioGroup when the user chooses exactly one option from a small set.
+- Use Checkbox for independent boolean choices or multi-select checklists.
+- Use Select or Combobox for long option lists, async options, or compact forms.
+- Keep only `tyui-radio` choices in the default slot.
 
 ## Anti-Patterns
 

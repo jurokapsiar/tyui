@@ -1,4 +1,4 @@
-import { TyuiCenterElement } from '@tyui/elements/center';
+import { TyuiCenterElement } from '@toyu-ui/elements/center';
 
 export const tyuiCenterTagName = 'tyui-center';
 

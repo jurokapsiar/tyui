@@ -6,21 +6,42 @@ import type {
   TyuiButtonShape,
   TyuiButtonSize,
   TyuiButtonType,
-} from '@tyui/elements/button';
-import type { TyuiCheckboxElement } from '@tyui/elements/checkbox';
+} from '@toyu-ui/elements/button';
+import type { TyuiCenterElement, TyuiCenterGutter } from '@toyu-ui/elements/center';
+import type { TyuiCheckboxElement } from '@toyu-ui/elements/checkbox';
+import type {
+  TyuiClusterAlign,
+  TyuiClusterElement,
+  TyuiClusterJustify,
+} from '@toyu-ui/elements/cluster';
+import type {
+  TyuiContainerElement,
+  TyuiContainerGutter,
+  TyuiContainerSize,
+} from '@toyu-ui/elements/container';
+import type {
+  TyuiFlexAlign,
+  TyuiFlexDirection,
+  TyuiFlexElement,
+  TyuiFlexJustify,
+  TyuiFlexWrap,
+} from '@toyu-ui/elements/flex';
+import type { TyuiFrameElement, TyuiFrameFit } from '@toyu-ui/elements/frame';
+import type { TyuiGridAlign, TyuiGridElement, TyuiGridJustify } from '@toyu-ui/elements/grid';
 import type {
   TyuiInputAppearance,
   TyuiInputElement,
   TyuiInputEvent,
   TyuiInputSize,
   TyuiInputType,
-} from '@tyui/elements/input';
-import type { TyuiRadioElement, TyuiRadioLabelPosition } from '@tyui/elements/radio';
+} from '@toyu-ui/elements/input';
+import type { TyuiRadioElement, TyuiRadioLabelPosition } from '@toyu-ui/elements/radio';
 import type {
   TyuiRadioGroupElement,
   TyuiRadioGroupEvent,
   TyuiRadioGroupLayout,
-} from '@tyui/elements/radio-group';
+} from '@toyu-ui/elements/radio-group';
+import type { TyuiSidebarElement, TyuiSidebarSide } from '@toyu-ui/elements/sidebar';
 
 export type TyuiButtonSolidAttributes = JSX.HTMLAttributes<TyuiButtonElement> & {
   appearance?: TyuiButtonAppearance | undefined;
@@ -101,14 +122,85 @@ export type TyuiRadioGroupSolidAttributes = TyuiRadioGroupBaseAttributes & {
   'on:change'?: ((event: TyuiRadioGroupEvent) => void) | undefined;
 };
 
+export type TyuiFlexSolidAttributes = JSX.HTMLAttributes<TyuiFlexElement> & {
+  direction?: TyuiFlexDirection | undefined;
+  wrap?: TyuiFlexWrap | undefined;
+  align?: TyuiFlexAlign | undefined;
+  justify?: TyuiFlexJustify | undefined;
+  gap?: '0' | '1' | '2' | '3' | '4' | undefined;
+  inline?: boolean | undefined;
+  children?: JSX.Element | undefined;
+};
+
+export type TyuiClusterSolidAttributes = JSX.HTMLAttributes<TyuiClusterElement> & {
+  align?: TyuiClusterAlign | undefined;
+  justify?: TyuiClusterJustify | undefined;
+  gap?: '0' | '1' | '2' | '3' | '4' | undefined;
+  rowGap?: '0' | '1' | '2' | '3' | '4' | undefined;
+  'row-gap'?: '0' | '1' | '2' | '3' | '4' | undefined;
+  children?: JSX.Element | undefined;
+};
+
+export type TyuiGridSolidAttributes = JSX.HTMLAttributes<TyuiGridElement> & {
+  minItemSize?: string | undefined;
+  'min-item-size'?: string | undefined;
+  gap?: '0' | '1' | '2' | '3' | '4' | undefined;
+  rowGap?: '0' | '1' | '2' | '3' | '4' | undefined;
+  'row-gap'?: '0' | '1' | '2' | '3' | '4' | undefined;
+  align?: TyuiGridAlign | undefined;
+  justify?: TyuiGridJustify | undefined;
+  dense?: boolean | undefined;
+  children?: JSX.Element | undefined;
+};
+
+export type TyuiCenterSolidAttributes = JSX.HTMLAttributes<TyuiCenterElement> & {
+  measure?: string | undefined;
+  gutter?: TyuiCenterGutter | undefined;
+  intrinsic?: boolean | undefined;
+  children?: JSX.Element | undefined;
+};
+
+export type TyuiContainerSolidAttributes = JSX.HTMLAttributes<TyuiContainerElement> & {
+  size?: TyuiContainerSize | undefined;
+  gutter?: TyuiContainerGutter | undefined;
+  bleed?: boolean | undefined;
+  children?: JSX.Element | undefined;
+};
+
+export type TyuiFrameSolidAttributes = JSX.HTMLAttributes<TyuiFrameElement> & {
+  ratio?: string | undefined;
+  fit?: TyuiFrameFit | undefined;
+  position?: string | undefined;
+  children?: JSX.Element | undefined;
+};
+
+export type TyuiSidebarSolidAttributes = JSX.HTMLAttributes<TyuiSidebarElement> & {
+  side?: TyuiSidebarSide | undefined;
+  sideSize?: string | undefined;
+  'side-size'?: string | undefined;
+  contentMin?: string | undefined;
+  'content-min'?: string | undefined;
+  gap?: '0' | '1' | '2' | '3' | '4' | undefined;
+  noStretch?: boolean | undefined;
+  'no-stretch'?: boolean | undefined;
+  children?: JSX.Element | undefined;
+};
+
 declare module 'solid-js' {
   namespace JSX {
     interface IntrinsicElements {
       'tyui-button': TyuiButtonSolidAttributes;
+      'tyui-center': TyuiCenterSolidAttributes;
       'tyui-checkbox': TyuiCheckboxSolidAttributes;
+      'tyui-cluster': TyuiClusterSolidAttributes;
+      'tyui-container': TyuiContainerSolidAttributes;
+      'tyui-flex': TyuiFlexSolidAttributes;
+      'tyui-frame': TyuiFrameSolidAttributes;
+      'tyui-grid': TyuiGridSolidAttributes;
       'tyui-input': TyuiInputSolidAttributes;
       'tyui-radio': TyuiRadioSolidAttributes;
       'tyui-radio-group': TyuiRadioGroupSolidAttributes;
+      'tyui-sidebar': TyuiSidebarSolidAttributes;
     }
   }
 }

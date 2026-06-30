@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-card` (+ `tyui-card-header`, `tyui-card-footer`, `tyui-card-preview` as light structural slots/elements)
-- Define: `@tyui/define/card`
+- Define: `@toyu-ui/define/card`
 - Status: draft
 - Native substrate: `<article>` (or `<div role="group">`); selectable cards use a **native `<input type="checkbox">`** in the floating-action slot; a primary-action card uses a native `<a>`/`<button>` overlay.
 - Shadow DOM: minimal (root renders the appearance container + `<slot>`s for preview/header/body/footer). Content stays light-DOM for headings/links.

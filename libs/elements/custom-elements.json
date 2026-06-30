@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0.0",
   "readme": "",
-  "package": "@tyui/elements",
-  "version": "0.0.0",
+  "package": "@toyu-ui/elements",
+  "version": "0.1.0",
   "modules": [
     {
       "kind": "javascript-module",
@@ -471,7 +471,9 @@
               "Use for independent choices.",
               "Use radio for mutually exclusive choices."
             ],
-            "misuse": ["Do not use checkbox as a command button."]
+            "misuse": [
+              "Do not use checkbox as a command button."
+            ]
           }
         }
       ],
@@ -578,8 +580,12 @@
             "intent": "Represent one option in a mutually exclusive set.",
             "pattern": "Native radio",
             "layoutOwnership": "Radio owns native input and indicator; radio group owns value and roving tabindex.",
-            "accessibility": ["Use inside tyui-radio-group for coordinated keyboard behavior."],
-            "misuse": ["Do not use standalone radios for unrelated boolean choices."]
+            "accessibility": [
+              "Use inside tyui-radio-group for coordinated keyboard behavior."
+            ],
+            "misuse": [
+              "Do not use standalone radios for unrelated boolean choices."
+            ]
           }
         }
       ],
@@ -696,7 +702,9 @@
               "Tab enters one active radio.",
               "Arrow keys move focus and selection."
             ],
-            "misuse": ["Do not put non-radio interactive controls in the default slot."]
+            "misuse": [
+              "Do not put non-radio interactive controls in the default slot."
+            ]
           }
         }
       ],
@@ -707,6 +715,934 @@
           "declaration": {
             "name": "TyuiRadioGroupElement",
             "module": "./src/radio-group/tyui-radio-group.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/flex/tyui-flex.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiFlexElement",
+            "module": "./src/flex/tyui-flex.ts"
+          },
+          "name": "TyuiFlexElement",
+          "tagName": "tyui-flex",
+          "customElement": true,
+          "summary": "Light-DOM flex layout primitive.",
+          "attributes": [
+            {
+              "name": "direction",
+              "type": "row | row-reverse | column | column-reverse",
+              "default": "row",
+              "description": "Flex direction."
+            },
+            {
+              "name": "wrap",
+              "type": "nowrap | wrap | wrap-reverse",
+              "default": "nowrap",
+              "description": "Flex wrapping."
+            },
+            {
+              "name": "align",
+              "type": "stretch | start | center | end | baseline",
+              "default": "stretch",
+              "description": "Cross-axis alignment."
+            },
+            {
+              "name": "justify",
+              "type": "start | center | end | between | around | evenly",
+              "default": "start",
+              "description": "Main-axis distribution."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4",
+              "default": "3",
+              "description": "Spacing token used for row and column gap."
+            },
+            {
+              "name": "inline",
+              "type": "boolean",
+              "default": "false",
+              "description": "Uses inline-flex display."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "direction",
+              "type": {
+                "text": "TyuiFlexDirection"
+              },
+              "attribute": "direction",
+              "description": "Reflected flex direction."
+            },
+            {
+              "kind": "field",
+              "name": "wrap",
+              "type": {
+                "text": "TyuiFlexWrap"
+              },
+              "attribute": "wrap",
+              "description": "Reflected wrapping mode."
+            },
+            {
+              "kind": "field",
+              "name": "align",
+              "type": {
+                "text": "TyuiFlexAlign"
+              },
+              "attribute": "align",
+              "description": "Reflected cross-axis alignment."
+            },
+            {
+              "kind": "field",
+              "name": "justify",
+              "type": {
+                "text": "TyuiFlexJustify"
+              },
+              "attribute": "justify",
+              "description": "Reflected main-axis distribution."
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "gap",
+              "description": "Reflected spacing token."
+            },
+            {
+              "kind": "field",
+              "name": "inline",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "inline",
+              "description": "Reflected inline display flag."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Laid-out children."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-flex-display",
+              "description": "Display value used by the shared layout stylesheet."
+            },
+            {
+              "name": "--ty-flex-direction",
+              "description": "Mapped flex-direction."
+            },
+            {
+              "name": "--ty-flex-wrap",
+              "description": "Mapped flex-wrap."
+            },
+            {
+              "name": "--ty-flex-align",
+              "description": "Mapped align-items."
+            },
+            {
+              "name": "--ty-flex-justify",
+              "description": "Mapped justify-content."
+            },
+            {
+              "name": "--ty-flex-gap",
+              "description": "Mapped gap."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Arrange children along one axis.",
+            "pattern": "Intrinsic flex layout primitive",
+            "layoutOwnership": "Parent owns child placement; children keep intrinsic sizing unless CSS changes it.",
+            "accessibility": [
+              "Preserves DOM order and does not set roles."
+            ],
+            "misuse": [
+              "Do not use for data grids or tabular relationships."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-flex",
+          "declaration": {
+            "name": "TyuiFlexElement",
+            "module": "./src/flex/tyui-flex.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/cluster/tyui-cluster.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiClusterElement",
+            "module": "./src/cluster/tyui-cluster.ts"
+          },
+          "name": "TyuiClusterElement",
+          "tagName": "tyui-cluster",
+          "customElement": true,
+          "summary": "Wrapping inline cluster layout primitive.",
+          "attributes": [
+            {
+              "name": "align",
+              "type": "start | center | end | baseline | stretch",
+              "default": "center",
+              "description": "Cross-axis alignment."
+            },
+            {
+              "name": "justify",
+              "type": "start | center | end | between",
+              "default": "start",
+              "description": "Main-axis distribution."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4",
+              "default": "2",
+              "description": "Inline spacing token."
+            },
+            {
+              "name": "row-gap",
+              "type": "0 | 1 | 2 | 3 | 4",
+              "description": "Optional row spacing token."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "align",
+              "type": {
+                "text": "TyuiClusterAlign"
+              },
+              "attribute": "align",
+              "description": "Reflected cross-axis alignment."
+            },
+            {
+              "kind": "field",
+              "name": "justify",
+              "type": {
+                "text": "TyuiClusterJustify"
+              },
+              "attribute": "justify",
+              "description": "Reflected main-axis distribution."
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "gap",
+              "description": "Reflected inline spacing token."
+            },
+            {
+              "kind": "field",
+              "name": "rowGap",
+              "type": {
+                "text": "string | null"
+              },
+              "attribute": "row-gap",
+              "description": "Reflected row spacing token."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Wrapping children."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-cluster-align",
+              "description": "Mapped align-items."
+            },
+            {
+              "name": "--ty-cluster-justify",
+              "description": "Mapped justify-content."
+            },
+            {
+              "name": "--ty-cluster-gap",
+              "description": "Mapped column gap."
+            },
+            {
+              "name": "--ty-cluster-row-gap",
+              "description": "Mapped row gap."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Wrap small peer controls or chips across lines.",
+            "pattern": "Intrinsic cluster layout primitive",
+            "layoutOwnership": "Parent owns wrapping, gaps, and alignment; children keep their own width.",
+            "accessibility": [
+              "Preserves DOM order and does not set roles."
+            ],
+            "misuse": [
+              "Do not use as a radio group or toolbar behavior primitive."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-cluster",
+          "declaration": {
+            "name": "TyuiClusterElement",
+            "module": "./src/cluster/tyui-cluster.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/grid/tyui-grid.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiGridElement",
+            "module": "./src/grid/tyui-grid.ts"
+          },
+          "name": "TyuiGridElement",
+          "tagName": "tyui-grid",
+          "customElement": true,
+          "summary": "Responsive auto-fit grid layout primitive.",
+          "attributes": [
+            {
+              "name": "min-item-size",
+              "type": "string",
+              "default": "16rem",
+              "description": "Minimum grid track size."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4",
+              "default": "4",
+              "description": "Column and row spacing token."
+            },
+            {
+              "name": "row-gap",
+              "type": "0 | 1 | 2 | 3 | 4",
+              "description": "Optional row spacing token."
+            },
+            {
+              "name": "align",
+              "type": "stretch | start | center | end",
+              "default": "stretch",
+              "description": "Grid item block-axis placement."
+            },
+            {
+              "name": "justify",
+              "type": "stretch | start | center | end",
+              "default": "stretch",
+              "description": "Grid item inline-axis placement."
+            },
+            {
+              "name": "dense",
+              "type": "boolean",
+              "default": "false",
+              "description": "Enables dense auto-placement."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "minItemSize",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "min-item-size",
+              "description": "Reflected minimum item size."
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "gap",
+              "description": "Reflected spacing token."
+            },
+            {
+              "kind": "field",
+              "name": "rowGap",
+              "type": {
+                "text": "string | null"
+              },
+              "attribute": "row-gap",
+              "description": "Reflected row spacing token."
+            },
+            {
+              "kind": "field",
+              "name": "align",
+              "type": {
+                "text": "TyuiGridAlign"
+              },
+              "attribute": "align",
+              "description": "Reflected block-axis placement."
+            },
+            {
+              "kind": "field",
+              "name": "justify",
+              "type": {
+                "text": "TyuiGridJustify"
+              },
+              "attribute": "justify",
+              "description": "Reflected inline-axis placement."
+            },
+            {
+              "kind": "field",
+              "name": "dense",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "dense",
+              "description": "Reflected dense placement flag."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Grid children."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-grid-min-item-size",
+              "description": "Mapped grid minimum item size."
+            },
+            {
+              "name": "--ty-grid-align",
+              "description": "Mapped align-items."
+            },
+            {
+              "name": "--ty-grid-justify",
+              "description": "Mapped justify-items."
+            },
+            {
+              "name": "--ty-grid-gap",
+              "description": "Mapped column gap."
+            },
+            {
+              "name": "--ty-grid-row-gap",
+              "description": "Mapped row gap."
+            },
+            {
+              "name": "--ty-grid-auto-flow",
+              "description": "Mapped grid-auto-flow."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Lay out peer cards or fields in responsive columns.",
+            "pattern": "Intrinsic grid layout primitive",
+            "layoutOwnership": "Parent owns track sizing and gaps; children own their internal layout.",
+            "accessibility": [
+              "Preserves DOM order and does not set roles."
+            ],
+            "misuse": [
+              "Do not use for semantic data tables."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-grid",
+          "declaration": {
+            "name": "TyuiGridElement",
+            "module": "./src/grid/tyui-grid.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/center/tyui-center.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiCenterElement",
+            "module": "./src/center/tyui-center.ts"
+          },
+          "name": "TyuiCenterElement",
+          "tagName": "tyui-center",
+          "customElement": true,
+          "summary": "Centered measure layout primitive.",
+          "attributes": [
+            {
+              "name": "measure",
+              "type": "string",
+              "default": "65ch",
+              "description": "Maximum inline measure."
+            },
+            {
+              "name": "gutter",
+              "type": "0 | 1 | 2 | 3 | 4 | page",
+              "default": "page",
+              "description": "Inline padding token."
+            },
+            {
+              "name": "intrinsic",
+              "type": "boolean",
+              "default": "false",
+              "description": "Centers children intrinsically."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "measure",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "measure",
+              "description": "Reflected maximum inline measure."
+            },
+            {
+              "kind": "field",
+              "name": "gutter",
+              "type": {
+                "text": "TyuiCenterGutter"
+              },
+              "attribute": "gutter",
+              "description": "Reflected gutter token."
+            },
+            {
+              "kind": "field",
+              "name": "intrinsic",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "intrinsic",
+              "description": "Reflected intrinsic centering flag."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Centered content."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-center-measure",
+              "description": "Mapped max-inline-size."
+            },
+            {
+              "name": "--ty-center-gutter",
+              "description": "Mapped inline padding."
+            },
+            {
+              "name": "--ty-center-display",
+              "description": "Display value for intrinsic centering."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Center readable content within a measure.",
+            "pattern": "Intrinsic center layout primitive",
+            "layoutOwnership": "Parent owns readable measure and gutter; children own internal layout.",
+            "accessibility": [
+              "Preserves DOM order and does not set roles."
+            ],
+            "misuse": [
+              "Do not use as a generic card or surface."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-center",
+          "declaration": {
+            "name": "TyuiCenterElement",
+            "module": "./src/center/tyui-center.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/container/tyui-container.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiContainerElement",
+            "module": "./src/container/tyui-container.ts"
+          },
+          "name": "TyuiContainerElement",
+          "tagName": "tyui-container",
+          "customElement": true,
+          "summary": "Page container layout primitive.",
+          "attributes": [
+            {
+              "name": "size",
+              "type": "narrow | medium | wide | full",
+              "default": "wide",
+              "description": "Container rail size."
+            },
+            {
+              "name": "gutter",
+              "type": "0 | 1 | 2 | 3 | 4 | page",
+              "default": "page",
+              "description": "Inline padding token."
+            },
+            {
+              "name": "bleed",
+              "type": "boolean",
+              "default": "false",
+              "description": "Removes max width and gutter."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "TyuiContainerSize"
+              },
+              "attribute": "size",
+              "description": "Reflected rail size."
+            },
+            {
+              "kind": "field",
+              "name": "gutter",
+              "type": {
+                "text": "TyuiContainerGutter"
+              },
+              "attribute": "gutter",
+              "description": "Reflected gutter token."
+            },
+            {
+              "kind": "field",
+              "name": "bleed",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "bleed",
+              "description": "Reflected bleed flag."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Page section content."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-container-max-inline-size",
+              "description": "Mapped max-inline-size."
+            },
+            {
+              "name": "--ty-container-gutter",
+              "description": "Mapped inline padding."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Constrain page sections to product rails.",
+            "pattern": "Page container layout primitive",
+            "layoutOwnership": "Parent owns section width and gutter; children own internal layout.",
+            "accessibility": [
+              "Preserves DOM order and does not set roles."
+            ],
+            "misuse": [
+              "Do not use bleed and full size to fake unrelated section behavior."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-container",
+          "declaration": {
+            "name": "TyuiContainerElement",
+            "module": "./src/container/tyui-container.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/frame/tyui-frame.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiFrameElement",
+            "module": "./src/frame/tyui-frame.ts"
+          },
+          "name": "TyuiFrameElement",
+          "tagName": "tyui-frame",
+          "customElement": true,
+          "summary": "Aspect-ratio media frame layout primitive.",
+          "attributes": [
+            {
+              "name": "ratio",
+              "type": "string",
+              "default": "16/9",
+              "description": "Aspect ratio."
+            },
+            {
+              "name": "fit",
+              "type": "cover | contain | fill | scale-down | none",
+              "default": "cover",
+              "description": "Object-fit for replaced children."
+            },
+            {
+              "name": "position",
+              "type": "string",
+              "default": "center",
+              "description": "Object-position for replaced children."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "ratio",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "ratio",
+              "description": "Reflected aspect ratio."
+            },
+            {
+              "kind": "field",
+              "name": "fit",
+              "type": {
+                "text": "TyuiFrameFit"
+              },
+              "attribute": "fit",
+              "description": "Reflected object-fit."
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "position",
+              "description": "Reflected object-position."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "One media or visual child."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-frame-ratio",
+              "description": "Mapped aspect-ratio."
+            },
+            {
+              "name": "--ty-frame-fit",
+              "description": "Mapped object-fit for replaced children."
+            },
+            {
+              "name": "--ty-frame-position",
+              "description": "Mapped object-position for replaced children."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Preserve a media aspect ratio.",
+            "pattern": "Intrinsic frame layout primitive",
+            "layoutOwnership": "Parent owns ratio and crop behavior; media child owns rendered content.",
+            "accessibility": [
+              "Preserves child semantics and alternative text."
+            ],
+            "misuse": [
+              "Do not expect fit or position to affect non-replaced children."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-frame",
+          "declaration": {
+            "name": "TyuiFrameElement",
+            "module": "./src/frame/tyui-frame.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./src/sidebar/tyui-sidebar.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "declaration": {
+            "name": "TyuiSidebarElement",
+            "module": "./src/sidebar/tyui-sidebar.ts"
+          },
+          "name": "TyuiSidebarElement",
+          "tagName": "tyui-sidebar",
+          "customElement": true,
+          "summary": "Two-child sidebar/content layout primitive.",
+          "attributes": [
+            {
+              "name": "side",
+              "type": "start | end",
+              "default": "start",
+              "description": "Places the fixed side at the start or end."
+            },
+            {
+              "name": "side-size",
+              "type": "string",
+              "default": "18rem",
+              "description": "Preferred sidebar basis."
+            },
+            {
+              "name": "content-min",
+              "type": "string",
+              "default": "50%",
+              "description": "Minimum content width before wrapping."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4",
+              "default": "3",
+              "description": "Spacing token between children."
+            },
+            {
+              "name": "no-stretch",
+              "type": "boolean",
+              "default": "false",
+              "description": "Aligns children to flex-start."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "side",
+              "type": {
+                "text": "TyuiSidebarSide"
+              },
+              "attribute": "side",
+              "description": "Reflected sidebar side."
+            },
+            {
+              "kind": "field",
+              "name": "sideSize",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "side-size",
+              "description": "Reflected sidebar basis."
+            },
+            {
+              "kind": "field",
+              "name": "contentMin",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "content-min",
+              "description": "Reflected content minimum width."
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "gap",
+              "description": "Reflected spacing token."
+            },
+            {
+              "kind": "field",
+              "name": "noStretch",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "no-stretch",
+              "description": "Reflected no-stretch flag."
+            }
+          ],
+          "events": [],
+          "slots": [
+            {
+              "name": "default",
+              "description": "Exactly two direct children: sidebar and content."
+            }
+          ],
+          "cssParts": [],
+          "cssProperties": [
+            {
+              "name": "--ty-sidebar-direction",
+              "description": "Mapped flex-direction."
+            },
+            {
+              "name": "--ty-sidebar-size",
+              "description": "Mapped sidebar flex-basis."
+            },
+            {
+              "name": "--ty-sidebar-content-min-inline-size",
+              "description": "Mapped content minimum inline size."
+            },
+            {
+              "name": "--ty-sidebar-gap",
+              "description": "Mapped gap."
+            },
+            {
+              "name": "--ty-sidebar-align",
+              "description": "Mapped align-items."
+            }
+          ],
+          "x-design-system": {
+            "intent": "Place a sidebar beside flexible content until wrapping is required.",
+            "pattern": "Intrinsic sidebar layout primitive",
+            "layoutOwnership": "Parent owns the two-child relationship, side sizing, wrapping, and gap.",
+            "accessibility": [
+              "Preserves DOM order; side=end changes visual order with row-reverse only."
+            ],
+            "misuse": [
+              "Do not use with more or fewer than two direct children."
+            ]
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "tyui-sidebar",
+          "declaration": {
+            "name": "TyuiSidebarElement",
+            "module": "./src/sidebar/tyui-sidebar.ts"
           }
         }
       ]

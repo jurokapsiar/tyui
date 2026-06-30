@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-flex`
-- Define: `@tyui/define/flex`
+- Define: `@toyu-ui/define/flex`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none. Children must stay in light DOM so layout applies directly to slotted content.
@@ -175,7 +175,7 @@ Attributes are public styling surface. There are no interactive states.
 - Do not attach shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Flex adds no interaction.
 - Define idempotently through `defineTyuiFlex`.
-- Export `@tyui/elements/flex` and `@tyui/define/flex`.
+- Export `@toyu-ui/elements/flex` and `@toyu-ui/define/flex`.
 - Provide `.ty-flex` utility CSS with the same behavior as the element.
 - Attribute changes must mutate host style or reflected attributes without rebuilding children.
 - Use logical alignment aliases: `start` -> `flex-start`, `end` -> `flex-end`, `between` -> `space-between`.

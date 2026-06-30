@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-table`, `tyui-table-header`, `tyui-table-header-cell`, `tyui-table-body`, `tyui-table-row`, `tyui-table-cell`, `tyui-table-selection-cell`, `tyui-table-cell-layout`
-- Define: `@tyui/define/table`
+- Define: `@toyu-ui/define/table`
 - Status: draft
 - Native substrate: **native `<table> <thead> <tbody> <tr> <th> <td>`** (Fluent's "primitive, low-level" table). Sort control = native `<button>` inside `<th>`; selection = native `<input type=checkbox/radio>`.
 - Shadow DOM: minimal/none. Prefer **light DOM** so native table semantics and the `grid` keyboard pattern work without re-mapping roles. Styling via tokens + parts on the host.

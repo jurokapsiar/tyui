@@ -1,4 +1,4 @@
-import { TyuiRadioGroupElement } from '@tyui/elements/radio-group';
+import { TyuiRadioGroupElement } from '@toyu-ui/elements/radio-group';
 
 export const tyuiRadioGroupTagName = 'tyui-radio-group';
 

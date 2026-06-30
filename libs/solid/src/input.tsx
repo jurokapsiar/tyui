@@ -1,14 +1,11 @@
 import type { JSX } from 'solid-js';
-import { defineTyuiInput } from '@tyui/define/input';
 import './jsx';
 import type {
   TyuiInputAppearance,
   TyuiInputEvent,
   TyuiInputSize,
   TyuiInputType,
-} from '@tyui/elements/input';
-
-defineTyuiInput();
+} from '@toyu-ui/elements/input';
 
 export type InputProps = {
   appearance?: TyuiInputAppearance | undefined;

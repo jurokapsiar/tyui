@@ -1,4 +1,4 @@
-import { TyuiContainerElement } from '@tyui/elements/container';
+import { TyuiContainerElement } from '@toyu-ui/elements/container';
 
 export const tyuiContainerTagName = 'tyui-container';
 

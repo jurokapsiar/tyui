@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 // nx-ignore-next-line
-import { defineTyuiInput } from '@tyui/define/input';
+import { defineTyuiInput } from '@toyu-ui/define/input';
 import '../../../../design/alternatives/atmospheric-glass/theme.css';
 import '../../../../design/alternatives/atmospheric-glass/component-variants.css';
 import '../../../../design/alternatives/fluent-web/theme.css';

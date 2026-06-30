@@ -1,9 +1,6 @@
 import type { JSX } from 'solid-js';
-import { defineTyuiRadioGroup } from '@tyui/define/radio-group';
 import './jsx';
-import type { TyuiRadioGroupEvent, TyuiRadioGroupLayout } from '@tyui/elements/radio-group';
-
-defineTyuiRadioGroup();
+import type { TyuiRadioGroupEvent, TyuiRadioGroupLayout } from '@toyu-ui/elements/radio-group';
 
 export type RadioGroupProps = {
   disabled?: boolean | undefined;

@@ -6,11 +6,11 @@
   "implicitDependencies": ["core"],
   "targets": {
     "build": {
-      "executor": "@tyui/tools-executors:build",
+      "executor": "@toyu-ui/tools-executors:build",
       "dependsOn": ["cem", "skills:validate", "ai-context"]
     },
     "test": {
-      "executor": "@tyui/tools-executors:test",
+      "executor": "@toyu-ui/tools-executors:test",
       "options": {
         "browser": true,
         "watch": false,
@@ -25,7 +25,7 @@
       }
     },
     "storybook": {
-      "executor": "@tyui/tools-executors:storybook",
+      "executor": "@toyu-ui/tools-executors:storybook",
       "dependsOn": ["storybook-docs"],
       "options": {
         "framework": "web-components",
@@ -34,11 +34,11 @@
       }
     },
     "storybook-docs": {
-      "executor": "@tyui/tools-executors:storybook-docs",
+      "executor": "@toyu-ui/tools-executors:storybook-docs",
       "outputs": ["{projectRoot}/src/generated/spec-docs"]
     },
     "visual": {
-      "executor": "@tyui/tools-executors:storybook-visual",
+      "executor": "@toyu-ui/tools-executors:storybook-visual",
       "dependsOn": ["storybook-docs"],
       "options": {
         "port": 6010,
@@ -48,19 +48,19 @@
       }
     },
     "e2e": {
-      "executor": "@tyui/tools-executors:component-e2e",
+      "executor": "@toyu-ui/tools-executors:component-e2e",
       "options": {
         "port": 6011
       }
     },
     "cem": {
-      "executor": "@tyui/tools-executors:cem"
+      "executor": "@toyu-ui/tools-executors:cem"
     },
     "skills:validate": {
-      "executor": "@tyui/tools-executors:skills-validate"
+      "executor": "@toyu-ui/tools-executors:skills-validate"
     },
     "ai-context": {
-      "executor": "@tyui/tools-executors:ai-context",
+      "executor": "@toyu-ui/tools-executors:ai-context",
       "dependsOn": ["cem", "skills:validate"],
       "options": {
         "includeRootLlms": true

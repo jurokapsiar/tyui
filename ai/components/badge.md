@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-badge`
-- Define: `@tyui/define/badge`
+- Define: `@toyu-ui/define/badge`
 - Status: draft
 - Native substrate: `<span>` (host itself; no inner control)
 - Shadow DOM: **no** — Badge is pure decoration. A shadow root + `<slot>` buys nothing and only adds a boundary that label text must cross. Style the host directly (Oat-style classless/contextual CSS via `:host`).

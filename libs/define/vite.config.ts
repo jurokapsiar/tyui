@@ -1,6 +1,7 @@
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 import { workspaceAliases } from '../../vite.aliases';
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -8,6 +9,17 @@ const root = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   root,
   cacheDir: '../../node_modules/.vite/libs/define',
+  plugins: [
+    dts({
+      entryRoot: 'src',
+      outDirs: process.env.TYUI_OUT_DIR ?? 'dist',
+      tsconfigPath: resolve(root, 'tsconfig.lib.json'),
+      compilerOptions: {
+        paths: {},
+      },
+      exclude: ['src/**/*.spec.ts', 'src/**/*.test.ts'],
+    }),
+  ],
   resolve: {
     alias: workspaceAliases,
   },
@@ -36,19 +48,19 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        '@tyui/elements',
-        '@tyui/elements/button',
-        '@tyui/elements/center',
-        '@tyui/elements/checkbox',
-        '@tyui/elements/cluster',
-        '@tyui/elements/container',
-        '@tyui/elements/flex',
-        '@tyui/elements/frame',
-        '@tyui/elements/grid',
-        '@tyui/elements/input',
-        '@tyui/elements/radio',
-        '@tyui/elements/radio-group',
-        '@tyui/elements/sidebar',
+        '@toyu-ui/elements',
+        '@toyu-ui/elements/button',
+        '@toyu-ui/elements/center',
+        '@toyu-ui/elements/checkbox',
+        '@toyu-ui/elements/cluster',
+        '@toyu-ui/elements/container',
+        '@toyu-ui/elements/flex',
+        '@toyu-ui/elements/frame',
+        '@toyu-ui/elements/grid',
+        '@toyu-ui/elements/input',
+        '@toyu-ui/elements/radio',
+        '@toyu-ui/elements/radio-group',
+        '@toyu-ui/elements/sidebar',
       ],
     },
   },

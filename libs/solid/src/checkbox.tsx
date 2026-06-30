@@ -1,8 +1,5 @@
 import type { JSX } from 'solid-js';
-import { defineTyuiCheckbox } from '@tyui/define/checkbox';
 import './jsx';
-
-defineTyuiCheckbox();
 
 export type CheckboxProps = {
   checked?: boolean | undefined;

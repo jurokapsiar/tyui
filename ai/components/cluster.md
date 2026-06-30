@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-cluster`
-- Define: `@tyui/define/cluster`
+- Define: `@toyu-ui/define/cluster`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -159,7 +159,7 @@ Attributes and public tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Cluster adds no interaction.
 - Define idempotently through `defineTyuiCluster`.
-- Export `@tyui/elements/cluster` and `@tyui/define/cluster`.
+- Export `@toyu-ui/elements/cluster` and `@toyu-ui/define/cluster`.
 - Provide `.ty-cluster` utility CSS.
 - Map alignment aliases to valid CSS values.
 - Keep child DOM stable.

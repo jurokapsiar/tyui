@@ -22,8 +22,8 @@
 ## Activation
 
 ```ts
-import '@tyui/design-fluent-web/theme.css';
-import '@tyui/design-fluent-web/component-variants.css';
+import '@toyu-ui/design-fluent-web/theme.css';
+import '@toyu-ui/design-fluent-web/component-variants.css';
 ```
 
 ```html

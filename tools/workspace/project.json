@@ -25,6 +25,78 @@
         "command": "tsx src/bundle-sizes.ts"
       }
     },
+    "release:metadata": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/metadata.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:verify": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/verify.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/build.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/package.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:pack": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/pack.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:smoke": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/smoke.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:checklist": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/checklist.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:prepare": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/prepare.ts",
+        "forwardAllArgs": true
+      }
+    },
+    "release:postpublish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/workspace",
+        "command": "node --import tsx src/release/postpublish.ts",
+        "forwardAllArgs": true
+      }
+    },
     "typecheck": {
       "executor": "nx:run-commands",
       "options": {

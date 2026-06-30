@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-image`
-- Define: `@tyui/define/image`
+- Define: `@toyu-ui/define/image`
 - Status: draft
 - Native substrate: **native `<img>`**
 - Shadow DOM: optional/minimal. A thin shadow root holding one `<img part="img">` is acceptable so `shape`/`fit`/`bordered` styling is encapsulated, but `alt`, `src`, `loading`, native fallback and the broken-image glyph must be forwarded to the real `<img>`. If encapsulation is not needed, render the `<img>` in light DOM (lighter, Oat-preferred).

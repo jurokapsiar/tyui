@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-frame`
-- Define: `@tyui/define/frame`
+- Define: `@toyu-ui/define/frame`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -146,7 +146,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Frame adds no interaction.
 - Define idempotently through `defineTyuiFrame`.
-- Export `@tyui/elements/frame` and `@tyui/define/frame`.
+- Export `@toyu-ui/elements/frame` and `@toyu-ui/define/frame`.
 - Provide `.ty-frame` utility CSS.
 - Use CSS `aspect-ratio`; do not calculate height in JavaScript.
 - Apply child fill rules only to direct children.

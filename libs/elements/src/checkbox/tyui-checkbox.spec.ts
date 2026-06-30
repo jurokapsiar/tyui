@@ -31,7 +31,7 @@ describe('TyuiCheckboxElement', () => {
       (node.getAttribute('part') ?? '').split(/\s+/).filter(Boolean),
     );
 
-    expect(parts.sort()).toEqual(['box', 'control', 'label']);
+    expect(parts.toSorted()).toEqual(['box', 'control', 'label']);
     expect(element.shadowRoot?.querySelector('[part="root"]')).toBeNull();
     expect(element.shadowRoot?.querySelector('[part="input"]')).toBeNull();
     expect(element.shadowRoot?.querySelector('[part="mark"]')).toBeNull();
@@ -52,7 +52,7 @@ describe('TyuiCheckboxElement', () => {
     expect(element.checked).toBe(true);
     expect(element.shadowRoot?.querySelector('input')?.checked).toBe(true);
     expect(onChange).toHaveBeenCalledOnce();
-    expect((onChange.mock.calls[0]?.[0] as Event).composed).toBe(true);
+    expect((onChange.mock.calls[0]?.[0] as Event)?.composed).toBe(true);
 
     element.remove();
   });

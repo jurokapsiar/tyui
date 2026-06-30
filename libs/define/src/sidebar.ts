@@ -1,4 +1,4 @@
-import { TyuiSidebarElement } from '@tyui/elements/sidebar';
+import { TyuiSidebarElement } from '@toyu-ui/elements/sidebar';
 
 export const tyuiSidebarTagName = 'tyui-sidebar';
 

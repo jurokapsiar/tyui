@@ -1,5 +1,5 @@
 {
-  "name": "@tyui/testing",
+  "name": "@toyu-ui/testing",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -19,6 +19,6 @@
     "typecheck": "tsc -p tsconfig.lib.json --noEmit"
   },
   "devDependencies": {
-    "@tyui/tools-executors": "workspace:*"
+    "@toyu-ui/tools-executors": "workspace:*"
   }
 }

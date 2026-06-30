@@ -10,7 +10,7 @@ The consuming application should use Solid JSX/TSX, but component implementation
 
 ## Decision
 
-Publish a `@tyui/solid` package that provides:
+Publish a `@toyu-ui/solid` package that provides:
 
 - `JSX.IntrinsicElements` declarations for TYUI custom elements.
 - Typed custom-event helpers.
@@ -21,5 +21,5 @@ The Solid package must not contain component state machines, accessibility behav
 ## Consequences
 
 - Solid consumers get typed JSX and conventional wrapper props.
-- The implementation remains in `@tyui/core`, `@tyui/elements`, and `@tyui/define`.
+- The implementation remains in `@toyu-ui/core`, `@toyu-ui/elements`, and `@toyu-ui/define`.
 - Wrapper tests should verify type safety and event wiring, not duplicate Custom Element behavior tests.

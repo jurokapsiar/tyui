@@ -120,8 +120,8 @@ describe('TyuiRadioGroupElement', () => {
     expect(group.value).toBe('b');
     expect(radioB.checked).toBe(true);
     expect(onChange).toHaveBeenCalledOnce();
-    expect((onChange.mock.calls[0]?.[0] as TyuiRadioGroupEvent).detail).toEqual({ value: 'b' });
-    expect((onChange.mock.calls[0]?.[0] as Event).composed).toBe(true);
+    expect((onChange.mock.calls[0]?.[0] as TyuiRadioGroupEvent)?.detail).toEqual({ value: 'b' });
+    expect((onChange.mock.calls[0]?.[0] as Event)?.composed).toBe(true);
 
     group.remove();
   });

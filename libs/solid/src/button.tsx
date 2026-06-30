@@ -1,5 +1,4 @@
 import type { JSX } from 'solid-js';
-import { defineTyuiButton } from '@tyui/define/button';
 import './jsx';
 import type {
   TyuiButtonAppearance,
@@ -7,9 +6,7 @@ import type {
   TyuiButtonShape,
   TyuiButtonSize,
   TyuiButtonType,
-} from '@tyui/elements/button';
-
-defineTyuiButton();
+} from '@toyu-ui/elements/button';
 
 export type ButtonProps = {
   appearance?: TyuiButtonAppearance | undefined;

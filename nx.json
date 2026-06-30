@@ -29,7 +29,7 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"],
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"]
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}", "{projectRoot}/dist"]
     },
     "test": {
       "cache": true,
@@ -42,17 +42,6 @@
     "verify-configs": {
       "cache": true,
       "inputs": ["default", "sharedGlobals"]
-    },
-    "visual": {
-      "cache": true,
-      "inputs": ["visualInputs", "^production"],
-      "outputs": ["{projectRoot}/__visual_snapshots__"],
-      "parallelism": false
-    },
-    "e2e": {
-      "cache": true,
-      "inputs": ["e2eInputs", "^production"],
-      "parallelism": false
     },
     "cem": {
       "cache": true,
@@ -69,6 +58,7 @@
         "production",
         "{workspaceRoot}/ai/components/**/*",
         "{workspaceRoot}/design/alternatives/**/*",
+        "{workspaceRoot}/tools/executors/src/ai-context/**/*",
         "{projectRoot}/skills/**/*"
       ],
       "outputs": ["{workspaceRoot}/dist/ai", "{workspaceRoot}/llms.txt"]

@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-center`
-- Define: `@tyui/define/center`
+- Define: `@toyu-ui/define/center`
 - Status: implemented
 - Native substrate: native custom element extending `HTMLElement`.
 - Shadow DOM: none.
@@ -145,7 +145,7 @@ Attributes and tokens only.
 - Implement as a native custom element with no shadow DOM.
 - Follow `spec/behavior.md` by preserving native child semantics, focus order, and event propagation; Center adds no interaction.
 - Define idempotently through `defineTyuiCenter`.
-- Export `@tyui/elements/center` and `@tyui/define/center`.
+- Export `@toyu-ui/elements/center` and `@toyu-ui/define/center`.
 - Provide `.ty-center` utility CSS.
 - Do not use JavaScript measurement.
 

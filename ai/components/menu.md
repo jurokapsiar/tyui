@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-menu`, `tyui-menu-trigger`, `tyui-menu-popover`, `tyui-menu-list`, `tyui-menu-item`, `tyui-menu-item-checkbox`, `tyui-menu-item-radio`, `tyui-menu-item-link`, `tyui-menu-group`, `tyui-menu-group-header`, `tyui-menu-divider`
-- Define: `@tyui/define/menu`
+- Define: `@toyu-ui/define/menu`
 - Status: draft
 - Native substrate: **Popover API** (`popover`) for the surface + **CSS Anchor Positioning**; items are native `<button>`/`<a>` (link items) carrying menu roles; roving focus via the **`focusgroup` polyfill**. There is **no** native menu _widget_, so this is the one component here that genuinely needs an ARIA composite — but the surface/dismiss/top-layer still come from the platform.
 - Shadow DOM: minimal (surface + slots). Items are light-DOM native buttons/links with menu roles.

@@ -2,11 +2,11 @@
 name: setup
 description: Set up TYUI custom elements for Solid, including registration, JSX typing, wrappers, and typed custom events.
 license: Apache-2.0
-requires: ['@tyui/elements#button', '@tyui/elements#input']
+requires: ['@toyu-ui/elements#components']
 metadata:
   type: framework
-  library: '@tyui/solid'
-  library_version: '0.0.0'
+  library: '@toyu-ui/solid'
+  library_version: '0.1.0'
   framework: solid
   source: src/index.ts
 ---
@@ -15,15 +15,15 @@ metadata:
 
 ## Intent
 
-Use `@tyui/solid` when a Solid app wants typed JSX ergonomics for TYUI custom
-elements. The implementation remains in `@tyui/elements`.
+Use `@toyu-ui/solid` when a Solid app wants typed JSX ergonomics for TYUI custom
+elements. The implementation remains in `@toyu-ui/elements`.
 
 ## Registration
 
 Register only the elements you use:
 
 ```ts
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/solid/define/button';
 
 defineTyuiButton();
 ```
@@ -45,5 +45,5 @@ behavior from the underlying custom element.
 ## Anti-Patterns
 
 - Do not reimplement TYUI behavior in Solid wrappers.
-- Do not use Solid signals inside `@tyui/elements`.
+- Do not use Solid signals inside `@toyu-ui/elements`.
 - Do not register all elements in a library module that should tree-shake.

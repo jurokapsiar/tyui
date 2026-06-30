@@ -1,4 +1,4 @@
-import { Button, Input } from '@tyui/solid';
+import { Button, Input } from '@toyu-ui/solid';
 
 export function App() {
   return (

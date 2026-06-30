@@ -5,7 +5,7 @@
 ## Identity
 
 - Tags: `tyui-breadcrumb`, `tyui-breadcrumb-item`, `tyui-breadcrumb-divider` (divider may be CSS-generated)
-- Define: `@tyui/define/breadcrumb`
+- Define: `@toyu-ui/define/breadcrumb`
 - Status: draft
 - Native substrate: `<nav>` → `<ol>` → `<li>`, with native `<a href>` (links) / `<button>` (in-app actions) inside each item.
 - Shadow DOM: minimal on the root (renders `<nav><ol><slot></slot></ol></nav>`); items are light-DOM `<li>`s so the ordered-list semantics and `aria-current` stay intact. Dividers are decorative (`aria-hidden`), ideally CSS `::before` content rather than elements.

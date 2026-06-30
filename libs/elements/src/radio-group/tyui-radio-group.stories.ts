@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 // nx-ignore-next-line
-import { defineTyuiRadio } from '@tyui/define/radio';
+import { defineTyuiRadio } from '@toyu-ui/define/radio';
 // nx-ignore-next-line
-import { defineTyuiRadioGroup } from '@tyui/define/radio-group';
+import { defineTyuiRadioGroup } from '@toyu-ui/define/radio-group';
 import '../../../../design/alternatives/atmospheric-glass/theme.css';
 import '../../../../design/alternatives/atmospheric-glass/component-variants.css';
 import '../../../../design/alternatives/fluent-web/theme.css';

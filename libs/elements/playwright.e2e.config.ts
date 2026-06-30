@@ -1,4 +1,4 @@
-import { defineTestingConfig } from '@tyui/tools-executors/shared/playwright-config';
+import { defineTestingConfig } from '@toyu-ui/tools-executors/shared/playwright-config';
 
 export default defineTestingConfig({
   testDir: 'e2e',

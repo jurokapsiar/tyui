@@ -1,4 +1,4 @@
-import { TyuiRadioElement } from '@tyui/elements/radio';
+import { TyuiRadioElement } from '@toyu-ui/elements/radio';
 
 export const tyuiRadioTagName = 'tyui-radio';
 

@@ -1,9 +1,6 @@
 import type { JSX } from 'solid-js';
-import { defineTyuiRadio } from '@tyui/define/radio';
 import './jsx';
-import type { TyuiRadioLabelPosition } from '@tyui/elements/radio';
-
-defineTyuiRadio();
+import type { TyuiRadioLabelPosition } from '@toyu-ui/elements/radio';
 
 export type RadioProps = {
   checked?: boolean | undefined;

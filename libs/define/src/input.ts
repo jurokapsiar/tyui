@@ -1,4 +1,4 @@
-import { TyuiInputElement } from '@tyui/elements/input';
+import { TyuiInputElement } from '@toyu-ui/elements/input';
 
 export const tyuiInputTagName = 'tyui-input';
 

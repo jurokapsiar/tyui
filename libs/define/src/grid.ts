@@ -1,4 +1,4 @@
-import { TyuiGridElement } from '@tyui/elements/grid';
+import { TyuiGridElement } from '@toyu-ui/elements/grid';
 
 export const tyuiGridTagName = 'tyui-grid';
 

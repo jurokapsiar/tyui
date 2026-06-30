@@ -1,4 +1,4 @@
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 import './styles.css';
 
 defineTyuiButton();

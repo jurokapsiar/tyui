@@ -11,10 +11,10 @@
     "typecheck": "tsc -p tsconfig.app.json --noEmit"
   },
   "dependencies": {
-    "@tyui/define": "workspace:*",
-    "@tyui/elements": "workspace:*"
+    "@toyu-ui/define": "workspace:*",
+    "@toyu-ui/elements": "workspace:*"
   },
   "devDependencies": {
-    "@tyui/tools-executors": "workspace:*"
+    "@toyu-ui/tools-executors": "workspace:*"
   }
 }

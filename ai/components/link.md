@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-link`
-- Define: `@tyui/define/link`
+- Define: `@toyu-ui/define/link`
 - Status: draft
 - Native substrate: **native `<a href>`** when navigating; **native `<button>`** when there is no `href` (action styled as a link). `<span role=button>` only for the inline-wrapping edge case.
 - Shadow DOM: optional/minimal. Prefer light DOM or a shadow root that renders the chosen native element with `part="control"`; native `href`, focus, context menu, middle-click, and "open in new tab" must be preserved on a real `<a>`.

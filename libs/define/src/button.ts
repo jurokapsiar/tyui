@@ -1,4 +1,4 @@
-import { TyuiButtonElement } from '@tyui/elements/button';
+import { TyuiButtonElement } from '@toyu-ui/elements/button';
 
 export const tyuiButtonTagName = 'tyui-button';
 

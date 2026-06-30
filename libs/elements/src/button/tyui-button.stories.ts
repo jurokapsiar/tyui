@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 // nx-ignore-next-line
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 import '../../../../design/alternatives/atmospheric-glass/theme.css';
 import '../../../../design/alternatives/atmospheric-glass/component-variants.css';
 import '../../../../design/alternatives/fluent-web/theme.css';

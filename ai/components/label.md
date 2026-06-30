@@ -5,7 +5,7 @@
 ## Identity
 
 - Tag: `tyui-label`
-- Define: `@tyui/define/label`
+- Define: `@toyu-ui/define/label`
 - Status: draft
 - Native substrate: **native `<label>`** (host renders/upgrades to or wraps a `<label>`)
 - Shadow DOM: **no** — a label's whole job is the native `for`/implicit-wrapping association, which a shadow boundary breaks. Render light DOM so `<label for>` reaches the control in the same tree.

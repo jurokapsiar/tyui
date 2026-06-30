@@ -1,4 +1,4 @@
-import { TyuiCheckboxElement } from '@tyui/elements/checkbox';
+import { TyuiCheckboxElement } from '@toyu-ui/elements/checkbox';
 
 export const tyuiCheckboxTagName = 'tyui-checkbox';
 

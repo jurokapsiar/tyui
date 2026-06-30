@@ -261,7 +261,7 @@ TYUI exposes CEM generation through:
 nx run elements:cem
 ```
 
-This writes `libs/elements/custom-elements.json`, which is exported as `@tyui/elements/custom-elements.json` and included in the package files. The manifest is the machine-readable facts layer. It is generated output and must not be hand-edited.
+This writes `libs/elements/custom-elements.json`, which is exported as `@toyu-ui/elements/custom-elements.json` and included in the package files. The manifest is the machine-readable facts layer. It is generated output and must not be hand-edited.
 
 A future implementation may delegate baseline extraction to `@custom-elements-manifest/analyzer`; the architectural requirement is the package-level manifest plus TYUI's `x-design-system` enrichment and validation.
 
@@ -585,8 +585,8 @@ Consumer commands:
 
 ```sh
 yarn dlx @tanstack/intent@latest install
-yarn dlx @tanstack/intent@latest load @tyui/elements#button
-yarn dlx @tanstack/intent@latest load @tyui/solid#setup
+yarn dlx @tanstack/intent@latest load @toyu-ui/elements#button
+yarn dlx @tanstack/intent@latest load @toyu-ui/solid#setup
 ```
 
 The local `skills:validate` target intentionally provides a no-network CI gate.
@@ -605,7 +605,7 @@ Provide an `llms.txt` index at the documentation site or package root:
 ## Start Here
 
 - [Product integration](https://docs.example.com/ai/integration.md)
-- [Component selection guide](https://docs.example.com/ai/selection.md)
+- Component selection guide: `dist/ai/selection.md`, generated from shipped Intent-compatible `SKILL.md` files.
 - [Layout principles](https://docs.example.com/ai/layout.md)
 - [Accessibility rules](https://docs.example.com/ai/accessibility.md)
 

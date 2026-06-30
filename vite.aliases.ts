@@ -6,147 +6,147 @@ const workspaceRoot = dirname(fileURLToPath(import.meta.url));
 
 export const workspaceAliases: AliasOptions = [
   {
-    find: /^@tyui\/core$/,
+    find: /^@toyu-ui\/core$/,
     replacement: resolve(workspaceRoot, 'libs/core/src/index.ts'),
   },
   {
-    find: /^@tyui\/elements$/,
+    find: /^@toyu-ui\/elements$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/button$/,
+    find: /^@toyu-ui\/elements\/button$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/button/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/center$/,
+    find: /^@toyu-ui\/elements\/center$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/center/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/checkbox$/,
+    find: /^@toyu-ui\/elements\/checkbox$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/checkbox/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/cluster$/,
+    find: /^@toyu-ui\/elements\/cluster$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/cluster/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/container$/,
+    find: /^@toyu-ui\/elements\/container$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/container/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/flex$/,
+    find: /^@toyu-ui\/elements\/flex$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/flex/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/frame$/,
+    find: /^@toyu-ui\/elements\/frame$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/frame/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/grid$/,
+    find: /^@toyu-ui\/elements\/grid$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/grid/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/input$/,
+    find: /^@toyu-ui\/elements\/input$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/input/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/radio$/,
+    find: /^@toyu-ui\/elements\/radio$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/radio/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/radio-group$/,
+    find: /^@toyu-ui\/elements\/radio-group$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/radio-group/index.ts'),
   },
   {
-    find: /^@tyui\/elements\/sidebar$/,
+    find: /^@toyu-ui\/elements\/sidebar$/,
     replacement: resolve(workspaceRoot, 'libs/elements/src/sidebar/index.ts'),
   },
   {
-    find: /^@tyui\/define$/,
+    find: /^@toyu-ui\/define$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/index.ts'),
   },
   {
-    find: /^@tyui\/define\/button$/,
+    find: /^@toyu-ui\/define\/button$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/button.ts'),
   },
   {
-    find: /^@tyui\/define\/center$/,
+    find: /^@toyu-ui\/define\/center$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/center.ts'),
   },
   {
-    find: /^@tyui\/define\/checkbox$/,
+    find: /^@toyu-ui\/define\/checkbox$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/checkbox.ts'),
   },
   {
-    find: /^@tyui\/define\/cluster$/,
+    find: /^@toyu-ui\/define\/cluster$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/cluster.ts'),
   },
   {
-    find: /^@tyui\/define\/container$/,
+    find: /^@toyu-ui\/define\/container$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/container.ts'),
   },
   {
-    find: /^@tyui\/define\/flex$/,
+    find: /^@toyu-ui\/define\/flex$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/flex.ts'),
   },
   {
-    find: /^@tyui\/define\/frame$/,
+    find: /^@toyu-ui\/define\/frame$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/frame.ts'),
   },
   {
-    find: /^@tyui\/define\/grid$/,
+    find: /^@toyu-ui\/define\/grid$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/grid.ts'),
   },
   {
-    find: /^@tyui\/define\/input$/,
+    find: /^@toyu-ui\/define\/input$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/input.ts'),
   },
   {
-    find: /^@tyui\/define\/radio$/,
+    find: /^@toyu-ui\/define\/radio$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/radio.ts'),
   },
   {
-    find: /^@tyui\/define\/radio-group$/,
+    find: /^@toyu-ui\/define\/radio-group$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/radio-group.ts'),
   },
   {
-    find: /^@tyui\/define\/sidebar$/,
+    find: /^@toyu-ui\/define\/sidebar$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/sidebar.ts'),
   },
   {
-    find: /^@tyui\/define\/all$/,
+    find: /^@toyu-ui\/define\/all$/,
     replacement: resolve(workspaceRoot, 'libs/define/src/all.ts'),
   },
   {
-    find: /^@tyui\/solid$/,
+    find: /^@toyu-ui\/solid$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/index.ts'),
   },
   {
-    find: /^@tyui\/solid\/button$/,
+    find: /^@toyu-ui\/solid\/button$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/button.tsx'),
   },
   {
-    find: /^@tyui\/solid\/checkbox$/,
+    find: /^@toyu-ui\/solid\/checkbox$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/checkbox.tsx'),
   },
   {
-    find: /^@tyui\/solid\/input$/,
+    find: /^@toyu-ui\/solid\/input$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/input.tsx'),
   },
   {
-    find: /^@tyui\/solid\/radio$/,
+    find: /^@toyu-ui\/solid\/radio$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/radio.tsx'),
   },
   {
-    find: /^@tyui\/solid\/radio-group$/,
+    find: /^@toyu-ui\/solid\/radio-group$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/radio-group.tsx'),
   },
   {
-    find: /^@tyui\/solid\/jsx$/,
+    find: /^@toyu-ui\/solid\/jsx$/,
     replacement: resolve(workspaceRoot, 'libs/solid/src/jsx.ts'),
   },
   {
-    find: /^@tyui\/testing$/,
+    find: /^@toyu-ui\/testing$/,
     replacement: resolve(workspaceRoot, 'libs/testing/src/index.ts'),
   },
 ];

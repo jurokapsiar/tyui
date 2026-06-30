@@ -6,16 +6,16 @@
   "implicitDependencies": ["solid", "define", "elements", "core"],
   "targets": {
     "build": {
-      "executor": "@tyui/tools-executors:build"
+      "executor": "@toyu-ui/tools-executors:build"
     },
     "serve": {
-      "executor": "@tyui/tools-executors:serve",
+      "executor": "@toyu-ui/tools-executors:serve",
       "options": {
         "port": 4200
       }
     },
     "test": {
-      "executor": "@tyui/tools-executors:test",
+      "executor": "@toyu-ui/tools-executors:test",
       "options": {
         "browser": true,
         "watch": false,

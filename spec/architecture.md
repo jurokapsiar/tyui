@@ -5,12 +5,12 @@ TYUI is a framework-neutral component library built as an Nx + Vite monorepo. It
 ## Design Principles
 
 1. **No framework runtime in component implementation.** Components are native `HTMLElement` subclasses. Framework packages may improve consumer ergonomics, but they do not define component behavior.
-2. **No JSX in component implementations.** JSX is allowed only in optional wrapper packages and example apps. Those wrappers compile into the consuming app, not into `@tyui/elements`.
+2. **No JSX in component implementations.** JSX is allowed only in optional wrapper packages and example apps. Those wrappers compile into the consuming app, not into `@toyu-ui/elements`.
 3. **No virtual DOM. Stable-node updates only.** DOM is created once, usually from a shared `<template>`, and state changes mutate affected nodes and attributes directly.
-4. **Headless behavior is separated from DOM.** Reusable state machines and interaction logic live in `@tyui/core` and are unit-testable without browser DOM.
+4. **Headless behavior is separated from DOM.** Reusable state machines and interaction logic live in `@toyu-ui/core` and are unit-testable without browser DOM.
 5. **Standard Web Component contract.** Primitive configuration uses attributes, structured values use JavaScript properties, composition uses slots, and user output uses `CustomEvent`s with `bubbles: true` and `composed: true`.
 6. **Native behavior first.** Native controls own text editing, form input, focus behavior, keyboard defaults, and accessibility semantics wherever possible. Custom behavior is added only where the native platform does not provide the required composite pattern.
-7. **Ergonomics are additive, never authoritative.** `@tyui/solid` provides types and thin wrappers; it must remain tree-shakable and cannot become the source of behavior.
+7. **Ergonomics are additive, never authoritative.** `@toyu-ui/solid` provides types and thin wrappers; it must remain tree-shakable and cannot become the source of behavior.
 8. **Idempotent registration.** `define*` functions guard with `customElements.get(...)` so repeated registration is safe.
 9. **Public styling surface is explicit.** Generated app CSS may target only documented host attributes, slots, parts, forwarded parts, and public `--ty-*` tokens.
 10. **Tooling is opinionated and locked.** Yarn 4, Nx caching, Vite, Vitest, Playwright, Dockerized browser infrastructure, custom executors, `oxlint`, `oxfmt`, and config-drift checks are part of the architecture.
@@ -24,7 +24,7 @@ TYUI is a framework-neutral component library built as an Nx + Vite monorepo. It
 │   vanilla-example (plain HTML/TS consumer)                 │
 └───────────────▲─────────────────────────▲──────────────────┘
                 │                         │
-        @tyui/solid (opt-in)       @tyui/define (registration)
+        @toyu-ui/solid (opt-in)       @toyu-ui/define (registration)
                 │                         │
 ┌───────────────┴──────────┐   ┌──────────┴──────────────────┐
 │ libs/solid               │   │ libs/define                  │
@@ -55,23 +55,23 @@ TYUI is a framework-neutral component library built as an Nx + Vite monorepo. It
         libs/testing -> contract-test and a11y helpers
 ```
 
-| Layer    | Package                            | Responsibility                                                                                                                           | Depends on                       |
-| -------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| Core     | `@tyui/core`                       | Framework-neutral state machines, interaction logic, transition objects, pub/sub where needed. No DOM.                                   | none                             |
-| Elements | `@tyui/elements`                   | Native `HTMLElement` implementations: shadow DOM, templates, attributes/properties, slots, events, form participation, focus delegation. | `@tyui/core`                     |
-| Define   | `@tyui/define`                     | Opt-in `customElements.define` entry points per component and for all components.                                                        | `@tyui/elements`                 |
-| Solid    | `@tyui/solid`                      | Solid JSX intrinsic typings, typed event surfaces, thin ergonomic wrappers.                                                              | `@tyui/define`, `@tyui/elements` |
-| Testing  | `@tyui/testing`                    | Shared contract-test helpers and accessibility-role helpers.                                                                             | none                             |
-| Apps     | `solid-example`, `vanilla-example` | Consumer reference apps and smoke targets.                                                                                               | `@tyui/solid` or `@tyui/define`  |
+| Layer    | Package                            | Responsibility                                                                                                                           | Depends on                             |
+| -------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Core     | `@toyu-ui/core`                    | Framework-neutral state machines, interaction logic, transition objects, pub/sub where needed. No DOM.                                   | none                                   |
+| Elements | `@toyu-ui/elements`                | Native `HTMLElement` implementations: shadow DOM, templates, attributes/properties, slots, events, form participation, focus delegation. | `@toyu-ui/core`                        |
+| Define   | `@toyu-ui/define`                  | Opt-in `customElements.define` entry points per component and for all components.                                                        | `@toyu-ui/elements`                    |
+| Solid    | `@toyu-ui/solid`                   | Solid JSX intrinsic typings, typed event surfaces, thin ergonomic wrappers.                                                              | `@toyu-ui/define`, `@toyu-ui/elements` |
+| Testing  | `@toyu-ui/testing`                 | Shared contract-test helpers and accessibility-role helpers.                                                                             | none                                   |
+| Apps     | `solid-example`, `vanilla-example` | Consumer reference apps and smoke targets.                                                                                               | `@toyu-ui/solid` or `@toyu-ui/define`  |
 
 Package conventions:
 
 - Workspace packages use `"type": "module"` and should use `"sideEffects": false` when safe.
 - In-repo TypeScript types resolve to `src/` for fast development; build output resolves from `dist/`.
-- Per-component subpath exports such as `@tyui/elements/button` and `@tyui/define/button` support granular imports and code splitting.
-- `vite.aliases.ts` maps `@tyui/*` package specifiers to source files during local development so layers do not need prebuilds for HMR.
+- Per-component subpath exports such as `@toyu-ui/elements/button` and `@toyu-ui/define/button` support granular imports and code splitting.
+- `vite.aliases.ts` maps `@toyu-ui/*` package specifiers to source files during local development so layers do not need prebuilds for HMR.
 - Skill-bearing packages use the `tanstack-intent` keyword and include `skills/` in package files so agent guidance ships with the same version as the library.
-- `@tyui/elements` publishes `custom-elements.json` at the package root and exposes it as `@tyui/elements/custom-elements.json`.
+- `@toyu-ui/elements` publishes `custom-elements.json` at the package root and exposes it as `@toyu-ui/elements/custom-elements.json`.
 
 ## Component Anatomy
 
@@ -161,7 +161,7 @@ Programmatic state changes must not emit user events unless the component contra
 Solid consumers can use registered custom elements directly:
 
 ```tsx
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 
 defineTyuiButton();
 
@@ -178,7 +178,7 @@ Optional wrappers may improve naming, event typing, or property assignment:
 
 ```tsx
 import type { JSX } from 'solid-js';
-import { defineTyuiButton } from '@tyui/define/button';
+import { defineTyuiButton } from '@toyu-ui/define/button';
 
 defineTyuiButton();
 
@@ -303,13 +303,13 @@ Consumer flow:
 yarn dlx @tanstack/intent@latest install
 ```
 
-Consumers may then load skills for their installed TYUI version, for example `@tyui/elements#button` or `@tyui/solid#setup`, while still using `custom-elements.json` for exact API facts.
+Consumers may then load skills for their installed TYUI version, for example `@toyu-ui/elements#button` or `@toyu-ui/solid#setup`, while still using `custom-elements.json` for exact API facts.
 
 ## Performance Assessment
 
 Strengths:
 
-- Near-zero framework runtime footprint: no Solid, React, Lit, virtual DOM, or CSS-in-JS runtime ships in `@tyui/elements`.
+- Near-zero framework runtime footprint: no Solid, React, Lit, virtual DOM, or CSS-in-JS runtime ships in `@toyu-ui/elements`.
 - Fast initial load: module-level templates and constructed stylesheets are created once and reused per instance.
 - Efficient updates: stable nodes preserve listeners, focus, selection, and native control state.
 - Strong tree-shaking: per-component subpath exports let apps pay for the components they import.

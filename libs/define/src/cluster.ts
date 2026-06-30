@@ -1,4 +1,4 @@
-import { TyuiClusterElement } from '@tyui/elements/cluster';
+import { TyuiClusterElement } from '@toyu-ui/elements/cluster';
 
 export const tyuiClusterTagName = 'tyui-cluster';
 
